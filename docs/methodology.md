@@ -16,7 +16,7 @@ Routing is the only intended variable. The three architectures share the same ag
 | Jev | One Choice over each tool's `routingSummary`. Local sort of the returned distribution, cut at k. | Full JSON schemas for the top-k tools only. |
 | LLM router | Ranks the same `routingSummary` text, cut at k. | Full JSON schemas for the top-k tools only. |
 
-The MVP vertical slice runs baseline and Jev. M2 adds the LLM router and optional router-only Recall@k.
+The MVP vertical slice runs baseline and Jev. M2 adds the LLM router, optional router-only Recall@k, and a live LLM path that uses the same shared agent as baseline and Jev.
 
 ## Frozen controls
 

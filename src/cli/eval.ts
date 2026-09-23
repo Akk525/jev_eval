@@ -35,6 +35,7 @@ Mocked vertical slice:
 Live vertical slice (needs AGENT_API_KEY; Jev also needs TYPESAFE_API_KEY):
   npm run eval -- --config configs/baseline-20.yaml
   npm run eval -- --config configs/jev-top5-20.yaml
+  npm run eval -- --config configs/llm-top5-20.yaml
 
 Router-only live (needs TYPESAFE_API_KEY for Jev; no AGENT_API_KEY):
   npm run eval -- --config configs/jev-router-only-20.yaml
@@ -71,7 +72,11 @@ try {
   } else if (config.architecture === "mock") {
     const directory = await runSmokeCommand({ configPath, resultsRoot });
     console.log(directory);
-  } else if (config.architecture === "baseline" || config.architecture === "jev") {
+  } else if (
+    config.architecture === "baseline" ||
+    config.architecture === "jev" ||
+    config.architecture === "llm"
+  ) {
     const directory = await runLiveSlice({
       configPath,
       resultsRoot,
