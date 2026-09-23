@@ -8,7 +8,8 @@ M0 — Harness Foundation
 
 ## Completed issues
 
-- #1 Record the canonical brief and continuity docs — satisfied by `05d683e`. The GitHub issue is still open.
+- #1 Record the canonical brief and continuity docs — closed. On `main`.
+- #2 Scaffold the TypeScript package — on `main`. `npm test` passes with no tests, `npm run typecheck` passes, and `npm run eval` prints `not implemented`.
 
 ## Issue currently being worked on
 
@@ -28,21 +29,19 @@ Accepted in `docs/DECISIONS.md`:
 - D8. One TypeScript package (Node 20, Zod, Vitest). Native tool calling. Dataset slice is `datasets/v0.1/`.
 - D9. Result directories are immutable and resumable. Pricing is versioned.
 
-No harness code exists yet.
+Scaffold only: Node 20 package, Vitest, typecheck, and an eval stub. No routers, tools, or metrics yet.
 
 ## Known problems
 
-- `main` is not pushed. GitHub has the issues and milestones; a fresh clone will not see these docs until that push.
-- #1 meets its acceptance criteria and is still open on GitHub. Close it after the docs commit is pushed.
 - M2–M6 milestones have no issues yet. File them after the 50-task slice, not before.
 
 ## Open questions
 
-- Which pinned agent model and which Jev access path (OpenRouter `typesafe/jev-1.13` or direct TypeSafe) go in the M1 configs. Needed before #20 and #21, not before #2.
+- Which pinned agent model and which Jev access path (OpenRouter `typesafe/jev-1.13` or direct TypeSafe) go in the M1 configs. Needed before #20 and #21.
 - Pricing amounts in `pricing/v1.json` have to be copied from the provider page at the time #21 is implemented, then frozen.
 
 ## Next recommended issue
 
-#2 Scaffold the TypeScript package.
+#3 Define shared domain types.
 
-https://github.com/Akk525/jev_eval/issues/2
+https://github.com/Akk525/jev_eval/issues/3
