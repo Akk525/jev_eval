@@ -26,6 +26,7 @@ M1 — Vertical Slice
 - #16 Implement the shared single-step agent — on `main`. One tool-calling turn. The prompt does not name an architecture. Temperature comes from config. A missing tool call is `selectedTool: null`.
 - #17 Implement the Jev router adapter — on `main`. One Choice over `routingSummary`, then a local sort to k. Confidence is copied from the provider. More than 255 tools fails before the call. The TypeSafe client strips the API key from the stored payload.
 - #18 Implement the task evaluator — on `main`. One attempt gets Recall@k, selection accuracy, and Execution Success from the pure functions. Router `R0` is excluded from both rates. `R1` is an execution miss.
+- #19 Implement the experiment runner — on `main`. Baseline and Jev share one path. Each run stores the ordered toolspace and the Jev distribution. A router failure skips the agent and still appends. Resume skips completed tasks.
 
 ## Issue currently being worked on
 
@@ -58,6 +59,8 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Next recommended issue
 
-#19 Implement the experiment runner.
+#20 Add the CLI and example configs.
 
-https://github.com/Akk525/jev_eval/issues/19
+https://github.com/Akk525/jev_eval/issues/20
+
+Blocked until the open questions below name the pinned agent model and the Jev access path. Those strings go into the example configs.

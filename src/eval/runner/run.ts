@@ -1,12 +1,13 @@
 import { readFileSync } from "node:fs";
 import type { Agent } from "../../agent/types.js";
-import { classifyAttempt } from "../failures/classify.js";
 import type { BenchmarkTask } from "../../dataset/schema.js";
+import { evaluateAttempt, type AttemptEvaluation } from "../evaluators/attempt.js";
 import type { Router } from "../../routers/types.js";
-import type { OpenResultDirectory, ResultSummary } from "../../results/writer.js";
+import type { OpenResultDirectory, ResultSummary, RunRecord } from "../../results/writer.js";
 import { toolspaceForTask } from "../../tools/toolspace.js";
 import type { ExperimentConfig } from "../../types/config.js";
-import type { Tracer } from "../../tracing/tracer.js";
+import type { RouteDecision } from "../../types/routing.js";
+import type { Tracer, TraceHandle } from "../../tracing/tracer.js";
 import type { ToolRegistry } from "../../tools/registry/registry.js";
 
 export interface ExperimentRun {
@@ -44,7 +45,24 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
           if (!tool) throw new Error(`toolspace named a missing tool: ${name}`);
           return tool;
         });
-        const decision = await run.router.route({ taskPrompt: task.prompt, tools: presented, k });
+        const attemptBase = {
+          requiredTools: task.required_tools,
+          acceptableTools: task.acceptable_tools,
+          ...(task.expected_arguments === undefined ? {} : { expectedArguments: task.expected_arguments }),
+        };
+
+        let decision: RouteDecision;
+        try {
+          decision = await run.router.route({ taskPrompt: task.prompt, tools: presented, k });
+        } catch {
+          await finish(run, handle, task, repetition, toolspace, evaluateAttempt({
+            ...attemptBase,
+            router: { status: "failed", reason: "provider_error" },
+            agent: { status: "not_run" },
+            tool: { status: "not_run" },
+          }, k), null);
+          continue;
+        }
         await run.tracer.event(handle, { type: "routing_completed", decision });
 
         const candidateNames = new Set(decision.candidates.map((candidate) => candidate.name));
@@ -57,31 +75,12 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
           : run.registry.execute(turn.selectedTool, turn.arguments, {});
         if (toolResult) await run.tracer.event(handle, { type: "tool_completed", result: toolResult });
 
-        const classification = classifyAttempt({
-          requiredTools: task.required_tools,
-          acceptableTools: task.acceptable_tools,
-          ...(task.expected_arguments === undefined ? {} : { expectedArguments: task.expected_arguments }),
+        await finish(run, handle, task, repetition, toolspace, evaluateAttempt({
+          ...attemptBase,
           router: { status: "valid", decision },
           agent: { status: "valid", turn },
           tool: toolResult === null ? { status: "not_run" } : { status: "result", result: toolResult },
-        });
-        await run.tracer.event(handle, {
-          type: "evaluation_completed",
-          executionSuccess: classification.executionSuccess,
-          failureCode: classification.code,
-          infrastructureReason: classification.infrastructureReason,
-        });
-
-        run.results.append({
-          taskId: task.id,
-          repetition,
-          toolspace,
-          executionExcluded: classification.executionExcluded,
-          routingExcluded: classification.routingExcluded,
-          executionSuccess: classification.executionSuccess,
-          failureCode: classification.code,
-          infrastructureReason: classification.infrastructureReason,
-        });
+        }, k), decision);
       }
     }
     await run.tracer.endRun(handle, "completed");
@@ -91,4 +90,35 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
   }
 
   return JSON.parse(readFileSync(`${run.results.directory}/summary.json`, "utf8")) as ResultSummary;
+}
+
+async function finish(
+  run: ExperimentRun,
+  handle: TraceHandle,
+  task: BenchmarkTask,
+  repetition: number,
+  toolspace: readonly string[],
+  evaluation: AttemptEvaluation,
+  decision: RouteDecision | null,
+): Promise<void> {
+  await run.tracer.event(handle, {
+    type: "evaluation_completed",
+    executionSuccess: evaluation.executionSuccess,
+    failureCode: evaluation.code,
+    infrastructureReason: evaluation.infrastructureReason,
+  });
+  const record: RunRecord = {
+    taskId: task.id,
+    repetition,
+    toolspace,
+    scores: decision?.scores ?? null,
+    top1Probability: decision?.top1Probability ?? null,
+    confidence: decision?.confidence ?? null,
+    executionExcluded: evaluation.executionExcluded,
+    routingExcluded: evaluation.routingExcluded,
+    executionSuccess: evaluation.executionSuccess,
+    failureCode: evaluation.code,
+    infrastructureReason: evaluation.infrastructureReason,
+  };
+  run.results.append(record);
 }

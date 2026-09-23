@@ -9,6 +9,10 @@ export interface RunRecord {
   repetition: number;
   /** Exact ordered toolspace presented for this attempt. */
   toolspace: readonly string[];
+  /** Full router distribution, or null when the router has none or failed. */
+  scores: Readonly<Record<string, number>> | null;
+  top1Probability: number | null;
+  confidence: number | null;
   executionExcluded: boolean;
   routingExcluded: boolean;
   executionSuccess: boolean;
