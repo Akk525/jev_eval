@@ -10,7 +10,15 @@ M0 — Harness Foundation
 
 - #1 Record the canonical brief and continuity docs — closed. On `main`.
 - #2 Scaffold the TypeScript package — closed. On `main`.
-- #3 Define shared domain types — on `main`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields.
+- #3 Define shared domain types — closed. On `main`.
+- #4 Validate experiment configuration — on `main`.
+- #5 Validate the versioned task dataset — on `main`.
+- #6 Implement the tool registry and deterministic executor — on `main`. Two sample tools only.
+- #7 Implement pure metric functions — on `main`. The MVP aggregate is Execution Success Rate.
+- #8 Implement failure classification — on `main`.
+- #9 Implement the result writer and resume checkpoint — on `main`.
+- #10 Implement the tracer interface and local capture — on `main`.
+- #11 Implement mock providers — on `main`.
 
 ## Issue currently being worked on
 
@@ -30,7 +38,7 @@ Accepted in `docs/DECISIONS.md`:
 - D8. One TypeScript package (Node 20, Zod, Vitest). Native tool calling. Dataset slice is `datasets/v0.1/`.
 - D9. Result directories are immutable and resumable. Pricing is versioned.
 
-Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. No routers, tools, or metrics yet.
+Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. Config, dataset, registry, metrics, failure codes, result directories, the noop tracer, and mock providers are in place. The registry has two sample tools, not the 20-tool catalog. `npm run eval` is still the not-implemented stub.
 
 ## Known problems
 
@@ -43,6 +51,6 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Next recommended issue
 
-#4 Validate experiment configuration. #5, #6, #7, #10, and #11 can proceed in parallel.
+#12 Add the paid-API-free smoke benchmark.
 
-https://github.com/Akk525/jev_eval/issues/4
+https://github.com/Akk525/jev_eval/issues/12
