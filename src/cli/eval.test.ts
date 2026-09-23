@@ -1,0 +1,63 @@
+import { spawnSync } from "node:child_process";
+import { mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { expect, it } from "vitest";
+
+const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
+
+function cli(args: string[]) {
+  return spawnSync("node_modules/.bin/tsx", ["src/cli/eval.ts", ...args], {
+    cwd: repoRoot,
+    encoding: "utf8",
+  });
+}
+
+it("shows the config path in help", () => {
+  const run = cli(["--help"]);
+  expect(run.status, run.stderr).toBe(0);
+  expect(run.stdout).toContain("--config <file>");
+});
+
+it("validates the baseline and Jev example configs without calling a provider", () => {
+  const baseline = cli(["--validate", "--config", "configs/baseline-20.yaml"]);
+  const jev = cli(["--validate", "--config", "configs/jev-top5-20.yaml"]);
+  expect(baseline.status, baseline.stderr).toBe(0);
+  expect(jev.status, jev.stderr).toBe(0);
+  expect(baseline.stdout).toContain("agent=openai/gpt-5.6-sol");
+  expect(baseline.stdout).toContain("router=none");
+  expect(jev.stdout).toContain("agent=openai/gpt-5.6-sol");
+  expect(jev.stdout).toContain("router=typesafe/jev-1.13.0");
+  expect(jev.stdout).not.toContain("jev-latest");
+});
+
+it("exits non-zero on a dry validation failure", () => {
+  const root = mkdtempSync(join(tmpdir(), "jev-config-"));
+  const configPath = join(root, "bad.yaml");
+  writeFileSync(
+    configPath,
+    [
+      "architecture: jev",
+      "toolspaceSize: 20",
+      "topK: 5",
+      "datasetPath: datasets/v0.1/tasks.jsonl",
+      "repetitions: 1",
+      "concurrency: 1",
+      "seed: 0",
+      "agent:",
+      "  provider: openai",
+      "  model: gpt-5.6-sol",
+      "  temperature: 0",
+      "router:",
+      "  provider: typesafe",
+      "  model: jev-latest",
+      "pricingVersion: v1",
+      "tracing: noop",
+      "",
+    ].join("\n"),
+  );
+  const run = cli(["--validate", "--config", configPath]);
+  expect(run.status).not.toBe(0);
+  expect(run.stderr).toContain("pinned");
+});

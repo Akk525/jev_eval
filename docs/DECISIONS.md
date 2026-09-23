@@ -261,3 +261,26 @@ results/<timestamp>_<architecture>_n<N>_k<k>_<gitsha>/
 **Consequences.** `results/` is gitignored when implementation starts. Result files are local artifacts, not source.
 
 **Date.** 2026-09-23
+
+---
+
+## D10. M1 model pins
+
+**Decision.** The vertical-slice configs use one shared agent and the official TypeSafe System One API for Jev.
+
+* Agent: provider `openai`, model `gpt-5.6-sol`, temperature 0. The alias `gpt-5.6` is not a pin. OpenAI's model page on 2026-09-23 lists `gpt-5.6-sol` as the explicit id and does not list a dated snapshot.
+* Jev: provider `typesafe`, model `jev-1.13.0`, via `POST https://api.typesafe.ai/v1/systemone`. `jev-latest` stays rejected. OpenRouter `typesafe/jev-1.13` is not the M1 path.
+
+Both example configs use dataset `datasets/v0.1/tasks.jsonl`, toolspace 20, seed 0, and one repetition. Baseline has no router. Jev uses top-5.
+
+**Reason.** The two architectures have to name the same agent or the comparison is not about routing. The TypeSafe client from #17 already speaks the official endpoint and the pinned id `jev-1.13.0`. OpenRouter would be a second host before any result exists. `gpt-5.6-sol` is the current flagship tool-calling model; it was not selected from a Jev score.
+
+**Alternatives considered.**
+
+* OpenRouter for Jev. Rejected for M1 because the landed client is the TypeSafe API. The same pinned model can move to OpenRouter later only with a new decision, before the first result directory.
+* The alias `gpt-5.6`. Rejected because it routes to whatever OpenAI currently calls Sol.
+* A cheaper agent tier. Rejected for the first slice. The question is what happens when a normal tool-calling agent sees the full toolspace. A cheaper model can be a later, versioned comparison.
+
+**Consequences.** `configs/baseline-20.yaml` and `configs/jev-top5-20.yaml` carry these ids. Pricing amounts are still copied into `pricing/v1.json` when #21 is implemented, from the provider pages, and then frozen. Unspecified agent parameters stay at the provider default until a config field records them.
+
+**Date.** 2026-09-23

@@ -27,6 +27,7 @@ M1 — Vertical Slice
 - #17 Implement the Jev router adapter — on `main`. One Choice over `routingSummary`, then a local sort to k. Confidence is copied from the provider. More than 255 tools fails before the call. The TypeSafe client strips the API key from the stored payload.
 - #18 Implement the task evaluator — on `main`. One attempt gets Recall@k, selection accuracy, and Execution Success from the pure functions. Router `R0` is excluded from both rates. `R1` is an execution miss.
 - #19 Implement the experiment runner — on `main`. Baseline and Jev share one path. Each run stores the ordered toolspace and the Jev distribution. A router failure skips the agent and still appends. Resume skips completed tasks.
+- #20 Add the CLI and example configs — on `main`. `configs/baseline-20.yaml` and `configs/jev-top5-20.yaml`. `--validate` loads them and does not call a provider.
 
 ## Issue currently being worked on
 
@@ -45,6 +46,7 @@ Accepted in `docs/DECISIONS.md`:
 - D7. Do not tune the benchmark to favor Jev. Post-run method changes get a new version.
 - D8. One TypeScript package (Node 20, Zod, Vitest). Native tool calling. Dataset slice is `datasets/v0.1/`.
 - D9. Result directories are immutable and resumable. Pricing is versioned.
+- D10. M1 pins: agent `openai` / `gpt-5.6-sol` at temperature 0. Jev `typesafe` / `jev-1.13.0` on the official System One API. The alias `gpt-5.6` is not a pin.
 
 Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. The smoke path still uses five separate mock tools. The benchmark catalog is `createCatalogRegistry()`: 20 tools. Dataset v0.1 has 50 single-step tasks. `required_tools` is primary Recall@k. `acceptable_tools` is execution success and lenient recall.
 
@@ -54,13 +56,10 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Open questions
 
-- Which pinned agent model and which Jev access path (OpenRouter `typesafe/jev-1.13` or direct TypeSafe) go in the M1 configs. Needed before #20 and #21.
-- Pricing amounts in `pricing/v1.json` have to be copied from the provider page at the time #21 is implemented, then frozen.
+- Pricing amounts in `pricing/v1.json` have to be copied from the provider page at the time #21 is implemented, then frozen. Agent price is OpenAI `gpt-5.6-sol`. Jev price is the TypeSafe page for `jev-1.13.0`.
 
 ## Next recommended issue
 
-#20 Add the CLI and example configs.
+#21 Add versioned pricing.
 
-https://github.com/Akk525/jev_eval/issues/20
-
-Blocked until the open questions below name the pinned agent model and the Jev access path. Those strings go into the example configs.
+https://github.com/Akk525/jev_eval/issues/21
