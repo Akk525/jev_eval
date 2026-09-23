@@ -21,6 +21,7 @@ M1 — Vertical Slice
 - #11 Implement mock providers — on `main`.
 - #12 Add the paid-API-free smoke benchmark — on `main`. `npm run eval -- --config configs/smoke.yaml` writes a result directory. Mock run: execution success rate 1, `r0_attempts` 0.
 - #13 Add 20 deterministic mock tools — on `main`. Files, email, calendar, and code. `search_files` and `search_email` are mutual near misses. Smoke tools are unchanged.
+- #14 Author 50 single-step tasks — on `main`. `datasets/v0.1/tasks.jsonl`. 20 explicit, 15 implicit, 15 ambiguous. Labels were not taken from model output.
 
 ## Issue currently being worked on
 
@@ -40,7 +41,7 @@ Accepted in `docs/DECISIONS.md`:
 - D8. One TypeScript package (Node 20, Zod, Vitest). Native tool calling. Dataset slice is `datasets/v0.1/`.
 - D9. Result directories are immutable and resumable. Pricing is versioned.
 
-Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. The smoke path still uses five separate mock tools. The benchmark catalog is `createCatalogRegistry()`: 20 tools, interleaved tail, fixture data in `src/tools/fixtures/catalog.ts`.
+Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. The smoke path still uses five separate mock tools. The benchmark catalog is `createCatalogRegistry()`: 20 tools. Dataset v0.1 has 50 single-step tasks. `required_tools` is primary Recall@k. `acceptable_tools` is execution success and lenient recall.
 
 ## Known problems
 
@@ -53,6 +54,6 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Next recommended issue
 
-#14 Author 50 single-step tasks.
+#15 Implement the baseline router.
 
-https://github.com/Akk525/jev_eval/issues/14
+https://github.com/Akk525/jev_eval/issues/15
