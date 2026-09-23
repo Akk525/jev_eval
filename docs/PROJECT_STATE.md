@@ -28,6 +28,7 @@ M1 — Vertical Slice
 - #18 Implement the task evaluator — on `main`. One attempt gets Recall@k, selection accuracy, and Execution Success from the pure functions. Router `R0` is excluded from both rates. `R1` is an execution miss.
 - #19 Implement the experiment runner — on `main`. Baseline and Jev share one path. Each run stores the ordered toolspace and the Jev distribution. A router failure skips the agent and still appends. Resume skips completed tasks.
 - #20 Add the CLI and example configs — on `main`. `configs/baseline-20.yaml` and `configs/jev-top5-20.yaml`. `--validate` loads them and does not call a provider.
+- #21 Add versioned pricing — on `main`. `pricing/v1.json` freezes OpenAI `gpt-5.6-sol` at $4/$20 per MTok and TypeSafe `jev-1.13.0` at $0.042/$0. Run lines keep token counts so cost can be recomputed.
 
 ## Issue currently being worked on
 
@@ -56,10 +57,10 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Open questions
 
-- Pricing amounts in `pricing/v1.json` have to be copied from the provider page at the time #21 is implemented, then frozen. Agent price is OpenAI `gpt-5.6-sol`. Jev price is the TypeSafe page for `jev-1.13.0`.
+None that block M1 implementation. Pricing amounts are frozen in `pricing/v1.json` from the provider pages on 2026-09-23.
 
 ## Next recommended issue
 
-#21 Add versioned pricing.
+#22 Implement the Memora adapter.
 
-https://github.com/Akk525/jev_eval/issues/21
+https://github.com/Akk525/jev_eval/issues/22

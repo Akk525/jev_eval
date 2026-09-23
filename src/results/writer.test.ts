@@ -39,6 +39,10 @@ function run(taskId: string, repetition = 0): RunRecord {
     scores: null,
     top1Probability: null,
     confidence: null,
+    routerUsage: { inputTokens: 0, outputTokens: 0 },
+    agentUsage: { inputTokens: 10, outputTokens: 2 },
+    pricedCostUsd: 0.01,
+    providerReportedCostUsd: null,
     executionExcluded: false,
     routingExcluded: false,
     executionSuccess: true,
@@ -100,5 +104,11 @@ it("reports execution success rate from scored runs only", () => {
     routing_scored: 1,
     execution_scored: 1,
     execution_success_rate: 1,
+    router_input_tokens: 0,
+    router_output_tokens: 0,
+    agent_input_tokens: 20,
+    agent_output_tokens: 4,
+    priced_cost_usd: 0.02,
+    provider_reported_cost_usd: null,
   });
 });

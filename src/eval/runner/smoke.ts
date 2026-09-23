@@ -43,6 +43,7 @@ export async function runSmokeCommand(command: SmokeCommand): Promise<string> {
     agent: createScriptedAgent(script.calls),
     tracer: new NoopTracer(),
     results,
+    pricing: null,
   });
   return results.directory;
 }

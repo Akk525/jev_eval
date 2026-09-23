@@ -1,10 +1,13 @@
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { expect, it } from "vitest";
 import { createScriptedAgent } from "../../agent/mock.js";
 import type { Agent, AgentInput } from "../../agent/types.js";
 import type { BenchmarkTask } from "../../dataset/schema.js";
+import { pricedCostUsd } from "../../metrics/metrics.js";
+import { loadPricingTable, requireModelPrice } from "../../pricing/load.js";
 import { createMockDecisionProvider } from "../../providers/mock/providers.js";
 import { createJevRouter } from "../../routers/jev/jev.js";
 import type { Router } from "../../routers/types.js";
@@ -12,9 +15,10 @@ import { openResultDirectory } from "../../results/writer.js";
 import { createToolRegistry, type ToolRegistry } from "../../tools/registry/registry.js";
 import { NoopTracer } from "../../tracing/tracer.js";
 import type { ExperimentConfig } from "../../types/config.js";
-import { runExperiment } from "./run.js";
+import { attemptPricedCostUsd, runExperiment } from "./run.js";
 
 const names = ["gold", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9"];
+const pricingPath = fileURLToPath(new URL("../../../pricing/v1.json", import.meta.url));
 
 const decision = {
   scores: { gold: 0.5, d1: 0.4, d2: 0.1 },
@@ -59,7 +63,7 @@ function task(id: string, prompt: string): BenchmarkTask {
   };
 }
 
-function config(toolspaceSize: number): ExperimentConfig {
+function config(toolspaceSize: number, overrides: Partial<ExperimentConfig> = {}): ExperimentConfig {
   return {
     architecture: "jev",
     toolspaceSize,
@@ -72,6 +76,7 @@ function config(toolspaceSize: number): ExperimentConfig {
     router: { provider: "mock", model: "jev-1.13.0" },
     pricingVersion: "v1",
     tracing: "noop",
+    ...overrides,
   };
 }
 
@@ -114,6 +119,7 @@ it("runs mock Jev through the runner and stores the full distribution", async ()
     agent,
     tracer: new NoopTracer(),
     results,
+    pricing: null,
   });
 
   const line = results.readRuns()[0];
@@ -160,6 +166,7 @@ it("does not append a completed task again after the process stops", async () =>
       agent: stopping,
       tracer: new NoopTracer(),
       results,
+      pricing: null,
     }),
   ).rejects.toThrow(/killed/);
   expect(results.readRuns().map((run) => run.taskId)).toEqual(["task_0001"]);
@@ -188,6 +195,7 @@ it("does not append a completed task again after the process stops", async () =>
     },
     tracer: new NoopTracer(),
     results: resumed,
+    pricing: null,
   });
 
   expect(seen).toEqual(["second"]);
@@ -215,6 +223,7 @@ it("records a nested toolspace for N=5 inside N=10", async () => {
       agent: createScriptedAgent(new Map([["Find the gold file", { tool: "gold", arguments: { query: "q" } }]])),
       tracer: new NoopTracer(),
       results,
+      pricing: null,
     });
     spaces.push([...(results.readRuns()[0]?.toolspace ?? [])]);
   }
@@ -254,6 +263,7 @@ it("skips the agent when the router fails and still appends the run", async () =
     },
     tracer: new NoopTracer(),
     results,
+    pricing: null,
   });
   expect(agentCalls).toBe(0);
   expect(results.readRuns()[0]).toMatchObject({
@@ -264,4 +274,71 @@ it("skips the agent when the router fails and still appends the run", async () =
     top1Probability: null,
     confidence: null,
   });
+});
+
+it("stores token counts that recompute priced_cost_usd from the pricing table", async () => {
+  const root = mkdtempSync(join(tmpdir(), "jev-price-"));
+  const prompt = "Find the gold file";
+  const pricedConfig = config(10, {
+    agent: { provider: "openai", model: "gpt-5.6-sol", temperature: 0 },
+    router: { provider: "typesafe", model: "jev-1.13.0" },
+  });
+  const pricing = loadPricingTable(pricingPath);
+  const results = openResultDirectory({
+    root,
+    timestamp: "2026-09-23T160400Z",
+    config: pricedConfig,
+    configHash: "hash",
+    datasetVersion: "1",
+    registryHash: "reg",
+    gitSha: "abc",
+  });
+  const agent: Agent = {
+    async run() {
+      return {
+        selectedTool: "gold",
+        arguments: { query: "q" },
+        finalResponse: null,
+        usage: { inputTokens: 250_000, outputTokens: 50_000 },
+        latencyMs: 0,
+        raw: null,
+      };
+    },
+  };
+  const pricedDecision = {
+    ...decision,
+    usage: { inputTokens: 1_000_000, outputTokens: 100 },
+  };
+
+  await runExperiment({
+    config: pricedConfig,
+    tasks: [task("task_0001", prompt)],
+    registry: registry(),
+    router: createJevRouter(createMockDecisionProvider([pricedDecision])),
+    agent,
+    tracer: new NoopTracer(),
+    results,
+    pricing,
+  });
+
+  const line = results.readRuns()[0];
+  expect(line?.routerUsage).toEqual({ inputTokens: 1_000_000, outputTokens: 100 });
+  expect(line?.agentUsage).toEqual({ inputTokens: 250_000, outputTokens: 50_000 });
+  expect(line?.pricedCostUsd).toBe(2.042);
+  expect(line?.providerReportedCostUsd).toBeNull();
+  const recomputed = attemptPricedCostUsd(
+    pricing,
+    pricedConfig,
+    line?.routerUsage ?? { inputTokens: 0, outputTokens: 0 },
+    line?.agentUsage ?? { inputTokens: 0, outputTokens: 0 },
+  );
+  expect(recomputed).toBe(line?.pricedCostUsd);
+  expect(
+    pricedCostUsd(line!.routerUsage, requireModelPrice(pricing, "typesafe", "jev-1.13.0")) +
+      pricedCostUsd(line!.agentUsage, requireModelPrice(pricing, "openai", "gpt-5.6-sol")),
+  ).toBe(2.042);
+  const summary = JSON.parse(readFileSync(join(results.directory, "summary.json"), "utf8")) as {
+    priced_cost_usd: number;
+  };
+  expect(summary.priced_cost_usd).toBe(2.042);
 });

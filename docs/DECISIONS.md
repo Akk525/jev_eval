@@ -281,6 +281,6 @@ Both example configs use dataset `datasets/v0.1/tasks.jsonl`, toolspace 20, seed
 * The alias `gpt-5.6`. Rejected because it routes to whatever OpenAI currently calls Sol.
 * A cheaper agent tier. Rejected for the first slice. The question is what happens when a normal tool-calling agent sees the full toolspace. A cheaper model can be a later, versioned comparison.
 
-**Consequences.** `configs/baseline-20.yaml` and `configs/jev-top5-20.yaml` carry these ids. Pricing amounts are still copied into `pricing/v1.json` when #21 is implemented, from the provider pages, and then frozen. Unspecified agent parameters stay at the provider default until a config field records them.
+**Consequences.** `configs/baseline-20.yaml` and `configs/jev-top5-20.yaml` carry these ids. `pricing/v1.json` freezes the 2026-09-23 provider prices for those ids. Unspecified agent parameters stay at the provider default until a config field records them.
 
 **Date.** 2026-09-23
