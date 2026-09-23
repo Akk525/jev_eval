@@ -8,7 +8,7 @@ M0 — Harness Foundation
 
 ## Completed issues
 
-- #1 Record the canonical brief and continuity docs
+- #1 Record the canonical brief and continuity docs — satisfied by `05d683e`. The GitHub issue is still open.
 
 ## Issue currently being worked on
 
@@ -33,6 +33,7 @@ No harness code exists yet.
 ## Known problems
 
 - `main` is not pushed. GitHub has the issues and milestones; a fresh clone will not see these docs until that push.
+- #1 meets its acceptance criteria and is still open on GitHub. Close it after the docs commit is pushed.
 - M2–M6 milestones have no issues yet. File them after the 50-task slice, not before.
 
 ## Open questions
