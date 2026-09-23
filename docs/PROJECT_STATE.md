@@ -9,7 +9,8 @@ M0 — Harness Foundation
 ## Completed issues
 
 - #1 Record the canonical brief and continuity docs — closed. On `main`.
-- #2 Scaffold the TypeScript package — on `main`. `npm test` passes with no tests, `npm run typecheck` passes, and `npm run eval` prints `not implemented`.
+- #2 Scaffold the TypeScript package — closed. On `main`.
+- #3 Define shared domain types — on `main`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields.
 
 ## Issue currently being worked on
 
@@ -29,7 +30,7 @@ Accepted in `docs/DECISIONS.md`:
 - D8. One TypeScript package (Node 20, Zod, Vitest). Native tool calling. Dataset slice is `datasets/v0.1/`.
 - D9. Result directories are immutable and resumable. Pricing is versioned.
 
-Scaffold only: Node 20 package, Vitest, typecheck, and an eval stub. No routers, tools, or metrics yet.
+Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. No routers, tools, or metrics yet.
 
 ## Known problems
 
@@ -42,6 +43,6 @@ Scaffold only: Node 20 package, Vitest, typecheck, and an eval stub. No routers,
 
 ## Next recommended issue
 
-#3 Define shared domain types.
+#4 Validate experiment configuration. #5, #6, #7, #10, and #11 can proceed in parallel.
 
-https://github.com/Akk525/jev_eval/issues/3
+https://github.com/Akk525/jev_eval/issues/4
