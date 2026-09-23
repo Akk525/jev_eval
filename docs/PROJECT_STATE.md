@@ -22,6 +22,7 @@ M1 — Vertical Slice
 - #12 Add the paid-API-free smoke benchmark — on `main`. `npm run eval -- --config configs/smoke.yaml` writes a result directory. Mock run: execution success rate 1, `r0_attempts` 0.
 - #13 Add 20 deterministic mock tools — on `main`. Files, email, calendar, and code. `search_files` and `search_email` are mutual near misses. Smoke tools are unchanged.
 - #14 Author 50 single-step tasks — on `main`. `datasets/v0.1/tasks.jsonl`. 20 explicit, 15 implicit, 15 ambiguous. Labels were not taken from model output.
+- #15 Implement the baseline router — on `main`. Returns the presented toolspace in order. Scores, confidence, and router tokens stay null or zero. It does not cut to k.
 
 ## Issue currently being worked on
 
@@ -54,6 +55,6 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Next recommended issue
 
-#15 Implement the baseline router.
+#16 Implement the shared single-step agent.
 
-https://github.com/Akk525/jev_eval/issues/15
+https://github.com/Akk525/jev_eval/issues/16
