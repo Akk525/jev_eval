@@ -10,6 +10,7 @@ M2 — Routing Benchmark
 
 - #1–#24 — M0 and M1 closed on `main`. Vertical slice: 20 tools, 50 tasks, mocked baseline/Jev, methodology, pricing, Memora adapter.
 - Live OpenAI ChatProvider — on `main`. Native tool calling via Chat Completions. Live CLI path for baseline and Jev.
+- #25 Implement the LLM router — on `main`. Ranks `routingSummary` only via one text completion. Malformed JSON throws (R0). Scores stay null.
 
 ## Issue currently being worked on
 
@@ -44,13 +45,6 @@ Shared types live in `src/types/`. Live agent path: `createOpenAIChatProvider` +
 
 ## Next recommended issue
 
-#25 Implement the LLM router.
+#26 Add LLM-router example configs.
 
-https://github.com/Akk525/jev_eval/issues/25
-
-Live vertical slice (needs keys; not for CI):
-
-```bash
-npm run eval -- --config configs/baseline-20.yaml
-npm run eval -- --config configs/jev-top5-20.yaml
-```
+https://github.com/Akk525/jev_eval/issues/26

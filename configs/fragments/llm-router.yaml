@@ -1,0 +1,6 @@
+# Fragment only. Full example config is configs/llm-top5-20.yaml (#26).
+architecture: llm
+topK: 5
+router:
+  provider: openai
+  model: gpt-5.6-sol
