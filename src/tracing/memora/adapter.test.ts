@@ -92,6 +92,7 @@ it("does not fail the experiment when Memora throws", async () => {
     router: null,
     pricingVersion: "v1",
     tracing: "memora",
+    routerOnly: false,
   };
   const task: BenchmarkTask = {
     id: "smoke_0001",

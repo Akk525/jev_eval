@@ -20,6 +20,7 @@ function baseline(overrides: Partial<ExperimentConfig> = {}): ExperimentConfig {
     router: null,
     pricingVersion: "v1",
     tracing: "noop",
+    routerOnly: false,
     ...overrides,
   };
 }
@@ -117,5 +118,11 @@ describe("parseExperimentConfig", () => {
 
   it("rejects concurrency above 1", () => {
     expect(() => parseExperimentConfig(baseline({ concurrency: 2 }))).toThrow(/concurrency/);
+  });
+
+  it("defaults routerOnly to false when omitted", () => {
+    const { routerOnly: _omit, ...without } = baseline();
+    void _omit;
+    expect(parseExperimentConfig(without).routerOnly).toBe(false);
   });
 });

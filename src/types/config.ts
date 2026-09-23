@@ -26,4 +26,9 @@ export interface ExperimentConfig {
   router: ModelRef | null;
   pricingVersion: string;
   tracing: TracingMode;
+  /**
+   * When true, stop after routing, score Recall@k, and leave execution metrics excluded.
+   * Defaults to false for full agent runs.
+   */
+  routerOnly: boolean;
 }

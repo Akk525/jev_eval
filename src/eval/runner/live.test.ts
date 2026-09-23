@@ -26,3 +26,13 @@ it("refuses a live Jev run when TYPESAFE_API_KEY is missing", async () => {
     }),
   ).rejects.toThrow(/TYPESAFE_API_KEY/);
 });
+
+it("does not require AGENT_API_KEY for a live router-only Jev run", async () => {
+  await expect(
+    runLiveSlice({
+      configPath: join(repoRoot, "configs/jev-router-only-20.yaml"),
+      resultsRoot: mkdtempSync(join(tmpdir(), "jev-live-")),
+      env: {},
+    }),
+  ).rejects.toThrow(/TYPESAFE_API_KEY/);
+});

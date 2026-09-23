@@ -1,7 +1,8 @@
 import { execSync } from "node:child_process";
 import { resolve } from "node:path";
 import { createSingleStepAgent } from "../../agent/single-step.js";
-import { loadExperimentConfig } from "../../config/load.js";
+import { createScriptedAgent } from "../../agent/mock.js";
+import { configHash, loadExperimentConfig } from "../../config/load.js";
 import { loadDataset } from "../../dataset/schema.js";
 import { loadPricingTable } from "../../pricing/load.js";
 import { createOpenAIChatProvider } from "../../providers/openai/client.js";
@@ -25,11 +26,14 @@ export interface LiveSliceCommand {
   timestamp?: string;
   resume?: boolean;
   pricingPath?: string;
+  /** Override config.routerOnly. When true, AGENT_API_KEY is not required. */
+  routerOnly?: boolean;
 }
 
 /**
  * Live vertical-slice run for baseline or Jev.
- * Requires AGENT_API_KEY. Jev also requires TYPESAFE_API_KEY.
+ * Full runs require AGENT_API_KEY. Jev also requires TYPESAFE_API_KEY.
+ * Router-only Jev runs need only TYPESAFE_API_KEY.
  */
 export async function runLiveSlice(command: LiveSliceCommand): Promise<string> {
   const env = command.env ?? process.env;
@@ -38,11 +42,19 @@ export async function runLiveSlice(command: LiveSliceCommand): Promise<string> {
     throw new Error(`live slice supports baseline and jev, not ${loaded.config.architecture}`);
   }
   const architecture = loaded.config.architecture;
-  const config: ExperimentConfig = { ...loaded.config, architecture };
-  const agentKey = env.AGENT_API_KEY?.trim() ?? "";
-  if (agentKey === "") throw new Error("AGENT_API_KEY is required for a live run");
-  if (config.agent.provider !== "openai") {
-    throw new Error(`live agent provider ${config.agent.provider} is not implemented`);
+  const config: ExperimentConfig = {
+    ...loaded.config,
+    architecture,
+    ...(command.routerOnly === true ? { routerOnly: true } : {}),
+  };
+  const hash = configHash(config);
+
+  if (!config.routerOnly) {
+    const agentKey = env.AGENT_API_KEY?.trim() ?? "";
+    if (agentKey === "") throw new Error("AGENT_API_KEY is required for a live run");
+    if (config.agent.provider !== "openai") {
+      throw new Error(`live agent provider ${config.agent.provider} is not implemented`);
+    }
   }
 
   const tasks = loadDataset(resolve(config.datasetPath));
@@ -54,22 +66,29 @@ export async function runLiveSlice(command: LiveSliceCommand): Promise<string> {
     root: command.resultsRoot,
     timestamp: command.timestamp ?? resultTimestamp(new Date()),
     config,
-    configHash: loaded.hash,
+    configHash: hash,
     datasetVersion: String(tasks[0]?.version ?? 1),
     registryHash: registry.hash(),
     gitSha: gitSha(),
     ...(command.resume === true ? { resume: true } : {}),
   });
 
+  const agent = config.routerOnly
+    ? createScriptedAgent(new Map())
+    : createSingleStepAgent({
+        provider: createOpenAIChatProvider({
+          apiKey: env.AGENT_API_KEY!.trim(),
+          model: config.agent.model,
+        }),
+        temperature: config.agent.temperature,
+      });
+
   await runExperiment({
     config,
     tasks,
     registry,
     router: liveRouter(config, env),
-    agent: createSingleStepAgent({
-      provider: createOpenAIChatProvider({ apiKey: agentKey, model: config.agent.model }),
-      temperature: config.agent.temperature,
-    }),
+    agent,
     tracer,
     results,
     pricing,

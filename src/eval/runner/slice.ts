@@ -4,7 +4,7 @@ import { createScriptedAgent, type ScriptedCall } from "../../agent/mock.js";
 import { createBaselineRouter } from "../../routers/baseline/baseline.js";
 import { createJevRouter } from "../../routers/jev/jev.js";
 import type { Router } from "../../routers/types.js";
-import { loadExperimentConfig } from "../../config/load.js";
+import { configHash, loadExperimentConfig } from "../../config/load.js";
 import { loadDataset, type BenchmarkTask } from "../../dataset/schema.js";
 import { loadPricingTable } from "../../pricing/load.js";
 import type { DecisionProvider, DecisionRequest, DecisionResponse } from "../../providers/types.js";
@@ -30,6 +30,8 @@ export interface MockedSliceCommand {
   /** Force every router call to throw (R0 path). */
   failRouter?: boolean;
   pricingPath?: string;
+  /** Override config.routerOnly. When true, the agent is never called. */
+  routerOnly?: boolean;
 }
 
 /**
@@ -49,7 +51,9 @@ export async function runMockedSlice(command: MockedSliceCommand): Promise<strin
     ...loaded.config,
     architecture,
     ...(command.toolspaceSize === undefined ? {} : { toolspaceSize: command.toolspaceSize }),
+    ...(command.routerOnly === true ? { routerOnly: true } : {}),
   };
+  const hash = configHash(config);
   const tasks = command.tasks ?? loadDataset(resolve(config.datasetPath));
   const registry = createCatalogRegistry();
   const script = scriptFromTasks(tasks);
@@ -61,7 +65,7 @@ export async function runMockedSlice(command: MockedSliceCommand): Promise<strin
     root: command.resultsRoot,
     timestamp: command.timestamp ?? resultTimestamp(new Date()),
     config,
-    configHash: loaded.hash,
+    configHash: hash,
     datasetVersion: String(tasks[0]?.version ?? 1),
     registryHash: registry.hash(),
     gitSha: gitSha(),

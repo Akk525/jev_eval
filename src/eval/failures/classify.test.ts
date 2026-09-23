@@ -143,3 +143,31 @@ it("counts an acceptable tool as execution success", () => {
   );
   expect(classification).toMatchObject({ code: null, executionSuccess: true });
 });
+
+it("marks a router-only miss as R1 and excludes execution", () => {
+  const classification = classifyAttempt({
+    requiredTools: ["search_email"],
+    acceptableTools: [],
+    routerOnly: true,
+    router: {
+      status: "valid",
+      decision: {
+        candidates: [{ name: "search_files", rank: 1, score: 1 }],
+        scores: { search_files: 1 },
+        top1Probability: 1,
+        confidence: 0.5,
+        usage: { inputTokens: 1, outputTokens: 0 },
+        latencyMs: 1,
+        raw: null,
+      },
+    },
+    agent: { status: "not_run" },
+    tool: { status: "not_run" },
+  });
+  expect(classification).toMatchObject({
+    code: "R1",
+    executionExcluded: true,
+    routingExcluded: false,
+    executionSuccess: false,
+  });
+});

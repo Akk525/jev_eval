@@ -20,20 +20,25 @@ it("shows the config path in help", () => {
   expect(run.stdout).toContain("--config <file>");
 });
 
-it("validates the baseline, Jev, and LLM example configs without calling a provider", () => {
+it("validates the baseline, Jev, LLM, and router-only example configs without calling a provider", () => {
   const baseline = cli(["--validate", "--config", "configs/baseline-20.yaml"]);
   const jev = cli(["--validate", "--config", "configs/jev-top5-20.yaml"]);
   const llm = cli(["--validate", "--config", "configs/llm-top5-20.yaml"]);
+  const routerOnly = cli(["--validate", "--config", "configs/jev-router-only-20.yaml"]);
   expect(baseline.status, baseline.stderr).toBe(0);
   expect(jev.status, jev.stderr).toBe(0);
   expect(llm.status, llm.stderr).toBe(0);
+  expect(routerOnly.status, routerOnly.stderr).toBe(0);
   expect(baseline.stdout).toContain("agent=openai/gpt-5.6-sol");
   expect(baseline.stdout).toContain("router=none");
+  expect(baseline.stdout).toContain("mode=full");
   expect(jev.stdout).toContain("agent=openai/gpt-5.6-sol");
   expect(jev.stdout).toContain("router=typesafe/jev-1.13.0");
   expect(jev.stdout).not.toContain("jev-latest");
   expect(llm.stdout).toContain("agent=openai/gpt-5.6-sol");
   expect(llm.stdout).toContain("router=openai/gpt-5.6-sol");
+  expect(routerOnly.stdout).toContain("mode=router-only");
+  expect(routerOnly.stdout).toContain("router=typesafe/jev-1.13.0");
 });
 
 it("exits non-zero on a dry validation failure", () => {

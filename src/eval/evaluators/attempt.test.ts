@@ -123,3 +123,19 @@ it("excludes a router infrastructure failure from recall and execution success",
   expect(evaluation.executionExcluded).toBe(true);
   expect(executionSuccessRate([evaluation])).toBeNull();
 });
+
+it("scores router-only recall without entering the execution denominator", () => {
+  const evaluation = evaluateAttempt(
+    record({
+      routerOnly: true,
+      agent: { status: "not_run" },
+      tool: { status: "not_run" },
+    }),
+    2,
+  );
+  expect(evaluation.recallAtK).toBe(1);
+  expect(evaluation.selectionAccuracy).toBeNull();
+  expect(evaluation.code).toBeNull();
+  expect(evaluation.executionExcluded).toBe(true);
+  expect(executionSuccessRate([evaluation])).toBeNull();
+});

@@ -23,6 +23,8 @@ export const experimentConfigSchema = z
     router: modelRefSchema.nullable(),
     pricingVersion: z.string().min(1),
     tracing: z.enum(["noop", "memora"]),
+    /** Omit or false for full agent runs. True stops after routing and scores Recall@k only. */
+    routerOnly: z.boolean().default(false),
   })
   .strict()
   .superRefine((config, ctx) => {

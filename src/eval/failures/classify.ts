@@ -8,6 +8,8 @@ export interface AttemptRecord {
   requiredTools: readonly string[];
   acceptableTools: readonly string[];
   expectedArguments?: Readonly<Record<string, unknown>>;
+  /** When true, score routing only. Execution stays excluded. */
+  routerOnly?: boolean;
   router:
     | { status: "valid"; decision: RouteDecision }
     | { status: "failed"; reason: InfrastructureReason };
@@ -43,6 +45,10 @@ export function classifyAttempt(record: AttemptRecord): FailureClassification {
     return infrastructure(record.router.reason, true);
   }
 
+  if (record.routerOnly === true) {
+    return classifyRouterOnly(record.requiredTools, record.router.decision);
+  }
+
   if (record.agent.status === "failed") {
     return infrastructure(record.agent.reason, false);
   }
@@ -66,6 +72,22 @@ export function classifyAttempt(record: AttemptRecord): FailureClassification {
   if (record.tool.status === "result" && !record.tool.result.success) return scientific("R4");
 
   return infrastructure("provider_error", false);
+}
+
+/** Router-only runs never enter the Execution Success Rate denominator. */
+function classifyRouterOnly(
+  requiredTools: readonly string[],
+  decision: RouteDecision,
+): FailureClassification {
+  const candidates = decision.candidates.map((candidate) => candidate.name);
+  const requiredMissing = requiredTools.some((tool) => !candidates.includes(tool));
+  return {
+    code: requiredMissing ? "R1" : null,
+    infrastructureReason: null,
+    executionExcluded: true,
+    routingExcluded: false,
+    executionSuccess: false,
+  };
 }
 
 function succeeded(record: AttemptRecord): boolean {

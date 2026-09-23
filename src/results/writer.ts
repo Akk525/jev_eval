@@ -10,6 +10,8 @@ export interface RunRecord {
   repetition: number;
   /** Exact ordered toolspace presented for this attempt. */
   toolspace: readonly string[];
+  /** Ordered candidate tool names after routing. Null when the router failed. */
+  candidates: readonly string[] | null;
   /** Full router distribution, or null when the router has none or failed. */
   scores: Readonly<Record<string, number>> | null;
   top1Probability: number | null;
@@ -22,6 +24,11 @@ export interface RunRecord {
   pricedCostUsd: number;
   /** Provider-reported USD when one was sent. Null otherwise. */
   providerReportedCostUsd: number | null;
+  /** Primary Recall@k. Null when routingExcluded. */
+  recallAtK: number | null;
+  lenientRecallAtK: number | null;
+  /** Null when outside the selection-accuracy denominator (including router-only). */
+  selectionAccuracy: number | null;
   executionExcluded: boolean;
   routingExcluded: boolean;
   executionSuccess: boolean;

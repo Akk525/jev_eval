@@ -76,6 +76,7 @@ function config(toolspaceSize: number, overrides: Partial<ExperimentConfig> = {}
     router: { provider: "mock", model: "jev-1.13.0" },
     pricingVersion: "v1",
     tracing: "noop",
+    routerOnly: false,
     ...overrides,
   };
 }
@@ -274,6 +275,58 @@ it("skips the agent when the router fails and still appends the run", async () =
     top1Probability: null,
     confidence: null,
   });
+});
+
+it("stops after routing in router-only mode and records Recall@k", async () => {
+  const root = mkdtempSync(join(tmpdir(), "jev-router-only-"));
+  const prompt = "Find the gold file";
+  let agentCalls = 0;
+  const results = openResultDirectory({
+    root,
+    timestamp: "2026-09-23T160350Z",
+    config: config(10, { routerOnly: true }),
+    configHash: "hash",
+    datasetVersion: "1",
+    registryHash: "reg",
+    gitSha: "abc",
+  });
+
+  await runExperiment({
+    config: config(10, { routerOnly: true }),
+    tasks: [task("task_0001", prompt)],
+    registry: registry(),
+    router: createJevRouter(createMockDecisionProvider([decision])),
+    agent: {
+      async run() {
+        agentCalls += 1;
+        throw new Error("agent should not run");
+      },
+    },
+    tracer: new NoopTracer(),
+    results,
+    pricing: null,
+  });
+
+  expect(agentCalls).toBe(0);
+  const line = results.readRuns()[0];
+  expect(line).toMatchObject({
+    candidates: ["gold", "d1"],
+    recallAtK: 1,
+    selectionAccuracy: null,
+    executionExcluded: true,
+    routingExcluded: false,
+    executionSuccess: false,
+    failureCode: null,
+    agentUsage: { inputTokens: 0, outputTokens: 0 },
+  });
+  const summary = JSON.parse(readFileSync(join(results.directory, "summary.json"), "utf8")) as {
+    execution_success_rate: number | null;
+    execution_scored: number;
+    routing_scored: number;
+  };
+  expect(summary.execution_success_rate).toBeNull();
+  expect(summary.execution_scored).toBe(0);
+  expect(summary.routing_scored).toBe(1);
 });
 
 it("stores token counts that recompute priced_cost_usd from the pricing table", async () => {

@@ -16,7 +16,7 @@ Routing is the only intended variable. The three architectures share the same ag
 | Jev | One Choice over each tool's `routingSummary`. Local sort of the returned distribution, cut at k. | Full JSON schemas for the top-k tools only. |
 | LLM router | Ranks the same `routingSummary` text, cut at k. | Full JSON schemas for the top-k tools only. |
 
-The MVP vertical slice runs baseline and Jev. The LLM router is reserved for a later milestone.
+The MVP vertical slice runs baseline and Jev. M2 adds the LLM router and optional router-only Recall@k.
 
 ## Frozen controls
 
@@ -67,6 +67,18 @@ Absent `expected_arguments` means `R3` is not applicable for that task.
 * **Selection accuracy** is defined only when a valid agent decision exists and at least one required tool was in the candidate set. It is 1 when the selected tool is in `required_tools`, else 0. A router miss that omitted every required tool stays out of this denominator.
 
 An agent miss after a good candidate does not reduce Recall@k. A router miss does not enter the selection-accuracy denominator.
+
+## Router-only mode
+
+Set `routerOnly: true` in the config, or pass `--router-only` on the CLI. The run stops after routing. Each `runs.jsonl` line stores `candidates` and `recallAtK`. The agent is never called. Every attempt is `executionExcluded`, so `execution_success_rate` is null.
+
+Router-only answers "did the router surface the required tool?" It does not answer Execution Success Rate. Do not mix router-only and full-agent result directories when comparing ESR.
+
+Example:
+
+```bash
+npm run eval -- --config configs/jev-router-only-20.yaml --mock
+```
 
 ## Failure codes and denominators (D6)
 

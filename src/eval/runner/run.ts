@@ -59,6 +59,7 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
           requiredTools: task.required_tools,
           acceptableTools: task.acceptable_tools,
           ...(task.expected_arguments === undefined ? {} : { expectedArguments: task.expected_arguments }),
+          ...(run.config.routerOnly ? { routerOnly: true as const } : {}),
         };
 
         let decision: RouteDecision;
@@ -86,6 +87,28 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
           continue;
         }
         await run.tracer.event(handle, { type: "routing_completed", decision });
+
+        if (run.config.routerOnly) {
+          await finish(
+            run,
+            handle,
+            task,
+            repetition,
+            toolspace,
+            evaluateAttempt(
+              {
+                ...attemptBase,
+                router: { status: "valid", decision },
+                agent: { status: "not_run" },
+                tool: { status: "not_run" },
+              },
+              k,
+            ),
+            decision,
+            ZERO_USAGE,
+          );
+          continue;
+        }
 
         const candidateNames = new Set(decision.candidates.map((candidate) => candidate.name));
         const candidates = presented.filter((tool) => candidateNames.has(tool.name));
@@ -167,6 +190,7 @@ async function finish(
     taskId: task.id,
     repetition,
     toolspace,
+    candidates: decision === null ? null : decision.candidates.map((candidate) => candidate.name),
     scores: decision?.scores ?? null,
     top1Probability: decision?.top1Probability ?? null,
     confidence: decision?.confidence ?? null,
@@ -174,6 +198,9 @@ async function finish(
     agentUsage,
     pricedCostUsd: attemptPricedCostUsd(run.pricing, run.config, routerUsage, agentUsage),
     providerReportedCostUsd: null,
+    recallAtK: evaluation.recallAtK,
+    lenientRecallAtK: evaluation.lenientRecallAtK,
+    selectionAccuracy: evaluation.selectionAccuracy,
     executionExcluded: evaluation.executionExcluded,
     routingExcluded: evaluation.routingExcluded,
     executionSuccess: evaluation.executionSuccess,

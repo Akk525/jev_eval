@@ -18,6 +18,7 @@ function request(root: string, overrides: Partial<ResultDirectoryRequest> = {}):
     router: null,
     pricingVersion: "v1",
     tracing: "noop",
+    routerOnly: false,
   };
   return {
     root,
@@ -36,6 +37,7 @@ function run(taskId: string, repetition = 0): RunRecord {
     taskId,
     repetition,
     toolspace: ["sample_lookup"],
+    candidates: ["sample_lookup"],
     scores: null,
     top1Probability: null,
     confidence: null,
@@ -43,6 +45,9 @@ function run(taskId: string, repetition = 0): RunRecord {
     agentUsage: { inputTokens: 10, outputTokens: 2 },
     pricedCostUsd: 0.01,
     providerReportedCostUsd: null,
+    recallAtK: 1,
+    lenientRecallAtK: 1,
+    selectionAccuracy: 1,
     executionExcluded: false,
     routingExcluded: false,
     executionSuccess: true,
