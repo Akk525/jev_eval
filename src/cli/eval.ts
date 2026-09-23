@@ -23,12 +23,13 @@ if (values.help) {
 --config <file>  Experiment config. Required except with --help.
 --results <dir>  Result directory root. Default: results.
 --validate       Load and check the config, then exit. Does not call a provider.
---mock           Run baseline or Jev offline with scripted router/agent. No live APIs.
+--mock           Run baseline, Jev, or LLM offline with scripted router/agent. No live APIs.
 --router-only    Stop after routing. Score Recall@k. Do not call the agent.
 
 Mocked vertical slice:
   npm run eval -- --config configs/jev-top5-20.yaml --mock
   npm run eval -- --config configs/baseline-20.yaml --mock
+  npm run eval -- --config configs/llm-top5-20.yaml --mock
   npm run eval -- --config configs/jev-router-only-20.yaml --mock
 
 Live vertical slice (needs AGENT_API_KEY; Jev also needs TYPESAFE_API_KEY):

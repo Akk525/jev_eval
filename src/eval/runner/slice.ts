@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { createScriptedAgent, type ScriptedCall } from "../../agent/mock.js";
 import { createBaselineRouter } from "../../routers/baseline/baseline.js";
 import { createJevRouter } from "../../routers/jev/jev.js";
+import { createLlmRouter, type RankProvider } from "../../routers/llm/llm.js";
 import type { Router } from "../../routers/types.js";
 import { configHash, loadExperimentConfig } from "../../config/load.js";
 import { loadDataset, type BenchmarkTask } from "../../dataset/schema.js";
@@ -13,9 +14,11 @@ import { createCatalogRegistry } from "../../tools/catalog.js";
 import { catalogFixture } from "../../tools/fixtures/catalog.js";
 import { createMemoraTracerFromEnv } from "../../tracing/memora/adapter.js";
 import { NoopTracer, type Tracer } from "../../tracing/tracer.js";
-import type { ExperimentConfig } from "../../types/config.js";
+import type { Architecture, ExperimentConfig } from "../../types/config.js";
 import { resultTimestamp } from "./smoke.js";
 import { runExperiment } from "./run.js";
+
+const MOCKED_ARCHITECTURES = new Set<Architecture>(["baseline", "jev", "llm"]);
 
 export interface MockedSliceCommand {
   configPath: string;
@@ -32,18 +35,20 @@ export interface MockedSliceCommand {
   pricingPath?: string;
   /** Override config.routerOnly. When true, the agent is never called. */
   routerOnly?: boolean;
+  /** Replace the default mocked router (tests that inspect routing inputs). */
+  router?: Router;
 }
 
 /**
- * Offline vertical-slice run for baseline or Jev.
+ * Offline vertical-slice run for baseline, Jev, or LLM.
  *
  * Example:
- * `npm run eval -- --config configs/jev-top5-20.yaml --mock --results /tmp/jev-slice`
+ * `npm run eval -- --config configs/llm-top5-20.yaml --mock --results /tmp/jev-slice`
  */
 export async function runMockedSlice(command: MockedSliceCommand): Promise<string> {
   const loaded = loadExperimentConfig(command.configPath);
-  if (loaded.config.architecture !== "baseline" && loaded.config.architecture !== "jev") {
-    throw new Error(`mocked slice supports baseline and jev, not ${loaded.config.architecture}`);
+  if (!MOCKED_ARCHITECTURES.has(loaded.config.architecture)) {
+    throw new Error(`mocked slice supports baseline, jev, and llm, not ${loaded.config.architecture}`);
   }
   const architecture = loaded.config.architecture;
 
@@ -72,11 +77,15 @@ export async function runMockedSlice(command: MockedSliceCommand): Promise<strin
     ...(command.resume === true ? { resume: true } : {}),
   });
 
+  const router =
+    command.router ??
+    (command.failRouter === true ? failingRouter(architecture) : routerFor(config, script.preferred));
+
   await runExperiment({
     config,
     tasks,
     registry,
-    router: command.failRouter === true ? failingRouter(architecture) : routerFor(config, script.preferred),
+    router,
     agent: createScriptedAgent(script.calls),
     tracer,
     results,
@@ -88,11 +97,12 @@ export async function runMockedSlice(command: MockedSliceCommand): Promise<strin
 
 function routerFor(config: ExperimentConfig, preferredByPrompt: ReadonlyMap<string, string>): Router {
   if (config.architecture === "baseline") return createBaselineRouter();
-  if (config.architecture !== "jev") throw new Error(`mocked slice supports baseline and jev, not ${config.architecture}`);
-  return createJevRouter(createPreferredDecisionProvider(preferredByPrompt));
+  if (config.architecture === "jev") return createJevRouter(createPreferredDecisionProvider(preferredByPrompt));
+  if (config.architecture === "llm") return createLlmRouter(createPreferredRankProvider(preferredByPrompt));
+  throw new Error(`mocked slice supports baseline, jev, and llm, not ${config.architecture}`);
 }
 
-function failingRouter(architecture: "baseline" | "jev"): Router {
+function failingRouter(architecture: Architecture): Router {
   return {
     id: architecture,
     async route() {
@@ -119,6 +129,32 @@ export function createPreferredDecisionProvider(
         top1Probability: 0.9,
         confidence: 0.35,
         usage: { inputTokens: 12, outputTokens: 2 },
+        raw: null,
+      };
+    },
+  };
+}
+
+/** Ranks the preferred tool first as a JSON name array. Scores stay null. */
+export function createPreferredRankProvider(
+  preferredByPrompt: ReadonlyMap<string, string>,
+): RankProvider {
+  return {
+    async rank(request) {
+      const taskMatch = request.prompt.match(/Task:\n([\s\S]*?)\n\nTools:\n/);
+      const task = taskMatch?.[1] ?? "";
+      const toolsBlock = request.prompt.split("\n\nTools:\n")[1] ?? "";
+      const names = toolsBlock
+        .split("\n")
+        .map((line) => line.split(":")[0]?.trim())
+        .filter((name): name is string => name !== undefined && name.length > 0);
+      const preferred = preferredByPrompt.get(task);
+      const winner = preferred !== undefined && names.includes(preferred) ? preferred : names[0];
+      if (winner === undefined) throw new Error("rank criteria are empty");
+      const ordered = [winner, ...names.filter((name) => name !== winner)];
+      return {
+        text: JSON.stringify(ordered),
+        usage: { inputTokens: 20, outputTokens: 5 },
         raw: null,
       };
     },

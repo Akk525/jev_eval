@@ -45,6 +45,8 @@ Offline mocked slice (no live APIs):
 npm test
 npm run eval -- --config configs/baseline-20.yaml --mock
 npm run eval -- --config configs/jev-top5-20.yaml --mock
+npm run eval -- --config configs/llm-top5-20.yaml --mock
+npm run eval -- --config configs/jev-router-only-20.yaml --mock
 ```
 
 Live slice (needs `AGENT_API_KEY`; Jev also needs `TYPESAFE_API_KEY`):

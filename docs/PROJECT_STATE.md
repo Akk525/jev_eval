@@ -14,6 +14,7 @@ M2 — Routing Benchmark
 - #26 Add LLM-router example configs — on `main`. `configs/llm-top5-20.yaml` pins `openai` / `gpt-5.6-sol` for the router (D11).
 - #27 Score router-only Recall@k without the agent — on `main`. `routerOnly` / `--router-only` stops after routing, writes `candidates` and `recallAtK`, excludes execution.
 - #28 Add calibration and cost summaries for routers — on `main`. `summary.json` adds mean Recall@k, latency percentiles, and confidence calibration (ECE) recomputed from `runs.jsonl`.
+- #29 Add Jev vs LLM integration tests — on `main`. Mocked `--mock` path for architecture `llm`. `tests/integration/routing-benchmark.test.ts`.
 
 ## Issue currently being worked on
 
@@ -35,20 +36,20 @@ Accepted in `docs/DECISIONS.md`:
 - D10. M1 pins: agent `openai` / `gpt-5.6-sol` at temperature 0. Jev `typesafe` / `jev-1.13.0` on the official System One API. The alias `gpt-5.6` is not a pin.
 - D11. M2 LLM router pin: `openai` / `gpt-5.6-sol`, same id as the agent, so the comparison is routing method not model tier.
 
-Shared types live in `src/types/`. Live agent path: `createOpenAIChatProvider` + `createSingleStepAgent`. Live Jev path: TypeSafe DecisionProvider + `createJevRouter`. Offline path: `--mock`. Catalog tools use `catalogFixture`. Router-only: `configs/jev-router-only-20.yaml` or `--router-only`.
+Shared types live in `src/types/`. Live agent path: `createOpenAIChatProvider` + `createSingleStepAgent`. Live Jev path: TypeSafe DecisionProvider + `createJevRouter`. Offline path: `--mock` for baseline, Jev, and LLM. Catalog tools use `catalogFixture`. Router-only: `configs/jev-router-only-20.yaml` or `--router-only`.
 
 ## Known problems
 
 - M3–M6 milestones have no issues yet.
 - Live runs cost money and are not part of CI.
-- Mocked/live CLI paths for architecture `llm` are not wired yet (#29).
+- Live CLI path for architecture `llm` is not wired yet (mocked path is).
 
 ## Open questions
 
-None that block the next M2 issue.
+None that block filing M3.
 
 ## Next recommended issue
 
-#29 Add Jev vs LLM integration tests.
+File M3–M6 milestone issues, or run a live mocked-offline comparison once ready.
 
-https://github.com/Akk525/jev_eval/issues/29
+M2 exit criteria are met offline. Live Jev vs LLM comparison is outside CI.
