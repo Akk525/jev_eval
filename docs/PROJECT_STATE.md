@@ -23,6 +23,7 @@ M1 — Vertical Slice
 - #13 Add 20 deterministic mock tools — on `main`. Files, email, calendar, and code. `search_files` and `search_email` are mutual near misses. Smoke tools are unchanged.
 - #14 Author 50 single-step tasks — on `main`. `datasets/v0.1/tasks.jsonl`. 20 explicit, 15 implicit, 15 ambiguous. Labels were not taken from model output.
 - #15 Implement the baseline router — on `main`. Returns the presented toolspace in order. Scores, confidence, and router tokens stay null or zero. It does not cut to k.
+- #16 Implement the shared single-step agent — on `main`. One tool-calling turn. The prompt does not name an architecture. Temperature comes from config. A missing tool call is `selectedTool: null`.
 
 ## Issue currently being worked on
 
@@ -55,6 +56,6 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Next recommended issue
 
-#16 Implement the shared single-step agent.
+#17 Implement the Jev router.
 
-https://github.com/Akk525/jev_eval/issues/16
+https://github.com/Akk525/jev_eval/issues/17

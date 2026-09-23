@@ -28,7 +28,7 @@ it("replays a scripted tool call", async () => {
       raw: null,
     },
   ]);
-  const turn = await provider.complete({ prompt: "Find Sarah's email", tools: [] });
+  const turn = await provider.complete({ prompt: "Find Sarah's email", tools: [], temperature: 0 });
   expect(turn.selectedTool).toBe("search_email");
   expect(turn.arguments).toEqual({ query: "sarah" });
   expect(turn.usage.outputTokens).toBe(2);

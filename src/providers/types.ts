@@ -4,6 +4,7 @@ import type { TokenUsage } from "../types/usage.js";
 export interface ChatRequest {
   prompt: string;
   tools: readonly ToolDefinition[];
+  temperature: number;
 }
 
 export interface ChatResponse {
