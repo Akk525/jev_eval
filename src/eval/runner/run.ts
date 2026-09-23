@@ -11,7 +11,7 @@ import { toolspaceForTask } from "../../tools/toolspace.js";
 import type { ExperimentConfig } from "../../types/config.js";
 import type { RouteDecision } from "../../types/routing.js";
 import type { Tracer, TraceHandle } from "../../tracing/tracer.js";
-import type { ToolRegistry } from "../../tools/registry/registry.js";
+import type { ToolFixture, ToolRegistry } from "../../tools/registry/registry.js";
 import type { TokenUsage } from "../../types/usage.js";
 
 const ZERO_USAGE: TokenUsage = { inputTokens: 0, outputTokens: 0 };
@@ -26,6 +26,8 @@ export interface ExperimentRun {
   results: OpenResultDirectory;
   /** Null skips pricing (smoke/mock). Live architectures load the config's pricing version. */
   pricing: PricingTable | null;
+  /** Fixture passed to tool executors. Defaults to {}. */
+  fixture?: ToolFixture;
 }
 
 export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> {
@@ -92,7 +94,7 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
 
         const toolResult = turn.selectedTool === null
           ? null
-          : run.registry.execute(turn.selectedTool, turn.arguments, {});
+          : run.registry.execute(turn.selectedTool, turn.arguments, run.fixture ?? {});
         if (toolResult) await run.tracer.event(handle, { type: "tool_completed", result: toolResult });
 
         await finish(

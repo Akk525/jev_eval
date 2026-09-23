@@ -4,7 +4,7 @@ Snapshot date: 2026-09-23
 
 ## Current milestone
 
-M1 — Vertical Slice
+M1 — Vertical Slice (complete on `main`)
 
 ## Completed issues
 
@@ -31,6 +31,7 @@ M1 — Vertical Slice
 - #21 Add versioned pricing — on `main`. `pricing/v1.json` freezes OpenAI `gpt-5.6-sol` at $4/$20 per MTok and TypeSafe `jev-1.13.0` at $0.042/$0. Run lines keep token counts so cost can be recomputed.
 - #22 Add the Memora tracing adapter — on `main`. `recordEvent` under the run id. Client failures are swallowed. No credentials → no client. Payloads strip API keys.
 - #23 Write the initial methodology note — on `main`. `docs/methodology.md` repeats Execution Success Rate, the D6 table, and the frozen controls.
+- #24 Add vertical-slice integration tests — on `main`. Offline mocked baseline and Jev runs write result directories with registry hash and dataset version. `npm run eval -- --config configs/jev-top5-20.yaml --mock`.
 
 ## Issue currently being worked on
 
@@ -55,7 +56,8 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Known problems
 
-- M2–M6 milestones have no issues yet. File them after the 50-task slice, not before.
+- M2–M6 milestones have no issues yet. File them next.
+- Live baseline and Jev runs still need a real ChatProvider. `--mock` is the offline path.
 
 ## Open questions
 
@@ -63,6 +65,11 @@ None that block M1 implementation. Pricing amounts are frozen in `pricing/v1.jso
 
 ## Next recommended issue
 
-#24 Add vertical-slice integration tests.
+File M2 issues (Jev vs LLM router), or wire a live OpenAI ChatProvider and run the pinned configs for real.
 
-https://github.com/Akk525/jev_eval/issues/24
+M1 exit: `npm test` offline, and:
+
+```bash
+npm run eval -- --config configs/baseline-20.yaml --mock
+npm run eval -- --config configs/jev-top5-20.yaml --mock
+```

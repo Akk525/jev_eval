@@ -39,4 +39,12 @@ A new session should read those four, then the open GitHub issue, before changin
 
 The first slice is 20 deterministic mock tools and 50 labeled single-step tasks, comparing baseline with Jev top-5. The ~500-task set waits until that slice has exercised the schema.
 
+Offline mocked slice (no live APIs):
+
+```bash
+npm test
+npm run eval -- --config configs/baseline-20.yaml --mock
+npm run eval -- --config configs/jev-top5-20.yaml --mock
+```
+
 No benchmark numbers exist yet.
