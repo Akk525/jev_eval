@@ -47,4 +47,11 @@ npm run eval -- --config configs/baseline-20.yaml --mock
 npm run eval -- --config configs/jev-top5-20.yaml --mock
 ```
 
-No benchmark numbers exist yet.
+Live slice (needs `AGENT_API_KEY`; Jev also needs `TYPESAFE_API_KEY`):
+
+```bash
+npm run eval -- --config configs/baseline-20.yaml
+npm run eval -- --config configs/jev-top5-20.yaml
+```
+
+No invented benchmark numbers. Conclusions come from result directories only.

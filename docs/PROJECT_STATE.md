@@ -4,34 +4,12 @@ Snapshot date: 2026-09-23
 
 ## Current milestone
 
-M1 — Vertical Slice (complete on `main`)
+M2 — Routing Benchmark
 
 ## Completed issues
 
-- #1 Record the canonical brief and continuity docs — closed. On `main`.
-- #2 Scaffold the TypeScript package — closed. On `main`.
-- #3 Define shared domain types — closed. On `main`.
-- #4 Validate experiment configuration — on `main`.
-- #5 Validate the versioned task dataset — on `main`.
-- #6 Implement the tool registry and deterministic executor — on `main`. Two sample tools only.
-- #7 Implement pure metric functions — on `main`. The MVP aggregate is Execution Success Rate.
-- #8 Implement failure classification — on `main`.
-- #9 Implement the result writer and resume checkpoint — on `main`.
-- #10 Implement the tracer interface and local capture — on `main`.
-- #11 Implement mock providers — on `main`.
-- #12 Add the paid-API-free smoke benchmark — on `main`. `npm run eval -- --config configs/smoke.yaml` writes a result directory. Mock run: execution success rate 1, `r0_attempts` 0.
-- #13 Add 20 deterministic mock tools — on `main`. Files, email, calendar, and code. `search_files` and `search_email` are mutual near misses. Smoke tools are unchanged.
-- #14 Author 50 single-step tasks — on `main`. `datasets/v0.1/tasks.jsonl`. 20 explicit, 15 implicit, 15 ambiguous. Labels were not taken from model output.
-- #15 Implement the baseline router — on `main`. Returns the presented toolspace in order. Scores, confidence, and router tokens stay null or zero. It does not cut to k.
-- #16 Implement the shared single-step agent — on `main`. One tool-calling turn. The prompt does not name an architecture. Temperature comes from config. A missing tool call is `selectedTool: null`.
-- #17 Implement the Jev router adapter — on `main`. One Choice over `routingSummary`, then a local sort to k. Confidence is copied from the provider. More than 255 tools fails before the call. The TypeSafe client strips the API key from the stored payload.
-- #18 Implement the task evaluator — on `main`. One attempt gets Recall@k, selection accuracy, and Execution Success from the pure functions. Router `R0` is excluded from both rates. `R1` is an execution miss.
-- #19 Implement the experiment runner — on `main`. Baseline and Jev share one path. Each run stores the ordered toolspace and the Jev distribution. A router failure skips the agent and still appends. Resume skips completed tasks.
-- #20 Add the CLI and example configs — on `main`. `configs/baseline-20.yaml` and `configs/jev-top5-20.yaml`. `--validate` loads them and does not call a provider.
-- #21 Add versioned pricing — on `main`. `pricing/v1.json` freezes OpenAI `gpt-5.6-sol` at $4/$20 per MTok and TypeSafe `jev-1.13.0` at $0.042/$0. Run lines keep token counts so cost can be recomputed.
-- #22 Add the Memora tracing adapter — on `main`. `recordEvent` under the run id. Client failures are swallowed. No credentials → no client. Payloads strip API keys.
-- #23 Write the initial methodology note — on `main`. `docs/methodology.md` repeats Execution Success Rate, the D6 table, and the frozen controls.
-- #24 Add vertical-slice integration tests — on `main`. Offline mocked baseline and Jev runs write result directories with registry hash and dataset version. `npm run eval -- --config configs/jev-top5-20.yaml --mock`.
+- #1–#24 — M0 and M1 closed on `main`. Vertical slice: 20 tools, 50 tasks, mocked baseline/Jev, methodology, pricing, Memora adapter.
+- Live OpenAI ChatProvider — on `main`. Native tool calling via Chat Completions. Live CLI path for baseline and Jev.
 
 ## Issue currently being worked on
 
@@ -52,24 +30,27 @@ Accepted in `docs/DECISIONS.md`:
 - D9. Result directories are immutable and resumable. Pricing is versioned.
 - D10. M1 pins: agent `openai` / `gpt-5.6-sol` at temperature 0. Jev `typesafe` / `jev-1.13.0` on the official System One API. The alias `gpt-5.6` is not a pin.
 
-Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. The smoke path still uses five separate mock tools. The benchmark catalog is `createCatalogRegistry()`: 20 tools. Dataset v0.1 has 50 single-step tasks. `required_tools` is primary Recall@k. `acceptable_tools` is execution success and lenient recall.
+Shared types live in `src/types/`. Live agent path: `createOpenAIChatProvider` + `createSingleStepAgent`. Live Jev path: TypeSafe DecisionProvider + `createJevRouter`. Offline path: `--mock`. Catalog tools use `catalogFixture`.
 
 ## Known problems
 
-- M2–M6 milestones have no issues yet. File them next.
-- Live baseline and Jev runs still need a real ChatProvider. `--mock` is the offline path.
+- M3–M6 milestones have no issues yet.
+- The LLM router model pin is not locked until its example config lands.
+- Live runs cost money and are not part of CI.
 
 ## Open questions
 
-None that block M1 implementation. Pricing amounts are frozen in `pricing/v1.json` from the provider pages on 2026-09-23.
+- Which pinned LLM router model goes in `configs/llm-top5-20.yaml`.
 
 ## Next recommended issue
 
-File M2 issues (Jev vs LLM router), or wire a live OpenAI ChatProvider and run the pinned configs for real.
+#25 Implement the LLM router.
 
-M1 exit: `npm test` offline, and:
+https://github.com/Akk525/jev_eval/issues/25
+
+Live vertical slice (needs keys; not for CI):
 
 ```bash
-npm run eval -- --config configs/baseline-20.yaml --mock
-npm run eval -- --config configs/jev-top5-20.yaml --mock
+npm run eval -- --config configs/baseline-20.yaml
+npm run eval -- --config configs/jev-top5-20.yaml
 ```

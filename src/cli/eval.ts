@@ -1,6 +1,7 @@
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { loadExperimentConfig } from "../config/load.js";
+import { runLiveSlice } from "../eval/runner/live.js";
 import { runMockedSlice } from "../eval/runner/slice.js";
 import { runSmokeCommand } from "../eval/runner/smoke.js";
 
@@ -26,6 +27,10 @@ if (values.help) {
 Mocked vertical slice:
   npm run eval -- --config configs/jev-top5-20.yaml --mock
   npm run eval -- --config configs/baseline-20.yaml --mock
+
+Live vertical slice (needs AGENT_API_KEY; Jev also needs TYPESAFE_API_KEY):
+  npm run eval -- --config configs/baseline-20.yaml
+  npm run eval -- --config configs/jev-top5-20.yaml
 `);
   process.exit(0);
 }
@@ -38,9 +43,10 @@ if (values.config === undefined) {
 try {
   const configPath = resolve(values.config);
   const resultsRoot = resolve(values.results);
+  const loaded = loadExperimentConfig(configPath);
 
   if (values.validate) {
-    const { config } = loadExperimentConfig(configPath);
+    const { config } = loaded;
     const k = config.topK === null ? "all" : String(config.topK);
     const router = config.router === null ? "none" : `${config.router.provider}/${config.router.model}`;
     console.log(
@@ -49,9 +55,14 @@ try {
   } else if (values.mock) {
     const directory = await runMockedSlice({ configPath, resultsRoot });
     console.log(directory);
-  } else {
+  } else if (loaded.config.architecture === "mock") {
     const directory = await runSmokeCommand({ configPath, resultsRoot });
     console.log(directory);
+  } else if (loaded.config.architecture === "baseline" || loaded.config.architecture === "jev") {
+    const directory = await runLiveSlice({ configPath, resultsRoot });
+    console.log(directory);
+  } else {
+    throw new Error(`architecture ${loaded.config.architecture} is not implemented`);
   }
 } catch (error) {
   const message = error instanceof Error ? error.message : String(error);
