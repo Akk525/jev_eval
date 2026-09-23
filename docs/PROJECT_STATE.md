@@ -4,17 +4,13 @@ Snapshot date: 2026-09-23
 
 ## Current milestone
 
-M2 — Routing Benchmark
+M2 — Routing Benchmark (follow-up). M3–M6 issues are filed; do not start M3 until #30 lands.
 
 ## Completed issues
 
 - #1–#24 — M0 and M1 closed on `main`. Vertical slice: 20 tools, 50 tasks, mocked baseline/Jev, methodology, pricing, Memora adapter.
 - Live OpenAI agent — on `main`. Native tool calling via Chat Completions. Live CLI path for baseline and Jev.
-- #25 Implement the LLM router — on `main`. Ranks `routingSummary` only via one text completion. Malformed JSON throws (R0). Scores stay null.
-- #26 Add LLM-router example configs — on `main`. `configs/llm-top5-20.yaml` pins `openai` / `gpt-5.6-sol` for the router (D11).
-- #27 Score router-only Recall@k without the agent — on `main`. `routerOnly` / `--router-only` stops after routing, writes `candidates` and `recallAtK`, excludes execution.
-- #28 Add calibration and cost summaries for routers — on `main`. `summary.json` adds mean Recall@k, latency percentiles, and confidence calibration (ECE) recomputed from `runs.jsonl`.
-- #29 Add Jev vs LLM integration tests — on `main`. Mocked `--mock` path for architecture `llm`. `tests/integration/routing-benchmark.test.ts`.
+- #25–#29 — M2 offline path closed on `main`. LLM router, configs (D11), router-only Recall@k, calibration/cost summaries, mocked Jev vs LLM integration.
 
 ## Issue currently being worked on
 
@@ -36,20 +32,56 @@ Accepted in `docs/DECISIONS.md`:
 - D10. M1 pins: agent `openai` / `gpt-5.6-sol` at temperature 0. Jev `typesafe` / `jev-1.13.0` on the official System One API. The alias `gpt-5.6` is not a pin.
 - D11. M2 LLM router pin: `openai` / `gpt-5.6-sol`, same id as the agent, so the comparison is routing method not model tier.
 
-Shared types live in `src/types/`. Live agent path: `createOpenAIChatProvider` + `createSingleStepAgent`. Live Jev path: TypeSafe DecisionProvider + `createJevRouter`. Offline path: `--mock` for baseline, Jev, and LLM. Catalog tools use `catalogFixture`. Router-only: `configs/jev-router-only-20.yaml` or `--router-only`.
+Shared types live in `src/types/`. Live agent path: `createOpenAIChatProvider` + `createSingleStepAgent`. Live Jev path: TypeSafe DecisionProvider + `createJevRouter`. Offline `--mock` supports baseline, Jev, and LLM. Live architecture `llm` is not wired yet (#30).
 
 ## Known problems
 
-- M3–M6 milestones have no issues yet.
+- Live architecture `llm` is not wired (#30). Blocks M3 start.
 - Live runs cost money and are not part of CI.
-- Live CLI path for architecture `llm` is not wired yet (mocked path is).
+- M5 is blocked on real calibration-bearing result directories, not only code.
+- Which fixed N to hold for M4 k-sweep is not locked yet.
+- Adaptive policy thresholds (#42) cannot be chosen until those results exist.
 
 ## Open questions
 
-None that block filing M3.
+- Fixed N for the M4 k-sweep (must be chosen from completed M3 controls and documented in #39).
+- Adaptive policy shape and threshold rule (#42) — held-out methodology required before implementation (#43).
+- Whether M6.1 treats missing M5 dirs as skippable or required (issue allows documenting a skip).
+
+## Filed issue map (M2 follow-up + M3–M6)
+
+| Key | Issue | Milestone |
+|---|---|---|
+| M2F | #30 Wire the live LLM-routed path through the shared agent | M2 |
+| M3.1 | #31 Expand the deterministic tool catalog toward 100 tools | M3 |
+| M3.2 | #32 Harden per-task nested toolspace construction for N=5..100 | M3 |
+| M3.3 | #33 Validate and extend the dataset for the scaling experiment | M3 |
+| M3.4 | #34 Add N-matrix experiment configurations | M3 |
+| M3.5 | #35 Add scaling experiment runner orchestration | M3 |
+| M3.6 | #36 Add repetition and statistical aggregation for end-to-end runs | M3 |
+| M3.7 | #37 Add bounded provider concurrency | M3 |
+| M3.8 | #38 Add scaling experiment summary tables | M3 |
+| M4.1 | #39 Add Jev top-k sweep experiment configs | M4 |
+| M4.2 | #40 Execute and aggregate top-k ablation metrics | M4 |
+| M4.3 | #41 Add top-k tradeoff summary table | M4 |
+| M5.1 | #42 Define adaptive-routing policy from calibration results | M5 |
+| M5.2 | #43 Implement the adaptive router behind the Router interface | M5 |
+| M5.3 | #44 Evaluate adaptive routing against fixed-k baselines | M5 |
+| M5.4 | #45 Add adaptive routing summary tables | M5 |
+| M6.1 | #46 Build a normalized analysis dataset from result directories | M6 |
+| M6.2 | #47 Generate Figure 1 data and plot (ESR vs N) | M6 |
+| M6.3 | #48 Generate cost and token figures vs N | M6 |
+| M6.4 | #49 Generate latency figure vs N | M6 |
+| M6.5 | #50 Generate routing Recall@k figure | M6 |
+| M6.6 | #51 Generate calibration figure for Jev probabilities | M6 |
+| M6.7 | #52 Generate failure decomposition figure | M6 |
+| M6.8 | #53 Final methodology and reproducibility audit | M6 |
+| M6.9 | #54 Publication-ready technical report and README results section | M6 |
 
 ## Next recommended issue
 
-File M3–M6 milestone issues, or run a live mocked-offline comparison once ready.
+#30 Wire the live LLM-routed path through the shared agent.
 
-M2 exit criteria are met offline. Live Jev vs LLM comparison is outside CI.
+https://github.com/Akk525/jev_eval/issues/30
+
+Do not begin M3 (#31+) until #30 is closed.
