@@ -1,4 +1,4 @@
-# Fragment only. Full example config is configs/llm-top5-20.yaml (#26).
+# Fragment only. Full example: configs/llm-top5-20.yaml
 architecture: llm
 topK: 5
 router:

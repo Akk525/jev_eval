@@ -284,3 +284,20 @@ Both example configs use dataset `datasets/v0.1/tasks.jsonl`, toolspace 20, seed
 **Consequences.** `configs/baseline-20.yaml` and `configs/jev-top5-20.yaml` carry these ids. `pricing/v1.json` freezes the 2026-09-23 provider prices for those ids. Unspecified agent parameters stay at the provider default until a config field records them.
 
 **Date.** 2026-09-23
+
+---
+
+## D11. M2 LLM router pin
+
+**Decision.** The LLM-router example config uses the same OpenAI model as the agent: provider `openai`, model `gpt-5.6-sol`, temperature 0 for the ranking call. `configs/llm-top5-20.yaml` matches the Jev config on agent, dataset, toolspace 20, top-5, seed 0, and one repetition. The router still ranks `routingSummary` only.
+
+**Reason.** M2 compares routing methods. If the LLM router were a different, stronger or cheaper model, cost and quality differences would mix model choice with architecture. Using the same pinned id keeps the variable on the ranking path (structured Choice vs free-text ranking over the same summaries).
+
+**Alternatives considered.**
+
+* A cheaper OpenAI tier for the router only. Rejected for the first LLM-router comparison. It can be a later, versioned ablation.
+* OpenRouter for the LLM router. Rejected while the agent already speaks the OpenAI Chat Completions API with `AGENT_API_KEY`.
+
+**Consequences.** `pricing/v1.json` already prices `openai/gpt-5.6-sol`. Router and agent tokens both use that row. A different router model later needs a DECISIONS entry and, if new, a pricing row.
+
+**Date.** 2026-09-23
