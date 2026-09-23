@@ -21,6 +21,8 @@ export interface ChatProvider {
 
 export interface DecisionRequest {
   state: string;
+  /** Versioned Choice instructions. The same string for every task in a config. */
+  instructions: string;
   criteria: Readonly<Record<string, string>>;
 }
 

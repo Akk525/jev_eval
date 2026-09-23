@@ -24,6 +24,7 @@ M1 — Vertical Slice
 - #14 Author 50 single-step tasks — on `main`. `datasets/v0.1/tasks.jsonl`. 20 explicit, 15 implicit, 15 ambiguous. Labels were not taken from model output.
 - #15 Implement the baseline router — on `main`. Returns the presented toolspace in order. Scores, confidence, and router tokens stay null or zero. It does not cut to k.
 - #16 Implement the shared single-step agent — on `main`. One tool-calling turn. The prompt does not name an architecture. Temperature comes from config. A missing tool call is `selectedTool: null`.
+- #17 Implement the Jev router adapter — on `main`. One Choice over `routingSummary`, then a local sort to k. Confidence is copied from the provider. More than 255 tools fails before the call. The TypeSafe client strips the API key from the stored payload.
 
 ## Issue currently being worked on
 
@@ -56,6 +57,6 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Next recommended issue
 
-#17 Implement the Jev router.
+#18 Implement the task evaluator.
 
-https://github.com/Akk525/jev_eval/issues/17
+https://github.com/Akk525/jev_eval/issues/18

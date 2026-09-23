@@ -11,8 +11,8 @@ const decision = {
 
 it("replays a decision script deterministically", async () => {
   const provider = createMockDecisionProvider([decision, decision]);
-  const first = await provider.decide({ state: "one", criteria: { search_email: "mail" } });
-  const second = await provider.decide({ state: "two", criteria: { search_email: "mail" } });
+  const first = await provider.decide({ state: "one", instructions: "v1", criteria: { search_email: "mail" } });
+  const second = await provider.decide({ state: "two", instructions: "v1", criteria: { search_email: "mail" } });
   expect(first).toEqual(second);
   expect(first.confidence).not.toBe(first.top1Probability);
   expect(first.usage).toEqual({ inputTokens: 3, outputTokens: 1 });
