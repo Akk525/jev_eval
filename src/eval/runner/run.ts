@@ -83,6 +83,7 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
             ),
             null,
             ZERO_USAGE,
+            null,
           );
           continue;
         }
@@ -106,6 +107,7 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
             ),
             decision,
             ZERO_USAGE,
+            null,
           );
           continue;
         }
@@ -137,6 +139,7 @@ export async function runExperiment(run: ExperimentRun): Promise<ResultSummary> 
           ),
           decision,
           turn.usage,
+          turn.latencyMs,
         );
       }
     }
@@ -178,6 +181,7 @@ async function finish(
   evaluation: AttemptEvaluation,
   decision: RouteDecision | null,
   agentUsage: TokenUsage,
+  agentLatencyMs: number | null,
 ): Promise<void> {
   await run.tracer.event(handle, {
     type: "evaluation_completed",
@@ -198,6 +202,8 @@ async function finish(
     agentUsage,
     pricedCostUsd: attemptPricedCostUsd(run.pricing, run.config, routerUsage, agentUsage),
     providerReportedCostUsd: null,
+    routerLatencyMs: decision?.latencyMs ?? null,
+    agentLatencyMs,
     recallAtK: evaluation.recallAtK,
     lenientRecallAtK: evaluation.lenientRecallAtK,
     selectionAccuracy: evaluation.selectionAccuracy,

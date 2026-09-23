@@ -1,6 +1,6 @@
 import { appendFileSync, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { executionSuccessRate } from "../metrics/metrics.js";
+import { aggregateRuns, type AggregateSummary } from "../metrics/aggregate.js";
 import type { ExperimentConfig } from "../types/config.js";
 import type { FailureCode, InfrastructureReason } from "../types/trace.js";
 import type { TokenUsage } from "../types/usage.js";
@@ -24,6 +24,10 @@ export interface RunRecord {
   pricedCostUsd: number;
   /** Provider-reported USD when one was sent. Null otherwise. */
   providerReportedCostUsd: number | null;
+  /** Router wall time in ms. Null when the router did not complete. */
+  routerLatencyMs: number | null;
+  /** Agent wall time in ms. Null when the agent did not run. */
+  agentLatencyMs: number | null;
   /** Primary Recall@k. Null when routingExcluded. */
   recallAtK: number | null;
   lenientRecallAtK: number | null;
@@ -36,19 +40,7 @@ export interface RunRecord {
   infrastructureReason: InfrastructureReason | null;
 }
 
-export interface ResultSummary {
-  attempts: number;
-  r0_attempts: number;
-  routing_scored: number;
-  execution_scored: number;
-  execution_success_rate: number | null;
-  router_input_tokens: number;
-  router_output_tokens: number;
-  agent_input_tokens: number;
-  agent_output_tokens: number;
-  priced_cost_usd: number;
-  provider_reported_cost_usd: number | null;
-}
+export type ResultSummary = AggregateSummary;
 
 export interface OpenResultDirectory {
   directory: string;
@@ -139,32 +131,7 @@ function readRuns(directory: string): RunRecord[] {
 }
 
 function writeSummary(directory: string, runs: readonly RunRecord[]): void {
-  const providerCosts = runs
-    .map((run) => run.providerReportedCostUsd)
-    .filter((value): value is number => value !== null);
-  const summary: ResultSummary = {
-    attempts: runs.length,
-    r0_attempts: runs.filter((run) => run.failureCode === "R0").length,
-    routing_scored: runs.filter((run) => !run.routingExcluded).length,
-    execution_scored: runs.filter((run) => !run.executionExcluded).length,
-    execution_success_rate: executionSuccessRate(
-      runs.map((run) => ({
-        executionExcluded: run.executionExcluded,
-        executionSuccess: run.executionSuccess,
-      })),
-    ),
-    router_input_tokens: sum(runs.map((run) => run.routerUsage.inputTokens)),
-    router_output_tokens: sum(runs.map((run) => run.routerUsage.outputTokens)),
-    agent_input_tokens: sum(runs.map((run) => run.agentUsage.inputTokens)),
-    agent_output_tokens: sum(runs.map((run) => run.agentUsage.outputTokens)),
-    priced_cost_usd: sum(runs.map((run) => run.pricedCostUsd)),
-    provider_reported_cost_usd: providerCosts.length === 0 ? null : sum(providerCosts),
-  };
-  writeFileSync(join(directory, "summary.json"), `${JSON.stringify(summary, null, 2)}\n`);
-}
-
-function sum(values: readonly number[]): number {
-  return values.reduce((total, value) => total + value, 0);
+  writeFileSync(join(directory, "summary.json"), `${JSON.stringify(aggregateRuns(runs), null, 2)}\n`);
 }
 
 function writeFailures(directory: string, runs: readonly RunRecord[]): void {

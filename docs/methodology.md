@@ -110,6 +110,15 @@ execution_success_rate = execution_successes / execution_scored
 
 If a denominator is 0, the rate is null, not 0. An attempt is counted once. The earliest failing stage supplies the `R0` label.
 
+## Summary aggregates
+
+`summary.json` is recomputed from `runs.jsonl` after every append. Fields:
+
+* `recall_at_k` — mean primary Recall@k over routing-scored attempts
+* `priced_cost_usd` — sum of per-attempt priced costs from token counts and the config pricing version
+* `router_latency_ms` / `agent_latency_ms` — mean, median/p50, p95 over attempts that recorded a latency
+* `calibration` — provider `confidence` vs empirical hit rate (`recallAtK === 1`), including fixed buckets and Expected Calibration Error. Attempts without confidence (for example the LLM router) stay out of the calibration denominator. Top-1 probability is never substituted for confidence (D4).
+
 ## Source of truth
 
 `runs.jsonl` is the measurement record. Memora is an optional best-effort mirror. A Memora failure does not change the failure class and does not prevent the run append. Result directories are immutable. Resume is allowed only when the config hash matches.

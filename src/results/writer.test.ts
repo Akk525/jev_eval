@@ -45,6 +45,8 @@ function run(taskId: string, repetition = 0): RunRecord {
     agentUsage: { inputTokens: 10, outputTokens: 2 },
     pricedCostUsd: 0.01,
     providerReportedCostUsd: null,
+    routerLatencyMs: null,
+    agentLatencyMs: 5,
     recallAtK: 1,
     lenientRecallAtK: 1,
     selectionAccuracy: 1,
@@ -102,13 +104,15 @@ it("reports execution success rate from scored runs only", () => {
     routing_scored: number;
     execution_scored: number;
     execution_success_rate: number;
+    recall_at_k: number | null;
   };
-  expect(summary).toEqual({
+  expect(summary).toMatchObject({
     attempts: 2,
     r0_attempts: 1,
     routing_scored: 1,
     execution_scored: 1,
     execution_success_rate: 1,
+    recall_at_k: 1,
     router_input_tokens: 0,
     router_output_tokens: 0,
     agent_input_tokens: 20,

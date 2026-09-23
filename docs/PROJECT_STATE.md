@@ -13,6 +13,7 @@ M2 — Routing Benchmark
 - #25 Implement the LLM router — on `main`. Ranks `routingSummary` only via one text completion. Malformed JSON throws (R0). Scores stay null.
 - #26 Add LLM-router example configs — on `main`. `configs/llm-top5-20.yaml` pins `openai` / `gpt-5.6-sol` for the router (D11).
 - #27 Score router-only Recall@k without the agent — on `main`. `routerOnly` / `--router-only` stops after routing, writes `candidates` and `recallAtK`, excludes execution.
+- #28 Add calibration and cost summaries for routers — on `main`. `summary.json` adds mean Recall@k, latency percentiles, and confidence calibration (ECE) recomputed from `runs.jsonl`.
 
 ## Issue currently being worked on
 
@@ -40,7 +41,7 @@ Shared types live in `src/types/`. Live agent path: `createOpenAIChatProvider` +
 
 - M3–M6 milestones have no issues yet.
 - Live runs cost money and are not part of CI.
-- Mocked/live CLI paths for architecture `llm` are not wired yet (#28–#29).
+- Mocked/live CLI paths for architecture `llm` are not wired yet (#29).
 
 ## Open questions
 
@@ -48,6 +49,6 @@ None that block the next M2 issue.
 
 ## Next recommended issue
 
-#28 Add calibration and cost summaries for routers.
+#29 Add Jev vs LLM integration tests.
 
-https://github.com/Akk525/jev_eval/issues/28
+https://github.com/Akk525/jev_eval/issues/29
