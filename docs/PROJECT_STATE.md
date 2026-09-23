@@ -4,7 +4,7 @@ Snapshot date: 2026-09-23
 
 ## Current milestone
 
-M0 — Harness Foundation
+M0 — Harness Foundation is complete on `main`. Next work is M1.
 
 ## Completed issues
 
@@ -19,6 +19,7 @@ M0 — Harness Foundation
 - #9 Implement the result writer and resume checkpoint — on `main`.
 - #10 Implement the tracer interface and local capture — on `main`.
 - #11 Implement mock providers — on `main`.
+- #12 Add the paid-API-free smoke benchmark — on `main`. `npm run eval -- --config configs/smoke.yaml` writes a result directory. Mock run: execution success rate 1, `r0_attempts` 0.
 
 ## Issue currently being worked on
 
@@ -38,7 +39,7 @@ Accepted in `docs/DECISIONS.md`:
 - D8. One TypeScript package (Node 20, Zod, Vitest). Native tool calling. Dataset slice is `datasets/v0.1/`.
 - D9. Result directories are immutable and resumable. Pricing is versioned.
 
-Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. Config, dataset, registry, metrics, failure codes, result directories, the noop tracer, and mock providers are in place. The registry has two sample tools, not the 20-tool catalog. `npm run eval` is still the not-implemented stub.
+Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, and `confidence` are separate fields. The smoke path runs five mock tools and five tasks through the shared runner. Per-task toolspaces are built with the nested distractor rule. The 20-tool catalog does not exist yet.
 
 ## Known problems
 
@@ -51,6 +52,6 @@ Shared types live in `src/types/`. `RouteDecision.scores`, `top1Probability`, an
 
 ## Next recommended issue
 
-#12 Add the paid-API-free smoke benchmark.
+#13 Add 20 deterministic mock tools.
 
-https://github.com/Akk525/jev_eval/issues/12
+https://github.com/Akk525/jev_eval/issues/13

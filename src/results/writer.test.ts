@@ -35,6 +35,7 @@ function run(taskId: string, repetition = 0): RunRecord {
   return {
     taskId,
     repetition,
+    toolspace: ["sample_lookup"],
     executionExcluded: false,
     routingExcluded: false,
     executionSuccess: true,

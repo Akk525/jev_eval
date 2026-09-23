@@ -7,6 +7,8 @@ import type { FailureCode, InfrastructureReason } from "../types/trace.js";
 export interface RunRecord {
   taskId: string;
   repetition: number;
+  /** Exact ordered toolspace presented for this attempt. */
+  toolspace: readonly string[];
   executionExcluded: boolean;
   routingExcluded: boolean;
   executionSuccess: boolean;
