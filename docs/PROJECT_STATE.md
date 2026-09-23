@@ -30,6 +30,7 @@ M1 — Vertical Slice
 - #20 Add the CLI and example configs — on `main`. `configs/baseline-20.yaml` and `configs/jev-top5-20.yaml`. `--validate` loads them and does not call a provider.
 - #21 Add versioned pricing — on `main`. `pricing/v1.json` freezes OpenAI `gpt-5.6-sol` at $4/$20 per MTok and TypeSafe `jev-1.13.0` at $0.042/$0. Run lines keep token counts so cost can be recomputed.
 - #22 Add the Memora tracing adapter — on `main`. `recordEvent` under the run id. Client failures are swallowed. No credentials → no client. Payloads strip API keys.
+- #23 Write the initial methodology note — on `main`. `docs/methodology.md` repeats Execution Success Rate, the D6 table, and the frozen controls.
 
 ## Issue currently being worked on
 
@@ -62,6 +63,6 @@ None that block M1 implementation. Pricing amounts are frozen in `pricing/v1.jso
 
 ## Next recommended issue
 
-#23 Write the initial methodology note.
+#24 Add vertical-slice integration tests.
 
-https://github.com/Akk525/jev_eval/issues/23
+https://github.com/Akk525/jev_eval/issues/24

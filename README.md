@@ -32,9 +32,10 @@ Provider and parse failures are `R0 INFRASTRUCTURE_FAILURE`. They are reported s
 
 1. [docs/BRIEF.md](docs/BRIEF.md) — research design
 2. [docs/DECISIONS.md](docs/DECISIONS.md) — locked choices
-3. [docs/PROJECT_STATE.md](docs/PROJECT_STATE.md) — current milestone and next issue
+3. [docs/methodology.md](docs/methodology.md) — how success and denominators are defined
+4. [docs/PROJECT_STATE.md](docs/PROJECT_STATE.md) — current milestone and next issue
 
-A new session should read those three, then the open GitHub issue, before changing code.
+A new session should read those four, then the open GitHub issue, before changing code.
 
 The first slice is 20 deterministic mock tools and 50 labeled single-step tasks, comparing baseline with Jev top-5. The ~500-task set waits until that slice has exercised the schema.
 
