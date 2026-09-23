@@ -1,0 +1,14 @@
+architecture: mock
+toolspaceSize: 5
+topK: 1
+datasetPath: datasets/fixtures/smoke.jsonl
+repetitions: 1
+concurrency: 1
+seed: 0
+agent:
+  provider: mock
+  model: mock-agent
+  temperature: 0
+router: null
+pricingVersion: v1
+tracing: noop

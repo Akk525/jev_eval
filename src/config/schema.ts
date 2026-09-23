@@ -1,0 +1,124 @@
+import { z } from "zod";
+import type { ExperimentConfig } from "../types/config.js";
+
+const UNPINNED_JEV_MODELS = new Set(["jev-latest", "~typesafe/jev-latest"]);
+
+const modelRefSchema = z
+  .object({
+    provider: z.string().min(1),
+    model: z.string().min(1),
+  })
+  .strict();
+
+export const experimentConfigSchema = z
+  .object({
+    architecture: z.enum(["baseline", "jev", "llm", "mock"]),
+    toolspaceSize: z.number().int().positive(),
+    topK: z.number().int().positive().nullable(),
+    datasetPath: z.string().min(1),
+    repetitions: z.number().int().positive(),
+    concurrency: z.number().int().positive(),
+    seed: z.number().int(),
+    agent: modelRefSchema.extend({ temperature: z.number() }).strict(),
+    router: modelRefSchema.nullable(),
+    pricingVersion: z.string().min(1),
+    tracing: z.enum(["noop", "memora"]),
+  })
+  .strict()
+  .superRefine((config, ctx) => {
+    if (config.concurrency !== 1) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["concurrency"],
+        message: "must be 1 until bounded concurrency is implemented",
+      });
+    }
+
+    rejectUnpinnedModel(config.agent.model, ["agent", "model"], ctx);
+    if (config.router) rejectUnpinnedModel(config.router.model, ["router", "model"], ctx);
+
+    if (config.architecture === "baseline") {
+      if (config.topK !== null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["topK"],
+          message: "must be null for baseline",
+        });
+      }
+      if (config.router !== null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["router"],
+          message: "must be null for baseline",
+        });
+      }
+    }
+
+    if (config.architecture === "jev" || config.architecture === "llm") {
+      if (config.topK === null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["topK"],
+          message: "is required",
+        });
+      } else if (config.topK > config.toolspaceSize) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["topK"],
+          message: "must be less than or equal to toolspaceSize",
+        });
+      }
+      if (config.router === null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["router"],
+          message: "is required",
+        });
+      }
+    }
+
+    if (
+      config.architecture === "mock" &&
+      config.topK !== null &&
+      config.topK > config.toolspaceSize
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["topK"],
+        message: "must be less than or equal to toolspaceSize",
+      });
+    }
+  });
+
+function rejectUnpinnedModel(model: string, path: string[], ctx: z.RefinementCtx): void {
+  if (!UNPINNED_JEV_MODELS.has(model)) return;
+  ctx.addIssue({
+    code: z.ZodIssueCode.custom,
+    path,
+    message: "must be a pinned model id",
+  });
+}
+
+export class ConfigError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ConfigError";
+  }
+}
+
+export function parseExperimentConfig(input: unknown): ExperimentConfig {
+  const parsed = experimentConfigSchema.safeParse(input);
+  if (!parsed.success) {
+    throw new ConfigError(formatIssues(parsed.error));
+  }
+  return parsed.data;
+}
+
+function formatIssues(error: z.ZodError): string {
+  return error.issues
+    .map((issue) => {
+      const field = issue.path.join(".") || "(root)";
+      return `${field}: ${issue.message}`;
+    })
+    .join("\n");
+}
