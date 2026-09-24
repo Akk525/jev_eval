@@ -10,7 +10,8 @@ M3 — Toolspace Scaling
 
 - #1–#30 — M0–M2 closed on `main` (including live LLM path).
 - #31 Expand catalog to 100 tools — on `main`.
-- #32 Harden per-task nested toolspace construction for N=5..100 — on `main`. `SCALING_TOOLSPACE_SIZES`, invalid-N rejection, catalog nesting tests.
+- #32 Harden nested toolspaces for N=5..100 — on `main`.
+- #33 Validate and extend the dataset for scaling — on `main`. `datasets/v0.2/tasks.jsonl` (78 tasks); v0.1 kept for slice configs.
 
 ## Issue currently being worked on
 
@@ -18,12 +19,12 @@ None.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D11). Formal scaling sizes are `{5, 10, 25, 50, 100}`; other positive integers (e.g. N=20) remain constructible. Non-positive / non-integer N throws `ToolspaceError`.
+Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separately from the M1/M2 vertical-slice file. Labels are not model-tuned (D7).
 
 ## Known problems
 
 - Live runs cost money and are not part of CI.
-- `datasets/v0.1/` still labels the original 20-tool slice; #33 reviews/extends tasks for scaling.
+- Example configs still point at `datasets/v0.1/`; N-matrix configs (#34) should use v0.2.
 - M5 blocked on real calibration-bearing result directories.
 - Fixed N for M4 k-sweep not locked (#39).
 
@@ -34,6 +35,6 @@ Accepted in `docs/DECISIONS.md` (D1–D11). Formal scaling sizes are `{5, 10, 25
 
 ## Next recommended issue
 
-#33 Validate and extend the dataset for the scaling experiment
+#34 Add N-matrix experiment configurations
 
-https://github.com/Akk525/jev_eval/issues/33
+https://github.com/Akk525/jev_eval/issues/34

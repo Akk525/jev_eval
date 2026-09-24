@@ -1,12 +1,20 @@
-# Dataset v0.1
+# Dataset versions
 
-`datasets/v0.1/tasks.jsonl` is the first labeled slice: 50 single-step tasks over the original 20-tool vertical-slice set. The registry now has 100 tools for M3 scaling; later dataset versions may label against the full catalog. This file is not the later ~500-task set.
+## v0.1 — vertical slice
+
+`datasets/v0.1/tasks.jsonl` is the first labeled slice: 50 single-step tasks over the original 20-tool vertical-slice set. M1/M2 example configs still point here.
 
 Labels were written from the tool descriptions and `src/tools/fixtures/catalog.ts`. They were not revised from model output.
 
+## v0.2 — scaling experiment
+
+`datasets/v0.2/tasks.jsonl` is the M3 scaling set. It carries the audited v0.1 tasks (with `metadata.origin: v0.1`) and adds tasks for chat, docs, crm, tasks, plus a few expanded tools from the 100-tool registry. Every task is single-step, resolves against the current catalog, and has a reproducible nested distractor set at `N ∈ {5, 10, 25, 50, 100}`.
+
+Prompts do not contain required tool ids and do not copy `routingSummary` verbatim. Labels were not taken from model scores (D7). Volume was not padded to a round number.
+
 ## Required, acceptable, irrelevant
 
-`required_tools` is the tool the label treats as necessary. In this slice that list has one name, and `expected_sequence` is that same name.
+`required_tools` is the tool the label treats as necessary. In these slices that list has one name, and `expected_sequence` is that same name.
 
 `acceptable_tools` are other tools that could reasonably satisfy the request. They count toward execution success and lenient recall. They do not count as primary Recall@k hits.
 
@@ -20,6 +28,6 @@ Ambiguous tasks have a non-empty `acceptable_tools` list. Explicit and implicit 
 
 If `expected_arguments` is absent, `R3` does not apply to that task.
 
-## What this slice does not label
+## What these slices do not label
 
 Multi-step sequences, end-to-end answers, and a second tool call. Those wait until single-step routing has been run.
