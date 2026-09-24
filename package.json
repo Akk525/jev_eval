@@ -17,6 +17,7 @@
     "analysis:dataset": "tsx src/cli/analysis-dataset.ts",
     "analysis:figure1": "tsx src/cli/analysis-figure1.ts",
     "analysis:figure2": "tsx src/cli/analysis-figure2.ts",
+    "analysis:figure3": "tsx src/cli/analysis-figure3.ts",
     "generate:matrix": "tsx scripts/generate-n-matrix.ts",
     "generate:k-sweep": "tsx scripts/generate-k-sweep.ts"
   },

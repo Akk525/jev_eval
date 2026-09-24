@@ -55,3 +55,4 @@ confidence / top-1 probability kept distinct per D4).
 
 * Figure 1 (ESR vs N): `docs/figure1-esr.md` — `npm run analysis:figure1`
 * Figure 2 (cost + tokens vs N): `docs/figure2-cost-tokens.md` — `npm run analysis:figure2`
+* Figure 3 (latency vs N): `docs/figure3-latency.md` — `npm run analysis:figure3`
