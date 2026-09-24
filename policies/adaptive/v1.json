@@ -1,0 +1,55 @@
+{
+  "version": "adaptive-policy-v1",
+  "status": "thresholds_locked",
+  "confidence_field": "confidence",
+  "never_use_top1_probability_as_confidence": true,
+  "branches": [
+    {
+      "id": "high",
+      "description": "confidence >= 0.6",
+      "action": {
+        "type": "jev_topk",
+        "k": 1
+      }
+    },
+    {
+      "id": "medium",
+      "description": "T_low <= confidence < T_high",
+      "action": {
+        "type": "jev_topk",
+        "k": 5
+      }
+    },
+    {
+      "id": "low",
+      "description": "confidence < 0.5",
+      "action": {
+        "type": "escalate",
+        "target": "llm_topk",
+        "k": 5
+      }
+    }
+  ],
+  "thresholds": {
+    "T_low": 0.5,
+    "T_high": 0.6
+  },
+  "threshold_source": {
+    "development_results_dir": "results/2026-09-24T040823Z_jev_n20_k5_2e9e789ecba3",
+    "development_split": "even FNV-1a taskId hash",
+    "dataset_path": "datasets/v0.1/tasks.jsonl",
+    "git_sha": "c1b116760703bea5a5af213308c0a05930ed33bb",
+    "config_hash": "c6ce655b62c1bc145bb6ddb5d142940cb5980719c2ae59643462f140e4d571e7",
+    "objective": {
+      "dev_hit_rate": 1,
+      "mean_candidate_count": 3.3461538461538463,
+      "holdout_hit_rate": 0.9166666666666666
+    },
+    "predictive": {
+      "low_conf_hit_rate": 0.625,
+      "high_conf_hit_rate": 1
+    },
+    "notes": "Offline objective is routing-hit rate from stored scores (required tools in branch top-k). Low-confidence escalate without paired LLM ranks is modeled as full toolspace coverage for selection only.",
+    "results_git_sha": "2e9e789ecba3"
+  }
+}

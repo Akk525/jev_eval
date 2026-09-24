@@ -33,7 +33,7 @@ Every quantitative sentence below that is not marked **null** must cite one of:
 | Jev calibration | `analysis/figures/figure5/figure5-calibration.json` |
 | Failure mix | `analysis/figures/figure6/figure6-failures.json` |
 | k tradeoff | `analysis/k-tradeoff.json` from `npm run k-sweep -- --tradeoff` |
-| Adaptive routing | *none until #42 thresholds lock* — see [adaptive-policy.md](adaptive-policy.md) |
+| Adaptive routing | `policies/adaptive/v1.json` (D13 thresholds; eval pending #44) |
 
 If the citation path does not exist or `analysis:audit` fails, the claim is invalid.
 
@@ -107,16 +107,16 @@ Any future decision rule must be versioned separately and kept out of labeling
 
 ### 6. Does Jev confidence provide enough signal for adaptive routing?
 
-**Finding: null — and M5 is deferred.**
+**Finding: thresholds locked; live adaptive ESR still null.**
 
 Expected evidence: Figure 5 calibration of **confidence** and **top-1 probability
 as separate series** ([figure5-calibration.md](figure5-calibration.md), D4), plus
 calibration-bearing result dirs (`npm run check:calibration`).
 
-Adaptive thresholds remain unlocked (`policies/adaptive/v0.pending.json`).
-**Null finding:** there is insufficient locked evidence on `main` to claim that
-confidence supports adaptive routing. Top-1 must not be substituted for
-confidence.
+Adaptive thresholds are locked in `policies/adaptive/v1.json` (D13: `T_low = 0.5`,
+`T_high = 0.6`) from the development split of a live Jev result directory. Live
+adaptive evaluation vs fixed-k (#44) has not run yet, so whether the policy
+improves ESR remains unanswered. Top-1 must not be substituted for confidence (D4).
 
 ---
 
@@ -128,9 +128,9 @@ confidence.
 | “Pre-routing helps at N ≥ …” | **Null** — no crossover claim |
 | “Optimal k = …” | **Negative / refused** — tradeoff only |
 | “Jev is best on accuracy” | **Refused framing** |
-| Adaptive routing from confidence | **Null** — #42/#45 deferred |
+| Adaptive routing from confidence | Thresholds locked (D13); #44/#45 eval pending |
 | Tool-executor latency in Figure 3 | **Unavailable** (not stored; not invented) |
-| M5 adaptive summary tables | **Skipped** (documented on analysis dataset) |
+| M5 adaptive summary tables | **Skipped** until #45 |
 
 ## What this harness *does* establish (non-numeric)
 
@@ -147,7 +147,7 @@ These are implementation facts, not benchmark scores:
 - [x] Negative/null findings are listed explicitly.
 - [x] Narrative does not claim Jev superiority.
 - [x] Links to audit + figure docs.
-- [x] M5 / adaptive claims omitted until thresholds lock.
+- [x] M5 thresholds locked from calibration-bearing dirs (D13); adaptive ESR claims still omitted until #44.
 - [ ] *Operator:* after live runs, fill numeric subsections by citing regenerated JSON only.
 
 ## Related paths

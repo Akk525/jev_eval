@@ -319,3 +319,21 @@ Both example configs use dataset `datasets/v0.1/tasks.jsonl`, toolspace 20, seed
 **Consequences.** Checked-in files live under `configs/k-sweep/`. Changing N or any frozen control after the first k-sweep result directory requires a new version and a DECISIONS entry.
 
 **Date.** 2026-09-23
+
+---
+
+## D13. Adaptive policy thresholds (M5 / #42)
+
+**Decision.** Lock adaptive-routing thresholds at **`T_low = 0.5`**, **`T_high = 0.6`** in `policies/adaptive/v1.json`, selected by the pre-registered grid in [adaptive-policy.md](adaptive-policy.md) on the development split of `results/2026-09-24T040823Z_jev_n20_k5_2e9e789ecba3` (even FNV-1a `taskId` hash). Offline objective is routing-hit rate from stored Jev `scores` + `required_tools`; low-confidence escalate without paired LLM ranks is modeled as full toolspace coverage for selection only. `top1Probability` is never a branch input (D4).
+
+**Reason.** `npm run check:calibration` reported usable calibration-bearing Jev dirs. Development high-confidence third hit rate (1.0) exceeded the low-confidence third (0.625) at probe k = 1, so the negative-result abort did not fire. Among grid pairs with perfect development hit rate, `(0.5, 0.6)` minimized mean candidate count (~3.35).
+
+**Alternatives considered.**
+
+* Leaving `v0.pending.json` forever. Rejected once live calibration existed; #43 needs concrete thresholds.
+* Tuning on the full directory or the odd-hash holdout. Rejected (D7 / pre-registered split).
+* Using observed ESR instead of routing-hit from scores. Rejected for threshold selection because stored attempts were all run at fixed k = 5; k = 1 / escalate ESR is not labeled offline.
+
+**Consequences.** #43 may implement the adaptive `Router` against `policies/adaptive/v1.json`. Final adaptive evaluation dirs must be disjoint from the cited development directory. Changing thresholds requires a new policy version and a new DECISIONS entry.
+
+**Date.** 2026-09-24

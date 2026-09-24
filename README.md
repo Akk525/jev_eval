@@ -104,10 +104,11 @@ npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out anal
 npm run k-sweep -- --tradeoff --results /tmp/jev-ksweep --out analysis/k-tradeoff.json
 ```
 
-Adaptive policy readiness (M5 / #42) — fails until real Jev calibration dirs exist:
+Adaptive policy (M5 / #42) — thresholds locked in `policies/adaptive/v1.json` (D13):
 
 ```bash
 npm run check:calibration -- --results results
+npm run select:adaptive-thresholds -- --results <jev-result-dir> --write-policy policies/adaptive/v1.json
 ```
 
 No invented benchmark numbers. Conclusions come from result directories only.
@@ -143,6 +144,6 @@ npm run analysis:figure6 -- --dataset analysis/dataset/analysis-dataset.json
 | Jev vs baseline/LLM on ESR, cost, tokens, latency | **Null** | Figures 1–3 |
 | Failure movement under pre-routing | **Null** | `figure6-failures.json` (R0 separate) |
 | k tradeoff | **Null**; no optimal-k claim | `k-tradeoff.json`, `figure4-recall.json` |
-| Confidence for adaptive routing | **Null**; M5 deferred | `figure5-calibration.json`, `check:calibration` |
+| Confidence for adaptive routing | Thresholds locked (`T_low=0.5`, `T_high=0.6`); live adaptive ESR still pending #44 | `policies/adaptive/v1.json`, `figure5-calibration.json` |
 
 The project is not framed as proving that Jev is better than an LLM. Negative results are results.

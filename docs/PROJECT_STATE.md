@@ -1,42 +1,39 @@
 # Project state
 
-Snapshot date: 2026-09-23
+Snapshot date: 2026-09-24
 
 ## Current milestone
 
-M6 — Analysis + Publication (**complete** for pipeline / narrative; live numbers pending)
+M5 — Adaptive Routing (thresholds locked; router implementation next)
 
 ## Completed issues
 
 - #1–#41 — M0–M4 path on `main`.
-- #42 — scaffolding only; thresholds not locked (**still open**).
-- #46–#53 — analysis dataset, figures 1–6, reproducibility audit.
-- #54 — technical report + README Results section (null findings until result dirs).
+- #42 — adaptive thresholds locked in `policies/adaptive/v1.json` (D13).
+- #46–#54 — M6 analysis pipeline + publication report (null findings until more arches/figures regenerate from live dirs).
 
 ## Issue currently being worked on
 
-None (landing #54).
+None (landing #42). Next: #43 adaptive `Router`.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D12). Publication narrative answers all six research questions with **null** findings where artifacts are absent. No “Jev wins” framing.
+Accepted in `docs/DECISIONS.md` (D1–D13). Adaptive branches use provider `confidence` only (D4). OpenAI Chat Completions tool calls send `reasoning_effort: "none"` for `gpt-5.6-sol`.
 
 ## Known problems
 
 - Live runs cost money and are not part of CI.
-- **No calibration-bearing / scaling result directories in-repo** → no published curves; M5 still blocked.
+- Only the Jev N=20 k=5 vertical slice has a successful live agent run so far; baseline and LLM-router comparison dirs are still missing for a full three-way paper story.
 - Some slice example configs still point at `datasets/v0.1/`; matrix/k-sweep use v0.2.
+- Local `results/` are gitignored; threshold_source cites a path that must be retained on disk for audit.
 
 ## Open questions
 
-- Adaptive policy thresholds (#42) after real calibration results.
-- Fill [docs/TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) numeric subsections only from regenerated figure JSON.
+- #43–#45 adaptive implementation and eval vs fixed-k.
+- Fill [docs/TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) numeric subsections only from regenerated figure JSON once baseline/LLM dirs exist.
 
 ## Next recommended action
 
-1. Run matrix / k-sweep (mock or live) into a results root.
-2. `analysis:dataset` → `analysis:audit` → figures 1–6.
-3. Cite those paths when updating the technical report with numbers.
-4. Optionally resume M5 when `check:calibration` passes.
-
-M6 critical path through #54 is closed on `main` for documentation/pipeline. Experimental conclusions await data.
+1. #43 — Implement adaptive router reading `policies/adaptive/v1.json`.
+2. Optionally run baseline + LLM live slices for three-way figures.
+3. #44 / #45 — Evaluate adaptive against fixed-k and add summary tables (disjoint from the #42 development dir).
