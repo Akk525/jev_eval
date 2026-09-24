@@ -33,7 +33,7 @@ Every quantitative sentence below that is not marked **null** must cite one of:
 | Jev calibration | `analysis/figures/figure5/figure5-calibration.json` |
 | Failure mix | `analysis/figures/figure6/figure6-failures.json` |
 | k tradeoff | `analysis/k-tradeoff.json` from `npm run k-sweep -- --tradeoff` |
-| Adaptive routing | `policies/adaptive/v1.json` + `npm run adaptive-eval -- --summarize` ([adaptive-eval.md](adaptive-eval.md)) |
+| Adaptive routing | `analysis/adaptive/adaptive-summary.json` via `npm run analysis:adaptive` ([adaptive-summary-tables.md](adaptive-summary-tables.md)) |
 
 If the citation path does not exist or `analysis:audit` fails, the claim is invalid.
 
@@ -128,9 +128,9 @@ improves ESR remains unanswered. Top-1 must not be substituted for confidence (D
 | “Pre-routing helps at N ≥ …” | **Null** — no crossover claim |
 | “Optimal k = …” | **Negative / refused** — tradeoff only |
 | “Jev is best on accuracy” | **Refused framing** |
-| Adaptive routing from confidence | Thresholds locked (D13); mock eval harness ready (#44); live headline pending |
+| Adaptive routing from confidence | Thresholds locked (D13); summary tables ready (#45); live headline pending |
 | Tool-executor latency in Figure 3 | **Unavailable** (not stored; not invented) |
-| M5 adaptive summary tables | **Skipped** until #45 |
+| M5 adaptive summary tables | **Ready** — `npm run analysis:adaptive` when adaptive-eval dirs exist |
 
 ## What this harness *does* establish (non-numeric)
 

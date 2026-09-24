@@ -16,7 +16,7 @@ if (values.help) {
 
 Build one normalized analysis dataset from immutable result directories.
 Does not rewrite runs.jsonl. Fails loud on scientific-control mismatches.
-Documents M5 adaptive-table skip while #42/#45 remain deferred.
+Documents M5 adaptive-table status (present when adaptive-eval dirs exist).
 
 --results <dir>   Result root. Default: results.
 --out <dir>       Output directory. Default: analysis/dataset.

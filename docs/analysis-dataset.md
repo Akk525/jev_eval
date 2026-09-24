@@ -37,11 +37,12 @@ controls belong in one dataset.
 
 Mismatch → `AnalysisDatasetError` naming both directories and differing fields.
 
-## M5 skip
+## M5 adaptive tables
 
-While adaptive policy thresholds (#42) are unlocked, `#45` adaptive routing
-summary tables are documented as skipped (`m5_adaptive_tables: "skipped"`).
-Revisit when adaptive eval dirs exist.
+`m5_adaptive_tables` is `"present"` when the results root includes an
+adaptive-eval directory (`architecture=adaptive` + `policies/adaptive/v1.json`);
+otherwise `"skipped"` with `m5_skip_reason`. Regenerate tables with
+`npm run analysis:adaptive` ([adaptive-summary-tables.md](adaptive-summary-tables.md)).
 
 ## Attempt fields
 
@@ -59,4 +60,5 @@ confidence / top-1 probability kept distinct per D4).
 * Figure 4 (Recall@k vs k): `docs/figure4-recall.md` — `npm run analysis:figure4`
 * Figure 5 (Jev calibration): `docs/figure5-calibration.md` — `npm run analysis:figure5`
 * Figure 6 (failure decomposition): `docs/figure6-failures.md` — `npm run analysis:figure6`
+* Adaptive summary tables (M5 / #45): `docs/adaptive-summary-tables.md` — `npm run analysis:adaptive`
 * Reproducibility audit: `docs/reproducibility-audit.md` — `npm run analysis:audit`

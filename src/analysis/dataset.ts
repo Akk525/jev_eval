@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { ADAPTIVE_EVAL_POLICY_PATH, ADAPTIVE_EVAL_TOOLSPACE_SIZE } from "../config/adaptive-eval.js";
 import { discoverResultDirectories } from "./scaling-tables.js";
 import type { ExperimentConfig } from "../types/config.js";
 import type { RunRecord } from "../results/writer.js";
@@ -89,11 +90,11 @@ export interface AnalysisDataset {
   compatibility: AnalysisCompatibilityKey;
   source_directories: string[];
   /**
-   * #45 adaptive routing summary tables are optional while M5 is deferred.
-   * Documented skip until calibration-bearing adaptive eval dirs exist.
+   * #45 adaptive routing summary tables.
+   * `"present"` when adaptive-eval result dirs are in the results root; otherwise `"skipped"`.
    */
-  m5_adaptive_tables: "skipped";
-  m5_skip_reason: string;
+  m5_adaptive_tables: "skipped" | "present";
+  m5_skip_reason: string | null;
   attempt_count: number;
   attempts: NormalizedAttempt[];
 }
@@ -106,7 +107,10 @@ export class AnalysisDatasetError extends Error {
 }
 
 export const M5_SKIP_REASON =
-  "M5 adaptive routing summary tables (#45) skipped: adaptive policy thresholds (#42) are not locked and no adaptive eval dirs are expected yet.";
+  "M5 adaptive routing summary tables (#45) skipped: no adaptive-eval result directories (architecture=adaptive + policies/adaptive/v1.json) under the results root.";
+
+export const M5_PRESENT_NOTE =
+  "M5 adaptive routing summary tables (#45) available — regenerate with npm run analysis:adaptive -- --results <root>.";
 
 /**
  * Build one normalized analysis dataset from immutable result directories.
@@ -146,14 +150,16 @@ export function buildAnalysisDatasetFromLoads(
     }
   }
 
+  const hasAdaptiveEval = loads.some((load) => isAdaptiveEvalDir(load.config));
+
   return {
     version: 1,
     built_at: now().toISOString(),
     results_root: resolve(resultsRoot || "."),
     compatibility: first,
     source_directories: loads.map((load) => load.directory).sort(),
-    m5_adaptive_tables: "skipped",
-    m5_skip_reason: M5_SKIP_REASON,
+    m5_adaptive_tables: hasAdaptiveEval ? "present" : "skipped",
+    m5_skip_reason: hasAdaptiveEval ? null : M5_SKIP_REASON,
     attempt_count: attempts.length,
     attempts,
   };
@@ -316,4 +322,13 @@ function readRunRecords(path: string): RunRecord[] {
     .split("\n")
     .filter((line) => line.trim() !== "")
     .map((line) => JSON.parse(line) as RunRecord);
+}
+
+function isAdaptiveEvalDir(config: ExperimentConfig): boolean {
+  return (
+    config.architecture === "adaptive" &&
+    config.toolspaceSize === ADAPTIVE_EVAL_TOOLSPACE_SIZE &&
+    config.adaptivePolicyPath === ADAPTIVE_EVAL_POLICY_PATH &&
+    config.routerOnly !== true
+  );
 }

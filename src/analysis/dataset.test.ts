@@ -11,6 +11,7 @@ import {
   type AnalysisDirectoryLoad,
   type StoredExperimentConfig,
 } from "./dataset.js";
+import { buildAdaptiveEvalConfig } from "../config/adaptive-eval.js";
 import type { RunRecord } from "../results/writer.js";
 
 function run(overrides: Partial<RunRecord> = {}): RunRecord {
@@ -191,6 +192,22 @@ describe("buildAnalysisDataset", () => {
       },
     ];
     expect(() => buildAnalysisDatasetFromLoads(loads)).toThrow(/agentModel: gpt-5\.6-sol vs gpt-other/);
+  });
+
+  it("marks m5 adaptive tables present when an adaptive-eval dir is included", () => {
+    const config: StoredExperimentConfig = {
+      ...buildAdaptiveEvalConfig("adaptive"),
+      configHash: "hash-a",
+      datasetVersion: "1",
+      registryHash: "registry-a",
+      gitSha: "abc1234",
+    };
+    const dataset = buildAnalysisDatasetFromLoads(
+      [{ directory: "/tmp/adaptive-n20", config, runs: [run()] }],
+      "/tmp/results",
+    );
+    expect(dataset.m5_adaptive_tables).toBe("present");
+    expect(dataset.m5_skip_reason).toBeNull();
   });
 
   it("discovers fixture dirs on disk and writes analysis artifacts", () => {

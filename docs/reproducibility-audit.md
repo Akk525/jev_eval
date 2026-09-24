@@ -88,7 +88,7 @@ Reviewed against [methodology.md](methodology.md) and [DECISIONS.md](DECISIONS.m
 | Prompt version field | Brief versioning after first result mentions prompt versions | No separate `promptVersion` on configs; agent pin + registry hash stand in (#46) | Documented in analysis-dataset schema; still required before changing prompts post-results (D7) |
 | Tool-executor latency | Figure 3 “where useful expose tool latency” | Not stored on attempts | Figure 3 marks `tool_latency: "unavailable"` — not invented |
 | End-to-end Task Success / R5 | Later milestone | Not implemented; ESR used; R5/R6 only when emitted | Figures and methodology already say so |
-| M5 adaptive tables (#45) | Optional dependency of #46 | **Skipped** — thresholds unlocked (#42 open); no adaptive dirs | `m5_adaptive_tables: "skipped"` on analysis dataset |
+| M5 adaptive tables (#45) | Optional dependency of #46 | **Present** when adaptive-eval dirs exist; else skipped with reason | `m5_adaptive_tables` on analysis dataset; `npm run analysis:adaptive` |
 | Publication conclusions (#54) | After this audit | Not started | Blocked on real result dirs + this audit |
 
 ### Audit result (pipeline)

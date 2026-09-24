@@ -4,7 +4,7 @@ Snapshot date: 2026-09-24
 
 ## Current milestone
 
-M5 — Adaptive Routing (eval harness landed; live adaptive-vs-fixed-k optional)
+M5 — Adaptive Routing (**complete** for harness + summary tables; live headline numbers optional)
 
 ## Completed issues
 
@@ -12,11 +12,12 @@ M5 — Adaptive Routing (eval harness landed; live adaptive-vs-fixed-k optional)
 - #42 — adaptive thresholds locked in `policies/adaptive/v1.json` (D13).
 - #43 — adaptive `Router` behind the existing interface; run records carry branch/k/escalation.
 - #44 — adaptive vs fixed-k eval configs, holdout split, aggregator, mock path.
+- #45 — adaptive summary tables (comparison + branch usage; no superiority claim).
 - #46–#54 — M6 analysis pipeline + publication report (null findings until more arches/figures regenerate from live dirs).
 
 ## Issue currently being worked on
 
-None (landing #44). Next: #45 adaptive routing summary tables.
+None (landing #45). M5 critical path through #45 is closed on `main`.
 
 ## Important implementation decisions
 
@@ -31,11 +32,10 @@ Accepted in `docs/DECISIONS.md` (D1–D13). Adaptive branches use provider `conf
 
 ## Open questions
 
-- #45 adaptive summary tables for publication.
-- Fill [docs/TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) numeric subsections only from regenerated figure JSON once live adaptive-eval dirs exist.
+- Fill [docs/TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) numeric subsections only from regenerated figure / adaptive-summary JSON once live dirs exist.
 
 ## Next recommended action
 
-1. #45 — Adaptive routing summary tables (consume `npm run adaptive-eval -- --summarize` output).
-2. Optionally run `npm run adaptive-eval -- --results results` live for headline numbers.
-3. Optionally run baseline + LLM live slices for three-way figures.
+1. Optionally run `npm run adaptive-eval -- --results results` then `npm run analysis:adaptive`.
+2. Optionally run baseline + LLM live slices for three-way figures 1–6.
+3. Regenerate TECHNICAL_REPORT numeric subsections from artifact JSON only.

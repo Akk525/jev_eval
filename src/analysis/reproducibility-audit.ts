@@ -192,9 +192,12 @@ function provenanceChecks(dataset: AnalysisDataset): AuditCheck[] {
     detail: JSON.stringify(dataset.compatibility),
   });
   checks.push({
-    id: "m5_skip_documented",
-    ok: dataset.m5_adaptive_tables === "skipped",
-    detail: dataset.m5_skip_reason,
+    id: "m5_adaptive_tables_status",
+    ok: dataset.m5_adaptive_tables === "skipped" || dataset.m5_adaptive_tables === "present",
+    detail:
+      dataset.m5_adaptive_tables === "present"
+        ? "present — regenerate with npm run analysis:adaptive"
+        : (dataset.m5_skip_reason ?? "skipped"),
   });
 
   if (dataset.attempts.length === 0) {

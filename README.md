@@ -111,10 +111,10 @@ Adaptive policy (M5 / #42–#44) — thresholds locked; compare adaptive vs fixe
 npm run check:calibration -- --results results
 npm run select:adaptive-thresholds -- --results <jev-result-dir> --write-policy policies/adaptive/v1.json
 npm run adaptive-eval -- --mock --results /tmp/jev-adaptive-eval
-npm run adaptive-eval -- --summarize --results /tmp/jev-adaptive-eval --out analysis/adaptive-eval.json
+npm run analysis:adaptive -- --results /tmp/jev-adaptive-eval --out analysis/adaptive
 ```
 
-See [docs/adaptive-eval.md](docs/adaptive-eval.md).
+See [docs/adaptive-eval.md](docs/adaptive-eval.md) and [docs/adaptive-summary-tables.md](docs/adaptive-summary-tables.md).
 
 No invented benchmark numbers. Conclusions come from result directories only.
 
@@ -149,6 +149,6 @@ npm run analysis:figure6 -- --dataset analysis/dataset/analysis-dataset.json
 | Jev vs baseline/LLM on ESR, cost, tokens, latency | **Null** | Figures 1–3 |
 | Failure movement under pre-routing | **Null** | `figure6-failures.json` (R0 separate) |
 | k tradeoff | **Null**; no optimal-k claim | `k-tradeoff.json`, `figure4-recall.json` |
-| Confidence for adaptive routing | Thresholds locked (`T_low=0.5`, `T_high=0.6`); live adaptive ESR still pending #44 | `policies/adaptive/v1.json`, `figure5-calibration.json` |
+| Confidence for adaptive routing | Thresholds locked; summary tables regenerable; live adaptive ESR optional | `policies/adaptive/v1.json`, `analysis/adaptive/adaptive-summary.json` |
 
 The project is not framed as proving that Jev is better than an LLM. Negative results are results.

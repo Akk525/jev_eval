@@ -31,9 +31,10 @@ npm run adaptive-eval -- --dry-run
 npm run adaptive-eval -- --validate
 npm run adaptive-eval -- --mock --results /tmp/jev-adaptive-eval
 npm run adaptive-eval -- --summarize --results /tmp/jev-adaptive-eval --out analysis/adaptive-eval.json
-# live (outside CI):
-npm run adaptive-eval -- --results results
+npm run analysis:adaptive -- --results /tmp/jev-adaptive-eval --out analysis/adaptive
 ```
+
+Summary tables for publication: [adaptive-summary-tables.md](adaptive-summary-tables.md).
 
 Configs: `configs/adaptive-eval/*.yaml`.
 

@@ -23,6 +23,7 @@
     "analysis:figure4": "tsx src/cli/analysis-figure4.ts",
     "analysis:figure5": "tsx src/cli/analysis-figure5.ts",
     "analysis:figure6": "tsx src/cli/analysis-figure6.ts",
+    "analysis:adaptive": "tsx src/cli/analysis-adaptive.ts",
     "analysis:audit": "tsx src/cli/analysis-audit.ts",
     "generate:matrix": "tsx scripts/generate-n-matrix.ts",
     "generate:k-sweep": "tsx scripts/generate-k-sweep.ts"
