@@ -57,3 +57,4 @@ confidence / top-1 probability kept distinct per D4).
 * Figure 2 (cost + tokens vs N): `docs/figure2-cost-tokens.md` — `npm run analysis:figure2`
 * Figure 3 (latency vs N): `docs/figure3-latency.md` — `npm run analysis:figure3`
 * Figure 4 (Recall@k vs k): `docs/figure4-recall.md` — `npm run analysis:figure4`
+* Figure 5 (Jev calibration): `docs/figure5-calibration.md` — `npm run analysis:figure5`

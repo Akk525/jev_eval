@@ -15,14 +15,15 @@ M6 — Analysis + Publication (M5 adaptive tables deferred)
 - #48 — Figure 2 cost + tokens vs N (`npm run analysis:figure2`).
 - #49 — Figure 3 latency vs N (`npm run analysis:figure3`).
 - #50 — Figure 4 Recall@k vs k (`npm run analysis:figure4`).
+- #51 — Figure 5 Jev calibration (`npm run analysis:figure5`).
 
 ## Issue currently being worked on
 
-None (landing #50).
+None (landing #51).
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D12). Adaptive thresholds must cite a development/held-out source (D7). Confidence ≠ top-1 probability (D4). Strict vs lenient Recall@k stay distinct in Figure 4.
+Accepted in `docs/DECISIONS.md` (D1–D12). Adaptive thresholds must cite a development/held-out source (D7). Confidence ≠ top-1 probability (D4) — Figure 5 calibrates them as separate series.
 
 M5 (#42–#45) stays blocked on calibration-bearing result dirs. M6 documents `#45` as skipped until those dirs exist.
 
@@ -38,8 +39,8 @@ M5 (#42–#45) stays blocked on calibration-bearing result dirs. M6 documents `#
 
 ## Next recommended action
 
-1. With result dirs: `analysis:dataset` then figures 1–4.
-2. Next M6 figure issue: **#51** (calibration figure for Jev probabilities).
+1. With result dirs: `analysis:dataset` then figures 1–5.
+2. Next M6 figure issue: **#52** (failure decomposition figure).
 3. Or unlock M5 with a live Jev calibration-bearing slice when ready.
 
-https://github.com/Akk525/jev_eval/issues/50
+https://github.com/Akk525/jev_eval/issues/51

@@ -43,6 +43,28 @@ export interface CalibrationSummary {
   buckets: CalibrationBucket[];
 }
 
+/** Generic probability-vs-hit calibration (shared buckets / ECE with confidence path). */
+export interface ProbabilityCalibrationBucket {
+  range: string;
+  n: number;
+  mean_probability: number;
+  empirical_hit_rate: number;
+}
+
+export interface ProbabilityCalibrationSummary {
+  scored: number;
+  mean_probability: number | null;
+  empirical_hit_rate: number | null;
+  ece: number | null;
+  buckets: ProbabilityCalibrationBucket[];
+}
+
+export interface ProbabilitySample {
+  probability: number;
+  /** True when primary Recall@k === 1. */
+  hit: boolean;
+}
+
 /**
  * Per-repetition quality rates, then mean / sample stddev / 95% CI across repetitions.
  * Null when fewer than two distinct repetition indexes appear in the raw runs.
@@ -171,52 +193,77 @@ export function aggregateByRepetition(runs: readonly AggregateRun[]): Repetition
 }
 
 /**
- * Compare provider confidence to empirical routing hits (recallAtK === 1).
- * Attempts without confidence stay out of the calibration denominator.
+ * Bucketed calibration of a predicted probability against binary hits.
+ * Uses the same fixed probability buckets and ECE definition as provider-confidence calibration.
  */
-export function calibrateConfidence(runs: readonly AggregateRun[]): CalibrationSummary {
-  const scored = runs.filter(
-    (run) => !run.routingExcluded && run.confidence !== null && run.recallAtK !== null,
-  );
-  if (scored.length === 0) {
+export function calibrateProbabilities(
+  samples: readonly ProbabilitySample[],
+): ProbabilityCalibrationSummary {
+  if (samples.length === 0) {
     return {
       scored: 0,
-      mean_confidence: null,
+      mean_probability: null,
       empirical_hit_rate: null,
       ece: null,
       buckets: [],
     };
   }
 
-  const hits = scored.map((run) => (run.recallAtK === 1 ? 1 : 0));
-  const confidences = scored.map((run) => run.confidence as number);
-  const buckets: CalibrationBucket[] = [];
+  const buckets: ProbabilityCalibrationBucket[] = [];
   let ece = 0;
 
   for (const bucket of CONFIDENCE_BUCKETS) {
-    const inBucket = scored.filter((run) => {
-      const confidence = run.confidence as number;
-      if (bucket.last === true) return confidence >= bucket.low && confidence <= bucket.high;
-      return confidence >= bucket.low && confidence < bucket.high;
+    const inBucket = samples.filter((sample) => {
+      if (bucket.last === true) {
+        return sample.probability >= bucket.low && sample.probability <= bucket.high;
+      }
+      return sample.probability >= bucket.low && sample.probability < bucket.high;
     });
     if (inBucket.length === 0) continue;
-    const meanConfidence = mean(inBucket.map((run) => run.confidence as number));
-    const empiricalHitRate = mean(inBucket.map((run) => (run.recallAtK === 1 ? 1 : 0)));
+    const meanProbability = mean(inBucket.map((sample) => sample.probability));
+    const empiricalHitRate = mean(inBucket.map((sample) => (sample.hit ? 1 : 0)));
     buckets.push({
       range: bucket.label,
       n: inBucket.length,
-      mean_confidence: meanConfidence,
+      mean_probability: meanProbability,
       empirical_hit_rate: empiricalHitRate,
     });
-    ece += (inBucket.length / scored.length) * Math.abs(meanConfidence - empiricalHitRate);
+    ece += (inBucket.length / samples.length) * Math.abs(meanProbability - empiricalHitRate);
   }
 
   return {
-    scored: scored.length,
-    mean_confidence: mean(confidences),
-    empirical_hit_rate: mean(hits),
+    scored: samples.length,
+    mean_probability: mean(samples.map((sample) => sample.probability)),
+    empirical_hit_rate: mean(samples.map((sample) => (sample.hit ? 1 : 0))),
     ece,
     buckets,
+  };
+}
+
+/**
+ * Compare provider confidence to empirical routing hits (recallAtK === 1).
+ * Attempts without confidence stay out of the calibration denominator.
+ * Top-1 probability is never substituted for confidence (D4).
+ */
+export function calibrateConfidence(runs: readonly AggregateRun[]): CalibrationSummary {
+  const samples: ProbabilitySample[] = runs
+    .filter((run) => !run.routingExcluded && run.confidence !== null && run.recallAtK !== null)
+    .map((run) => ({
+      probability: run.confidence as number,
+      hit: run.recallAtK === 1,
+    }));
+  const calibrated = calibrateProbabilities(samples);
+  return {
+    scored: calibrated.scored,
+    mean_confidence: calibrated.mean_probability,
+    empirical_hit_rate: calibrated.empirical_hit_rate,
+    ece: calibrated.ece,
+    buckets: calibrated.buckets.map((bucket) => ({
+      range: bucket.range,
+      n: bucket.n,
+      mean_confidence: bucket.mean_probability,
+      empirical_hit_rate: bucket.empirical_hit_rate,
+    })),
   };
 }
 
