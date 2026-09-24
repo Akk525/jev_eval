@@ -58,12 +58,14 @@ it("posts one tool-calling turn and returns the selected tool", async () => {
   const body = JSON.parse(String(calls[0]?.init.body)) as {
     model: string;
     temperature: number;
+    reasoning_effort: string;
     tool_choice: string;
     parallel_tool_calls: boolean;
     tools: Array<{ type: string; function: { name: string; parameters: unknown } }>;
   };
   expect(body.model).toBe("gpt-5.6-sol");
   expect(body.temperature).toBe(0);
+  expect(body.reasoning_effort).toBe("none");
   expect(body.tool_choice).toBe("required");
   expect(body.parallel_tool_calls).toBe(false);
   expect(body.tools).toEqual([

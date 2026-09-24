@@ -24,6 +24,9 @@ export function createOpenAIChatProvider(options: OpenAIChatOptions): ChatProvid
         body: JSON.stringify({
           model: options.model,
           temperature: request.temperature,
+          // gpt-5.6-* defaults to medium reasoning; Chat Completions rejects
+          // function tools unless effective effort is none (use Responses otherwise).
+          reasoning_effort: "none",
           messages: [{ role: "user", content: request.prompt }],
           tools: request.tools.map((tool) => ({
             type: "function",
