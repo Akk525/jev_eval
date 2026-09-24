@@ -6,6 +6,11 @@ import {
   kSweepTablesToCsv,
   kSweepTablesToJson,
 } from "../analysis/k-sweep-tables.js";
+import {
+  buildKTradeoffTable,
+  kTradeoffTableToCsv,
+  kTradeoffTableToJson,
+} from "../analysis/k-tradeoff.js";
 import { enumerateKSweepCells } from "../config/k-sweep.js";
 import { loadExperimentConfig } from "../config/load.js";
 import { MatrixOrchestratorError } from "../eval/runner/matrix.js";
@@ -22,6 +27,7 @@ const { values } = parseArgs({
     only: { type: "string", multiple: true },
     validate: { type: "boolean", default: false },
     summarize: { type: "boolean", default: false },
+    tradeoff: { type: "boolean", default: false },
     format: { type: "string", default: "json" },
     out: { type: "string" },
   },
@@ -42,15 +48,17 @@ Manifests live under <results>/_k-sweep/.
 --timestamp <id>    Shared result timestamp / manifest id.
 --only <config>     Restrict to one or more repo-relative k-sweep configs.
 --validate          Load every selected k-sweep config and exit.
---summarize         Rebuild per-k aggregates from result dirs (no new runs).
---format json|csv   Summarize output format. Default: json.
---out <file>        Write summarize output to this path (default: stdout).
+--summarize         Rebuild full per-k aggregates from result dirs (no new runs).
+--tradeoff          Rebuild the compact k tradeoff table (no optimal-k claim).
+--format json|csv   Summarize/tradeoff output format. Default: json.
+--out <file>        Write summarize/tradeoff output to this path (default: stdout).
 
 Examples:
   npm run k-sweep -- --dry-run
   npm run k-sweep -- --validate
   npm run k-sweep -- --mock --results /tmp/jev-ksweep
   npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out analysis/k-sweep.csv
+  npm run k-sweep -- --tradeoff --results /tmp/jev-ksweep --out analysis/k-tradeoff.json
 `);
   process.exit(0);
 }
@@ -77,16 +85,30 @@ try {
     process.exit(0);
   }
 
-  if (values.summarize) {
+  if (values.summarize && values.tradeoff) {
+    throw new Error("pass only one of --summarize or --tradeoff");
+  }
+
+  if (values.summarize || values.tradeoff) {
     const format = values.format === "csv" ? "csv" : values.format === "json" ? "json" : null;
     if (format === null) throw new Error(`unknown format: ${values.format}`);
-    const tables = buildKSweepTables(resolve(values.results));
-    const text = format === "csv" ? kSweepTablesToCsv(tables) : kSweepTablesToJson(tables);
+    const resultsRoot = resolve(values.results);
+    let text: string;
+    let rowCount: number;
+    if (values.tradeoff) {
+      const table = buildKTradeoffTable(resultsRoot);
+      text = format === "csv" ? kTradeoffTableToCsv(table) : kTradeoffTableToJson(table);
+      rowCount = table.rows.length;
+    } else {
+      const tables = buildKSweepTables(resultsRoot);
+      text = format === "csv" ? kSweepTablesToCsv(tables) : kSweepTablesToJson(tables);
+      rowCount = tables.rows.length;
+    }
     if (values.out) {
       const outPath = resolve(values.out);
       mkdirSync(dirname(outPath), { recursive: true });
       writeFileSync(outPath, text);
-      console.log(`wrote ${tables.rows.length} row(s) to ${outPath}`);
+      console.log(`wrote ${rowCount} row(s) to ${outPath}`);
     } else {
       process.stdout.write(text);
     }

@@ -11,7 +11,8 @@ M4 — Top-k Ablations
 - #1–#30 — M0–M2 closed on `main` (including live LLM path).
 - #31–#38 — M3 scaling path on `main` (catalog, toolspaces, v0.2, N-matrix, orchestration, reps/stats, concurrency, summary tables).
 - #39 Add Jev top-k sweep experiment configs — on `main`. `configs/k-sweep/` at N=25, k∈{1,3,5,10} (D12).
-- #40 Execute and aggregate top-k ablation metrics — on `main`. `npm run k-sweep` (+ `--summarize` per-k JSON/CSV from raw dirs).
+- #40 Execute and aggregate top-k ablation metrics — on `main`. `npm run k-sweep` (+ `--summarize`).
+- #41 Add top-k tradeoff summary table — on `main`. `npm run k-sweep -- --tradeoff` (no optimal-k claim).
 
 ## Issue currently being worked on
 
@@ -19,7 +20,7 @@ None.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D12). M4 k-sweep fixes N=25 and varies only Jev `topK`. Aggregates recompute from `runs.jsonl` only; no optimal-k claim in #40 artifacts.
+Accepted in `docs/DECISIONS.md` (D1–D12). M4 k-sweep fixes N=25 and varies only Jev `topK`. Tradeoff table reports the curve only; `decision_rule` stays null until a versioned rule exists.
 
 ## Known problems
 
@@ -33,6 +34,6 @@ Accepted in `docs/DECISIONS.md` (D1–D12). M4 k-sweep fixes N=25 and varies onl
 
 ## Next recommended issue
 
-#41 Add top-k tradeoff summary table
+#42 Define adaptive-routing policy from calibration results
 
-https://github.com/Akk525/jev_eval/issues/41
+https://github.com/Akk525/jev_eval/issues/42

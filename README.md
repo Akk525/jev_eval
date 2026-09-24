@@ -100,6 +100,7 @@ npm run eval -- --validate --config configs/k-sweep/jev-top1-n25.yaml
 npm run k-sweep -- --dry-run
 npm run k-sweep -- --mock --results /tmp/jev-ksweep
 npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out analysis/k-sweep.csv
+npm run k-sweep -- --tradeoff --results /tmp/jev-ksweep --out analysis/k-tradeoff.json
 ```
 
 No invented benchmark numbers. Conclusions come from result directories only.

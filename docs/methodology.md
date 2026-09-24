@@ -151,6 +151,8 @@ M4 holds every scientific control fixed and varies only Jev `topK ∈ {1, 3, 5, 
 
 `npm run k-sweep` orchestrates those configs serially (manifest under `_k-sweep/`, mock path for CI). `npm run k-sweep -- --summarize` rebuilds per-k aggregates from `runs.jsonl`: strict Recall@k, mean candidate count, selection accuracy, ESR, tokens, cost, and latency. Individual result directories stay immutable; there is no optimal-k claim in the aggregate.
 
+`npm run k-sweep -- --tradeoff` emits the compact tradeoff table for the research question (k vs recall vs context/tokens vs ESR vs cost vs latency), including deltas versus the previous k. The artifact sets `decision_rule: null` and does not choose an optimal k. A future decision rule must be versioned separately and kept out of the evaluation labeling loop.
+
 ## Versioning after the first result
 
 After the first real result directory exists, any methodological change needs a new dataset version, registry hash, prompt version, or pricing version, plus a `docs/DECISIONS.md` entry. Old result directories are never rewritten.
