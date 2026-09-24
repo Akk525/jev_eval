@@ -13,6 +13,7 @@ M3 — Toolspace Scaling
 - #32 Harden nested toolspaces for N=5..100 — on `main`.
 - #33 Validate and extend the dataset for scaling — on `main`. `datasets/v0.2/tasks.jsonl` (78 tasks); v0.1 kept for slice configs.
 - #34 Add N-matrix experiment configurations — on `main`. `configs/matrix/` (15 cells); regenerate via `npm run generate:matrix`.
+- #35 Add scaling experiment runner orchestration — on `main`. `npm run matrix` with dry-run, resume manifests, fail-loud (no silent retries).
 
 ## Issue currently being worked on
 
@@ -20,7 +21,7 @@ None.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separately from the M1/M2 vertical-slice file. Labels are not model-tuned (D7). Matrix scientific fields live in versioned YAML, not runner hard-codes.
+Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separately from the M1/M2 vertical-slice file. Labels are not model-tuned (D7). Matrix scientific fields live in versioned YAML, not runner hard-codes. Matrix orchestration is serial; bounded provider concurrency is #37.
 
 ## Known problems
 
@@ -36,6 +37,6 @@ Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separat
 
 ## Next recommended issue
 
-#35 Add scaling experiment runner orchestration
+#36 Add repetition and statistical aggregation for end-to-end runs
 
-https://github.com/Akk525/jev_eval/issues/35
+https://github.com/Akk525/jev_eval/issues/36

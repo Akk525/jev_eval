@@ -65,4 +65,14 @@ npm run eval -- --validate --config configs/matrix/jev-top5-n100.yaml
 npm run eval -- --validate --config configs/matrix/llm-top5-n50.yaml
 ```
 
+Orchestrate the full matrix (serial cells, resume via `_matrix/<timestamp>.json`, no silent retries). Individual cells remain runnable with `npm run eval`:
+
+```bash
+npm run matrix -- --dry-run
+npm run matrix -- --validate
+npm run matrix -- --mock --results /tmp/jev-matrix
+npm run matrix -- --mock --resume --timestamp <id> --results /tmp/jev-matrix
+npm run eval -- --config configs/matrix/baseline-n5.yaml --mock
+```
+
 No invented benchmark numbers. Conclusions come from result directories only.

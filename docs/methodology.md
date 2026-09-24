@@ -125,6 +125,10 @@ If a denominator is 0, the rate is null, not 0. An attempt is counted once. The 
 
 `runs.jsonl` is the measurement record. Memora is an optional best-effort mirror. A Memora failure does not change the failure class and does not prevent the run append. Result directories are immutable. Resume is allowed only when the config hash matches.
 
+## N-matrix orchestration
+
+`npm run matrix` runs the checked-in `configs/matrix/` cells serially. A manifest under `<results>/_matrix/<timestamp>.json` records per-cell status. `--resume` skips completed and failed cells and continues pending/running ones (partial result dirs use the existing config-hash resume rules). Failed cells are not retried unless the operator starts a new matrix run. A single cell can still be executed with `npm run eval -- --config configs/matrix/...`.
+
 ## Versioning after the first result
 
 After the first real result directory exists, any methodological change needs a new dataset version, registry hash, prompt version, or pricing version, plus a `docs/DECISIONS.md` entry. Old result directories are never rewritten.
