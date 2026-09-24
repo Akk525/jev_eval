@@ -1,3 +1,5 @@
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { aggregateRuns } from "../metrics/aggregate.js";
 import { summarizeSamples, type LatencySummary, type SampleSummary } from "../metrics/metrics.js";
 import {
@@ -6,6 +8,7 @@ import {
   ADAPTIVE_EVAL_TOOLSPACE_SIZE,
   type AdaptiveEvalCellId,
 } from "../config/adaptive-eval.js";
+import { ADAPTIVE_EVAL_MANIFEST_DIR } from "../eval/runner/adaptive-eval.js";
 import {
   discoverResultDirectories,
   loadResultDirectory,
@@ -57,10 +60,17 @@ export interface AdaptiveEvalTableRow {
 
 export interface AdaptiveEvalTables {
   policy_path: string;
+  /** Manifest used to scope dirs (avoids merging older same-N/k slice runs). Null when falling back to a full scan. */
+  source_manifest: string | null;
   held_out_split: typeof ADAPTIVE_EVAL_HOLDOUT_SPLIT & {
     note: string;
   };
   rows: AdaptiveEvalTableRow[];
+}
+
+export interface AdaptiveEvalTablesOptions {
+  /** Prefer this `_adaptive-eval/<timestamp>.json` when several manifests exist. */
+  timestamp?: string;
 }
 
 export class AdaptiveEvalTableError extends Error {
@@ -72,13 +82,16 @@ export class AdaptiveEvalTableError extends Error {
 
 /**
  * Aggregate #44 adaptive-vs-fixed-k result directories at the locked N.
- * Escalation frequency is reported only for the adaptive architecture.
+ * Prefers directories listed in `_adaptive-eval/` manifests so older jev_n20_k5
+ * vertical-slice runs are not merged into the comparison.
  */
-export function buildAdaptiveEvalTables(resultsRoot: string): AdaptiveEvalTables {
-  const loads = discoverResultDirectories(resultsRoot)
-    .map(loadResultDirectory)
-    .filter(isAdaptiveEvalDirectory);
-  return buildAdaptiveEvalTablesFromLoads(loads);
+export function buildAdaptiveEvalTables(
+  resultsRoot: string,
+  options: AdaptiveEvalTablesOptions = {},
+): AdaptiveEvalTables {
+  const discovered = discoverAdaptiveEvalLoads(resolve(resultsRoot), options.timestamp);
+  const tables = buildAdaptiveEvalTablesFromLoads(discovered.loads);
+  return { ...tables, source_manifest: discovered.manifestPath };
 }
 
 export function buildAdaptiveEvalTablesFromLoads(
@@ -104,12 +117,63 @@ export function buildAdaptiveEvalTablesFromLoads(
 
   return {
     policy_path: ADAPTIVE_EVAL_POLICY_PATH,
+    source_manifest: null,
     held_out_split: {
       ...ADAPTIVE_EVAL_HOLDOUT_SPLIT,
       note: "Evaluation tasks must use the odd-hash holdout; #42 thresholds used the even-hash development split of the cited directory.",
     },
     rows,
   };
+}
+
+/**
+ * Prefer completed cell directories from `_adaptive-eval/<timestamp>.json`.
+ * Falls back to scanning the results root when no usable manifest exists.
+ */
+export function discoverAdaptiveEvalLoads(
+  resultsRoot: string,
+  timestamp?: string,
+): { loads: ResultDirectoryLoad[]; manifestPath: string | null } {
+  const root = resolve(resultsRoot);
+  const manifestPath = selectAdaptiveEvalManifest(root, timestamp);
+  if (manifestPath !== null) {
+    const raw = JSON.parse(readFileSync(manifestPath, "utf8")) as {
+      cells?: Array<{ status?: string; directory?: string | null }>;
+    };
+    const dirs = (raw.cells ?? [])
+      .filter((cell) => cell.status === "completed" && typeof cell.directory === "string")
+      .map((cell) => cell.directory as string);
+    if (dirs.length === 0) {
+      throw new AdaptiveEvalTableError(
+        `adaptive-eval manifest ${manifestPath} has no completed cell directories`,
+      );
+    }
+    return { loads: dirs.map(loadResultDirectory), manifestPath };
+  }
+
+  return {
+    loads: discoverResultDirectories(root).map(loadResultDirectory).filter(isAdaptiveEvalDirectory),
+    manifestPath: null,
+  };
+}
+
+export function selectAdaptiveEvalManifest(resultsRoot: string, timestamp?: string): string | null {
+  const dir = join(resolve(resultsRoot), ADAPTIVE_EVAL_MANIFEST_DIR);
+  if (!existsSync(dir) || !statSync(dir).isDirectory()) return null;
+
+  if (timestamp !== undefined) {
+    const path = join(dir, `${timestamp}.json`);
+    if (!existsSync(path)) {
+      throw new AdaptiveEvalTableError(`adaptive-eval manifest not found: ${path}`);
+    }
+    return path;
+  }
+
+  const manifests = readdirSync(dir)
+    .filter((name) => name.endsWith(".json"))
+    .map((name) => join(dir, name))
+    .sort();
+  return manifests.length === 0 ? null : manifests[manifests.length - 1]!;
 }
 
 export function adaptiveEvalTablesToJson(tables: AdaptiveEvalTables): string {

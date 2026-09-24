@@ -10,6 +10,7 @@ import {
   buildAdaptiveEvalTablesFromLoads,
   type AdaptiveEvalTableRow,
   type AdaptiveEvalTables,
+  type AdaptiveEvalTablesOptions,
 } from "./adaptive-eval-tables.js";
 import type { ResultDirectoryLoad } from "./scaling-tables.js";
 
@@ -59,6 +60,7 @@ export interface AdaptiveSummaryTables {
   /** Null until a versioned superiority rule exists (none for M5). */
   decision_rule: null;
   policy_path: string;
+  source_manifest: string | null;
   held_out_split: typeof ADAPTIVE_EVAL_HOLDOUT_SPLIT;
   comparison: AdaptiveComparisonRow[];
   branch_usage: AdaptiveBranchUsageRow[];
@@ -71,8 +73,11 @@ export const ADAPTIVE_SUMMARY_NOTE =
   "These tables report the adaptive vs fixed-k comparison and branch usage only. They do not claim adaptive routing is superior.";
 
 /** Build publication summary tables from a results root (recomputes via adaptive-eval aggregates). */
-export function buildAdaptiveSummaryTables(resultsRoot: string): AdaptiveSummaryTables {
-  return buildAdaptiveSummaryTablesFromEval(buildAdaptiveEvalTables(resultsRoot));
+export function buildAdaptiveSummaryTables(
+  resultsRoot: string,
+  options: AdaptiveEvalTablesOptions = {},
+): AdaptiveSummaryTables {
+  return buildAdaptiveSummaryTablesFromEval(buildAdaptiveEvalTables(resultsRoot, options));
 }
 
 export function buildAdaptiveSummaryTablesFromLoads(
@@ -93,6 +98,7 @@ export function buildAdaptiveSummaryTablesFromEval(tables: AdaptiveEvalTables): 
     note: ADAPTIVE_SUMMARY_NOTE,
     decision_rule: null,
     policy_path: tables.policy_path || ADAPTIVE_EVAL_POLICY_PATH,
+    source_manifest: tables.source_manifest,
     held_out_split: {
       rule: tables.held_out_split.rule,
       complement_of: tables.held_out_split.complement_of,

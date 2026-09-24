@@ -32,7 +32,12 @@ npm run adaptive-eval -- --validate
 npm run adaptive-eval -- --mock --results /tmp/jev-adaptive-eval
 npm run adaptive-eval -- --summarize --results /tmp/jev-adaptive-eval --out analysis/adaptive-eval.json
 npm run analysis:adaptive -- --results /tmp/jev-adaptive-eval --out analysis/adaptive
+npm run analysis:adaptive -- --results results --timestamp 2026-09-24T045743Z
 ```
+
+`analysis:adaptive` prefers dirs listed in `results/_adaptive-eval/<timestamp>.json`
+(latest by default) so older `jev_n20_k5` vertical-slice runs are not merged into
+the `jev_top5` row.
 
 Summary tables for publication: [adaptive-summary-tables.md](adaptive-summary-tables.md).
 

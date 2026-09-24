@@ -127,4 +127,66 @@ describe("buildAdaptiveEvalTables", () => {
       "adaptive",
     ]);
   });
+
+  it("scopes jev_top5 to the adaptive-eval manifest and ignores older same-N/k dirs", () => {
+    const root = mkdtempSync(join(tmpdir(), "jev-ae-manifest-"));
+    const oldJev = join(root, "old-jev-k5");
+    const fresh = {
+      baseline: join(root, "fresh-baseline"),
+      jev1: join(root, "fresh-jev1"),
+      jev5: join(root, "fresh-jev5"),
+      adaptive: join(root, "fresh-adaptive"),
+    };
+    for (const [id, directory] of [
+      ["baseline", fresh.baseline],
+      ["jev_top1", fresh.jev1],
+      ["jev_top5", fresh.jev5],
+      ["adaptive", fresh.adaptive],
+      ["jev_top5", oldJev],
+    ] as const) {
+      mkdirSync(directory, { recursive: true });
+      writeFileSync(
+        join(directory, "config.json"),
+        `${JSON.stringify({ ...buildAdaptiveEvalConfig(id), configHash: "h" }, null, 2)}\n`,
+      );
+      const count = directory === oldJev ? 50 : 2;
+      const lines = Array.from({ length: count }, () =>
+        JSON.stringify(
+          run(
+            id === "adaptive"
+              ? { adaptiveBranch: "high", adaptiveSelectedK: 1, adaptiveEscalationTarget: null }
+              : {},
+          ),
+        ),
+      );
+      writeFileSync(join(directory, "runs.jsonl"), `${lines.join("\n")}\n`);
+    }
+
+    mkdirSync(join(root, "_adaptive-eval"));
+    writeFileSync(
+      join(root, "_adaptive-eval", "2026-09-24T050000Z.json"),
+      `${JSON.stringify(
+        {
+          version: 1,
+          timestamp: "2026-09-24T050000Z",
+          mock: true,
+          cells: [
+            { status: "completed", directory: fresh.baseline },
+            { status: "completed", directory: fresh.jev1 },
+            { status: "completed", directory: fresh.jev5 },
+            { status: "completed", directory: fresh.adaptive },
+          ],
+        },
+        null,
+        2,
+      )}\n`,
+    );
+
+    const tables = buildAdaptiveEvalTables(root);
+    expect(tables.source_manifest).toContain("2026-09-24T050000Z.json");
+    expect(tables.rows.find((row) => row.cell_id === "jev_top5")?.attempts).toBe(2);
+    expect(tables.rows.find((row) => row.cell_id === "jev_top5")?.source_directories).toEqual([
+      fresh.jev5,
+    ]);
+  });
 });

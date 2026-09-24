@@ -82,7 +82,9 @@ try {
   }
 
   if (values.summarize) {
-    const tables = buildAdaptiveEvalTables(resolve(values.results));
+    const tables = buildAdaptiveEvalTables(resolve(values.results), {
+      ...(values.timestamp === undefined ? {} : { timestamp: values.timestamp }),
+    });
     const text =
       values.format === "csv" ? adaptiveEvalTablesToCsv(tables) : adaptiveEvalTablesToJson(tables);
     if (values.out) {

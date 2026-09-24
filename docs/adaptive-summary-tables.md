@@ -22,7 +22,12 @@ Immutable result directories from `npm run adaptive-eval` (see [adaptive-eval.md
 ```bash
 npm run adaptive-eval -- --mock --results /tmp/jev-adaptive-eval
 npm run analysis:adaptive -- --results /tmp/jev-adaptive-eval --out analysis/adaptive
+# or pin a live adaptive-eval timestamp:
+npm run analysis:adaptive -- --results results --timestamp 2026-09-24T045743Z --out analysis/adaptive
 ```
+
+Uses result dirs from `_adaptive-eval/<timestamp>.json` when present (avoids merging
+older same-N/k slice runs).
 
 Writes under `--out` (default `analysis/adaptive/`):
 
