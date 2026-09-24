@@ -4,9 +4,10 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { loadExperimentConfig } from "./load.js";
 import {
-  MATRIX_ARCHITECTURES,
+  MATRIX_CELL_IDS,
   MATRIX_DATASET_PATH,
   MATRIX_TOP_K,
+  MATRIX_TOP_K_CONTROL,
   buildMatrixConfig,
   enumerateMatrixCells,
   matrixRelativePath,
@@ -18,25 +19,25 @@ import { SCALING_TOOLSPACE_SIZES } from "../tools/toolspace.js";
 const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
 
 describe("N-matrix configs", () => {
-  it("enumerates the full 3 × 5 matrix before execution", () => {
+  it("enumerates the full 3 × 5 M3 matrix (baseline / jev_top1 / jev_top5)", () => {
     const cells = enumerateMatrixCells();
-    expect(cells).toHaveLength(MATRIX_ARCHITECTURES.length * SCALING_TOOLSPACE_SIZES.length);
+    expect(cells).toHaveLength(MATRIX_CELL_IDS.length * SCALING_TOOLSPACE_SIZES.length);
     expect(cells.map((c) => c.relativePath)).toEqual([
       "configs/matrix/baseline-n5.yaml",
       "configs/matrix/baseline-n10.yaml",
       "configs/matrix/baseline-n25.yaml",
       "configs/matrix/baseline-n50.yaml",
       "configs/matrix/baseline-n100.yaml",
+      "configs/matrix/jev-top1-n5.yaml",
+      "configs/matrix/jev-top1-n10.yaml",
+      "configs/matrix/jev-top1-n25.yaml",
+      "configs/matrix/jev-top1-n50.yaml",
+      "configs/matrix/jev-top1-n100.yaml",
       "configs/matrix/jev-top5-n5.yaml",
       "configs/matrix/jev-top5-n10.yaml",
       "configs/matrix/jev-top5-n25.yaml",
       "configs/matrix/jev-top5-n50.yaml",
       "configs/matrix/jev-top5-n100.yaml",
-      "configs/matrix/llm-top5-n5.yaml",
-      "configs/matrix/llm-top5-n10.yaml",
-      "configs/matrix/llm-top5-n25.yaml",
-      "configs/matrix/llm-top5-n50.yaml",
-      "configs/matrix/llm-top5-n100.yaml",
     ]);
   });
 
@@ -52,18 +53,15 @@ describe("N-matrix configs", () => {
         temperature: 0,
       });
       expect(loaded.config.agent.model).not.toMatch(/latest/);
-      if (cell.architecture === "baseline") {
+      if (cell.id === "baseline") {
         expect(loaded.config.topK).toBeNull();
         expect(loaded.config.router).toBeNull();
+      } else if (cell.id === "jev_top1") {
+        expect(loaded.config.topK).toBe(MATRIX_TOP_K_CONTROL);
+        expect(loaded.config.router).toEqual({ provider: "typesafe", model: "jev-1.13.0" });
       } else {
         expect(loaded.config.topK).toBe(MATRIX_TOP_K);
-        expect(loaded.config.router?.model).not.toMatch(/latest/);
-      }
-      if (cell.architecture === "jev") {
         expect(loaded.config.router).toEqual({ provider: "typesafe", model: "jev-1.13.0" });
-      }
-      if (cell.architecture === "llm") {
-        expect(loaded.config.router).toEqual({ provider: "openai", model: "gpt-5.6-sol" });
       }
     }
   });
@@ -82,7 +80,7 @@ describe("N-matrix configs", () => {
   });
 
   it("rejects an unpinned alias in a matrix-shaped config", () => {
-    const base = buildMatrixConfig("jev", 25);
+    const base = buildMatrixConfig("jev_top5", 25);
     expect(() =>
       parseExperimentConfig({
         ...base,
@@ -93,6 +91,29 @@ describe("N-matrix configs", () => {
 
   it("builds relative paths without hard-coding N in the runner", () => {
     expect(matrixRelativePath("baseline", 50)).toBe("configs/matrix/baseline-n50.yaml");
-    expect(matrixRelativePath("llm", 5)).toBe("configs/matrix/llm-top5-n5.yaml");
+    expect(matrixRelativePath("jev_top1", 5)).toBe("configs/matrix/jev-top1-n5.yaml");
+    expect(matrixRelativePath("jev_top5", 100)).toBe("configs/matrix/jev-top5-n100.yaml");
+  });
+
+  it("differs across architectures only by routing/tool-exposure treatment", () => {
+    const n25 = SCALING_TOOLSPACE_SIZES[2]!;
+    const baseline = buildMatrixConfig("baseline", n25);
+    const top1 = buildMatrixConfig("jev_top1", n25);
+    const top5 = buildMatrixConfig("jev_top5", n25);
+    for (const cfg of [baseline, top1, top5]) {
+      expect(cfg.datasetPath).toBe(MATRIX_DATASET_PATH);
+      expect(cfg.repetitions).toBe(1);
+      expect(cfg.concurrency).toBe(1);
+      expect(cfg.seed).toBe(0);
+      expect(cfg.agent).toEqual(baseline.agent);
+      expect(cfg.pricingVersion).toBe("v1");
+      expect(cfg.tracing).toBe("noop");
+      expect(cfg.toolspaceSize).toBe(25);
+    }
+    expect(baseline.router).toBeNull();
+    expect(baseline.topK).toBeNull();
+    expect(top1.topK).toBe(1);
+    expect(top5.topK).toBe(5);
+    expect(top1.router).toEqual(top5.router);
   });
 });

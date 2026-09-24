@@ -29,6 +29,7 @@ function run(overrides: Partial<RunRecord> = {}): RunRecord {
     providerReportedCostUsd: null,
     routerLatencyMs: 5,
     agentLatencyMs: 10,
+    totalLatencyMs: 20,
     recallAtK: 1,
     lenientRecallAtK: 1,
     selectionAccuracy: 1,

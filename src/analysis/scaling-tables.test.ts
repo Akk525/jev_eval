@@ -27,6 +27,7 @@ function run(overrides: Partial<ScalingRun> = {}): ScalingRun {
     providerReportedCostUsd: null,
     routerLatencyMs: 5,
     agentLatencyMs: 10,
+    totalLatencyMs: 20,
     ...overrides,
   };
 }
@@ -101,6 +102,7 @@ describe("buildScalingTables", () => {
             pricedCostUsd: 0,
             routerLatencyMs: null,
             agentLatencyMs: null,
+            totalLatencyMs: 3,
           }),
         ],
       },

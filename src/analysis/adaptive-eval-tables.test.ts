@@ -27,6 +27,7 @@ function run(overrides: Partial<AdaptiveEvalRun> = {}): AdaptiveEvalRun {
     providerReportedCostUsd: null,
     routerLatencyMs: 5,
     agentLatencyMs: 10,
+    totalLatencyMs: 20,
     adaptiveBranch: null,
     adaptiveEscalationTarget: null,
     adaptiveSelectedK: null,

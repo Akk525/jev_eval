@@ -21,6 +21,7 @@ function run(overrides: Partial<AggregateRun> = {}): AggregateRun {
     providerReportedCostUsd: null,
     routerLatencyMs: 10,
     agentLatencyMs: null,
+    totalLatencyMs: 25,
     ...overrides,
   };
 }
@@ -38,6 +39,7 @@ it("recomputes mean recall and priced cost from known fixture hits", () => {
       pricedCostUsd: 0,
       routerUsage: { inputTokens: 0, outputTokens: 0 },
       routerLatencyMs: null,
+      totalLatencyMs: 3,
     }),
   ];
   const summary = aggregateRuns(runs);
@@ -50,6 +52,9 @@ it("recomputes mean recall and priced cost from known fixture hits", () => {
   expect(summary.execution_success_rate).toBe(1);
   expect(summary.router_latency_ms).toEqual({ mean: 10, median: 10, p50: 10, p95: 10 });
   expect(summary.agent_latency_ms.mean).toBeNull();
+  // Non-R0 totals only (25+25); R0 wall time stays in total_latency_ms_r0.
+  expect(summary.total_latency_ms).toEqual({ mean: 25, median: 25, p50: 25, p95: 25 });
+  expect(summary.total_latency_ms_r0).toEqual({ mean: 3, median: 3, p50: 3, p95: 3 });
   // R0 is out of both sample denominators. Recall samples are [1, 0].
   expect(summary.recall_at_k_stats.mean).toBe(0.5);
   expect(summary.recall_at_k_stats.stddev).toBeCloseTo(Math.SQRT1_2);

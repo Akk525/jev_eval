@@ -24,9 +24,12 @@ const { values } = parseArgs({
 if (values.help) {
   console.log(`Usage: npm run matrix -- [options]
 
-Execute the M3 N-matrix (baseline / Jev top-5 / LLM top-5 × N ∈ {5,10,25,50,100}).
+Execute the M3 N-matrix (baseline / Jev top-1 / Jev top-5 × N ∈ {5,10,25,50,100}).
 Cells run serially. Each cell still has its own immutable result directory.
 Failed cells are recorded and not retried on --resume.
+
+LLM top-5 remains available under configs/archive/llm-top5-matrix/ but is not
+part of this M3 comparison.
 
 --results <dir>     Result root. Default: results.
 --dry-run           Enumerate the plan and exit. Writes no results.

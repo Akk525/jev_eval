@@ -130,6 +130,8 @@ it("runs mock Jev through the runner and stores the full distribution", async ()
   expect(line?.scores).toEqual(decision.scores);
   expect(line?.top1Probability).toBe(0.5);
   expect(line?.confidence).toBe(0.2);
+  expect(typeof line?.totalLatencyMs).toBe("number");
+  expect(line?.totalLatencyMs).toBeGreaterThanOrEqual(0);
   expect(seen[0]?.tools.map((tool) => tool.name)).toEqual(["gold", "d1"]);
   expect(seen[0]?.tools[0]?.parameters).toMatchObject({ type: "object" });
 });
@@ -177,8 +179,21 @@ it("records agent provider failures as R0 and continues the experiment", async (
   expect(runs[0]?.failureCode).toBe("R0");
   expect(runs[0]?.infrastructureReason).toBe("provider_error");
   expect(runs[0]?.executionExcluded).toBe(true);
+  expect(typeof runs[0]?.totalLatencyMs).toBe("number");
+  expect(runs[0]?.totalLatencyMs).toBeGreaterThanOrEqual(0);
   expect(runs[1]?.failureCode).toBeNull();
   expect(runs[1]?.executionSuccess).toBe(true);
+  expect(typeof runs[1]?.totalLatencyMs).toBe("number");
+  expect(runs[1]?.totalLatencyMs).toBeGreaterThanOrEqual(0);
+
+  const summary = JSON.parse(readFileSync(join(results.directory, "summary.json"), "utf8")) as {
+    total_latency_ms: { mean: number | null };
+    total_latency_ms_r0: { mean: number | null };
+    r0_attempts: number;
+  };
+  expect(summary.r0_attempts).toBe(1);
+  expect(summary.total_latency_ms.mean).not.toBeNull();
+  expect(summary.total_latency_ms_r0.mean).not.toBeNull();
 });
 
 it("does not append a completed task again after the process stops", async () => {

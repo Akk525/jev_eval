@@ -22,6 +22,8 @@ export interface AggregateRun {
   providerReportedCostUsd: number | null;
   routerLatencyMs: number | null;
   agentLatencyMs: number | null;
+  /** Present on current runs.jsonl lines; optional for legacy fixtures. */
+  totalLatencyMs?: number | null;
 }
 
 export interface CalibrationBucket {
@@ -106,6 +108,14 @@ export interface AggregateSummary {
   provider_reported_cost_usd: number | null;
   router_latency_ms: LatencySummary;
   agent_latency_ms: LatencySummary;
+  /**
+   * Total runner-path latency over non-R0 attempts only.
+   * R0 wall times are summarized separately so infrastructure failures are not
+   * silently mixed into the semantic-path latency distribution.
+   */
+  total_latency_ms: LatencySummary;
+  /** Total runner-path latency over R0 attempts only. Empty summary when none. */
+  total_latency_ms_r0: LatencySummary;
   calibration: CalibrationSummary;
 }
 
@@ -152,6 +162,18 @@ export function aggregateRuns(runs: readonly AggregateRun[]): AggregateSummary {
     ),
     agent_latency_ms: summarizeLatency(
       runs.map((run) => run.agentLatencyMs).filter((value): value is number => value !== null),
+    ),
+    total_latency_ms: summarizeLatency(
+      runs
+        .filter((run) => run.failureCode !== "R0")
+        .map((run) => run.totalLatencyMs)
+        .filter((value): value is number => typeof value === "number"),
+    ),
+    total_latency_ms_r0: summarizeLatency(
+      runs
+        .filter((run) => run.failureCode === "R0")
+        .map((run) => run.totalLatencyMs)
+        .filter((value): value is number => typeof value === "number"),
     ),
     calibration: calibrateConfidence(routingScored),
   };

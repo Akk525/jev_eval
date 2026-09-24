@@ -52,16 +52,16 @@ it("validates every N-matrix config without calling a provider", () => {
     "configs/matrix/baseline-n25.yaml",
     "configs/matrix/baseline-n50.yaml",
     "configs/matrix/baseline-n100.yaml",
+    "configs/matrix/jev-top1-n5.yaml",
+    "configs/matrix/jev-top1-n10.yaml",
+    "configs/matrix/jev-top1-n25.yaml",
+    "configs/matrix/jev-top1-n50.yaml",
+    "configs/matrix/jev-top1-n100.yaml",
     "configs/matrix/jev-top5-n5.yaml",
     "configs/matrix/jev-top5-n10.yaml",
     "configs/matrix/jev-top5-n25.yaml",
     "configs/matrix/jev-top5-n50.yaml",
     "configs/matrix/jev-top5-n100.yaml",
-    "configs/matrix/llm-top5-n5.yaml",
-    "configs/matrix/llm-top5-n10.yaml",
-    "configs/matrix/llm-top5-n25.yaml",
-    "configs/matrix/llm-top5-n50.yaml",
-    "configs/matrix/llm-top5-n100.yaml",
   ];
   for (const configPath of paths) {
     const run = cli(["--validate", "--config", configPath]);

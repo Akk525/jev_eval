@@ -49,6 +49,7 @@ function run(taskId: string, repetition = 0): RunRecord {
     providerReportedCostUsd: null,
     routerLatencyMs: null,
     agentLatencyMs: 5,
+    totalLatencyMs: 12,
     recallAtK: 1,
     lenientRecallAtK: 1,
     selectionAccuracy: 1,

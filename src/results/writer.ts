@@ -28,6 +28,17 @@ export interface RunRecord {
   routerLatencyMs: number | null;
   /** Agent wall time in ms. Null when the agent did not run. */
   agentLatencyMs: number | null;
+  /**
+   * Monotonic wall-clock ms for the complete attempted runner path for this
+   * (taskId, repetition): from attempt start through router (when used), agent
+   * (when used), synchronous tool execute (when used), and evaluation — measured
+   * immediately before append. Always non-null on written rows.
+   *
+   * For R0 / incomplete attempts this is time until the infrastructure failure
+   * was classified (not a fabricated end-to-end duration). Tool-executor-only
+   * latency is not stored separately and must not be reconstructed from this field.
+   */
+  totalLatencyMs: number;
   /** Primary Recall@k. Null when routingExcluded. */
   recallAtK: number | null;
   lenientRecallAtK: number | null;

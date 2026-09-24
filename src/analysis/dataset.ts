@@ -72,6 +72,8 @@ export interface NormalizedAttempt {
   provider_reported_cost_usd: number | null;
   router_latency_ms: number | null;
   agent_latency_ms: number | null;
+  /** Runner-path wall clock; null on legacy rows that predate the field. */
+  total_latency_ms: number | null;
   recall_at_k: number | null;
   lenient_recall_at_k: number | null;
   selection_accuracy: number | null;
@@ -305,6 +307,7 @@ function normalizeAttempt(
     provider_reported_cost_usd: run.providerReportedCostUsd,
     router_latency_ms: run.routerLatencyMs,
     agent_latency_ms: run.agentLatencyMs,
+    total_latency_ms: run.totalLatencyMs ?? null,
     recall_at_k: run.recallAtK,
     lenient_recall_at_k: run.lenientRecallAtK,
     selection_accuracy: run.selectionAccuracy,

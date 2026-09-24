@@ -41,6 +41,7 @@ function attempt(overrides: Partial<NormalizedAttempt> = {}): NormalizedAttempt 
     provider_reported_cost_usd: null,
     router_latency_ms: null,
     agent_latency_ms: 10,
+            total_latency_ms: 20,
     recall_at_k: 1,
     lenient_recall_at_k: 1,
     selection_accuracy: 1,
@@ -96,6 +97,7 @@ describe("buildFigure3", () => {
             toolspace_size: 5,
             task_id: `b${index}`,
             agent_latency_ms: ms,
+            total_latency_ms: 20,
             router_latency_ms: null,
           }),
         ),
@@ -109,6 +111,7 @@ describe("buildFigure3", () => {
             router_model: "jev-1.13.0",
             router_latency_ms: ms,
             agent_latency_ms: agentMs[index]!,
+            total_latency_ms: 20,
           }),
         ),
         // router-only ignored
@@ -119,6 +122,7 @@ describe("buildFigure3", () => {
           router_only: true,
           router_latency_ms: 999,
           agent_latency_ms: null,
+          total_latency_ms: null,
         }),
       ]),
     );
@@ -152,6 +156,7 @@ describe("buildFigure3", () => {
           toolspace_size: 5,
           task_id: "t2",
           agent_latency_ms: 50,
+            total_latency_ms: 20,
         }),
         attempt({
           architecture: "llm",
@@ -161,6 +166,7 @@ describe("buildFigure3", () => {
           router_model: "gpt-5.6-sol",
           router_latency_ms: 20,
           agent_latency_ms: 30,
+            total_latency_ms: 20,
         }),
       ]),
     );

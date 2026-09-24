@@ -82,6 +82,8 @@ async function processAttempt(
   k: number,
 ): Promise<void> {
   const { task, repetition, toolspace, presented } = item;
+  const attemptStartedMs = performance.now();
+  const totalLatencyMs = (): number => Math.max(0, performance.now() - attemptStartedMs);
 
   await run.tracer.event(handle, {
     type: "task_started",
@@ -120,6 +122,7 @@ async function processAttempt(
       null,
       ZERO_USAGE,
       null,
+      totalLatencyMs(),
     );
     return;
   }
@@ -146,6 +149,7 @@ async function processAttempt(
       decision,
       ZERO_USAGE,
       null,
+      totalLatencyMs(),
     );
     return;
   }
@@ -175,6 +179,7 @@ async function processAttempt(
       decision,
       ZERO_USAGE,
       null,
+      totalLatencyMs(),
     );
     return;
   }
@@ -205,6 +210,7 @@ async function processAttempt(
     decision,
     turn.usage,
     turn.latencyMs,
+    totalLatencyMs(),
   );
 }
 
@@ -251,6 +257,7 @@ async function finish(
   decision: RouteDecision | null,
   agentUsage: TokenUsage,
   agentLatencyMs: number | null,
+  totalLatencyMs: number,
 ): Promise<void> {
   await run.tracer.event(handle, {
     type: "evaluation_completed",
@@ -274,6 +281,7 @@ async function finish(
     providerReportedCostUsd: null,
     routerLatencyMs: decision?.latencyMs ?? null,
     agentLatencyMs,
+    totalLatencyMs,
     recallAtK: evaluation.recallAtK,
     lenientRecallAtK: evaluation.lenientRecallAtK,
     selectionAccuracy: evaluation.selectionAccuracy,

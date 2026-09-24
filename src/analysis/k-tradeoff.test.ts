@@ -132,6 +132,7 @@ describe("buildKTradeoffTable", () => {
         providerReportedCostUsd: null,
         routerLatencyMs: 5,
         agentLatencyMs: 15,
+    totalLatencyMs: 20,
         ...overrides,
       };
     }

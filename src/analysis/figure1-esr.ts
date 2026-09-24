@@ -302,6 +302,7 @@ function pointFromAttempts(attempts: readonly NormalizedAttempt[]): Figure1Point
     providerReportedCostUsd: attempt.provider_reported_cost_usd,
     routerLatencyMs: attempt.router_latency_ms,
     agentLatencyMs: attempt.agent_latency_ms,
+    totalLatencyMs: attempt.total_latency_ms,
   }));
 
   const executionScored = attempts.filter((attempt) => !attempt.execution_excluded).length;

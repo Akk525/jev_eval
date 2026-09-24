@@ -1,0 +1,479 @@
+{
+  "version": 1,
+  "kind": "m3_matrix_freeze_plan",
+  "status": "frozen_pending_approval",
+  "note": "Pre-execution scientific plan. Do not launch live M3 until freeze review is approved. Dress rehearsal 2026-09-24T053415Z @ commit 2a99ed2 remains an immutable engineering artifact.",
+  "scientific_controls": {
+    "dataset_path": "datasets/v0.2/tasks.jsonl",
+    "dataset_version": 2,
+    "task_count": 78,
+    "task_ids": [
+      "task_0001",
+      "task_0002",
+      "task_0003",
+      "task_0004",
+      "task_0005",
+      "task_0006",
+      "task_0007",
+      "task_0008",
+      "task_0009",
+      "task_0010",
+      "task_0011",
+      "task_0012",
+      "task_0013",
+      "task_0014",
+      "task_0015",
+      "task_0016",
+      "task_0017",
+      "task_0018",
+      "task_0019",
+      "task_0020",
+      "task_0021",
+      "task_0022",
+      "task_0023",
+      "task_0024",
+      "task_0025",
+      "task_0026",
+      "task_0027",
+      "task_0028",
+      "task_0029",
+      "task_0030",
+      "task_0031",
+      "task_0032",
+      "task_0033",
+      "task_0034",
+      "task_0035",
+      "task_0036",
+      "task_0037",
+      "task_0038",
+      "task_0039",
+      "task_0040",
+      "task_0041",
+      "task_0042",
+      "task_0043",
+      "task_0044",
+      "task_0045",
+      "task_0046",
+      "task_0047",
+      "task_0048",
+      "task_0049",
+      "task_0050",
+      "task_0051",
+      "task_0052",
+      "task_0053",
+      "task_0054",
+      "task_0055",
+      "task_0056",
+      "task_0057",
+      "task_0058",
+      "task_0059",
+      "task_0060",
+      "task_0061",
+      "task_0062",
+      "task_0063",
+      "task_0064",
+      "task_0065",
+      "task_0066",
+      "task_0067",
+      "task_0068",
+      "task_0069",
+      "task_0070",
+      "task_0071",
+      "task_0072",
+      "task_0073",
+      "task_0074",
+      "task_0075",
+      "task_0076",
+      "task_0077",
+      "task_0078"
+    ],
+    "registry_tool_count": 100,
+    "registry_hash": "b2a7accc8bca767e126be54908567f48f3d852d826ab2f2f6d38b38b5e99a0dd",
+    "nested_toolspace": "required_tools ∪ prefix(distractor_sequence, N − |required|); sizes nest",
+    "jev_model": {
+      "provider": "typesafe",
+      "model": "jev-1.13.0"
+    },
+    "agent_model": {
+      "provider": "openai",
+      "model": "gpt-5.6-sol",
+      "temperature": 0
+    },
+    "pricing_version": "v1",
+    "repetitions": 1,
+    "concurrency": 1,
+    "seed": 0,
+    "tracing": "noop",
+    "architectures": {
+      "baseline": {
+        "topK": null,
+        "router": null
+      },
+      "jev_top1": {
+        "topK": 1,
+        "router": {
+          "provider": "typesafe",
+          "model": "jev-1.13.0"
+        }
+      },
+      "jev_top5": {
+        "topK": 5,
+        "router": {
+          "provider": "typesafe",
+          "model": "jev-1.13.0"
+        }
+      }
+    },
+    "excluded_from_m3": [
+      "llm_top5"
+    ],
+    "llm_archive_path": "configs/archive/llm-top5-matrix/"
+  },
+  "latency": {
+    "totalLatencyMs": "Monotonic wall-clock ms for the complete attempted runner path (attempt start → append). Always written. For R0, time until infrastructure failure classification. Tool-executor-only latency is unavailable and must not be fabricated.",
+    "summary_total_latency_ms": "Non-R0 attempts only",
+    "summary_total_latency_ms_r0": "R0 attempts only",
+    "component_fields_preserved": [
+      "routerLatencyMs",
+      "agentLatencyMs"
+    ]
+  },
+  "r0_policy": {
+    "quality_denominators": "R0 excluded from ESR, Recall@k, selection accuracy (executionExcluded / routingExcluded)",
+    "latency_denominators": "R0 excluded from total_latency_ms; reported in total_latency_ms_r0",
+    "tokens_and_cost": "R0 rows remain in attempts / token+cost totals when recorded"
+  },
+  "expected_attempted_runs": 1170,
+  "cells": [
+    {
+      "id": "baseline",
+      "relativePath": "configs/matrix/baseline-n5.yaml",
+      "architecture": "baseline",
+      "toolspaceSize": 5,
+      "topK": null,
+      "config_hash": "5dc82be0d5b5aea94941a35f0efa81a6ccc584a572ab91be36210fc2e4b2b90a",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": null,
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "baseline",
+      "relativePath": "configs/matrix/baseline-n10.yaml",
+      "architecture": "baseline",
+      "toolspaceSize": 10,
+      "topK": null,
+      "config_hash": "a1d58d7189c2e65a7941df6aa5eac3896063528702ed842aad7056e64052bdf3",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": null,
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "baseline",
+      "relativePath": "configs/matrix/baseline-n25.yaml",
+      "architecture": "baseline",
+      "toolspaceSize": 25,
+      "topK": null,
+      "config_hash": "3b6e7d466a7f28f21cba0365aca3356dbbe92593ff3d3683342914d0fc3a1c01",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": null,
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "baseline",
+      "relativePath": "configs/matrix/baseline-n50.yaml",
+      "architecture": "baseline",
+      "toolspaceSize": 50,
+      "topK": null,
+      "config_hash": "71e96fc7e5bd505c88f61ec5c40e54814867eb94f020951a2f3cb53cdf0b8aca",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": null,
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "baseline",
+      "relativePath": "configs/matrix/baseline-n100.yaml",
+      "architecture": "baseline",
+      "toolspaceSize": 100,
+      "topK": null,
+      "config_hash": "b11903bdb62f14a94d9db14a9f8adee03fef568acd597321843bccc924d95e6e",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": null,
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top1",
+      "relativePath": "configs/matrix/jev-top1-n5.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 5,
+      "topK": 1,
+      "config_hash": "7e6840b97e8dda1d9bcce0917c49d59b763f701c79907918f6b12d35ec700a47",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top1",
+      "relativePath": "configs/matrix/jev-top1-n10.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 10,
+      "topK": 1,
+      "config_hash": "2c892b29609875d937e1b0e56ec9dc3c780a1ecd9f21da0834739cb87496f8d2",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top1",
+      "relativePath": "configs/matrix/jev-top1-n25.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 25,
+      "topK": 1,
+      "config_hash": "cbade5d9fc4f50e24e1acf87ec5e7fdb1b15f05bc8c2d9e5ba0b4405974f75bb",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top1",
+      "relativePath": "configs/matrix/jev-top1-n50.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 50,
+      "topK": 1,
+      "config_hash": "de0ceb185dd6a16b0467da31933b0bf040f66001ef4157aa6aadef846addf731",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top1",
+      "relativePath": "configs/matrix/jev-top1-n100.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 100,
+      "topK": 1,
+      "config_hash": "52c1ec755beb40e2df3ba42575907bbcf014125eccdce87392512f2ef989d5b0",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top5",
+      "relativePath": "configs/matrix/jev-top5-n5.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 5,
+      "topK": 5,
+      "config_hash": "3f414202b53324699d861007995613c7dea2182c5319989a40de39925b4042c5",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top5",
+      "relativePath": "configs/matrix/jev-top5-n10.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 10,
+      "topK": 5,
+      "config_hash": "25cad01eade9d1049e8ab83a5d6a2665817ed020d8d455bcb210be0668dab2ce",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top5",
+      "relativePath": "configs/matrix/jev-top5-n25.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 25,
+      "topK": 5,
+      "config_hash": "3962ae64246bcb914dfffb6b5fc42a52d17d079a6613c0860021eba735fcd6ef",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top5",
+      "relativePath": "configs/matrix/jev-top5-n50.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 50,
+      "topK": 5,
+      "config_hash": "c4a7ab1e300b47ed9f8c66461f0789ff26a9c3fddd547ee8b855e06ddefcb4d0",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_top5",
+      "relativePath": "configs/matrix/jev-top5-n100.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 100,
+      "topK": 5,
+      "config_hash": "3f514a0c5cdbc4536e5d8bc91c8376da0904de08e9c5c3e6947aabc37fb7df87",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    }
+  ]
+}

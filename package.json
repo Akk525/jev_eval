@@ -29,7 +29,8 @@
     "analysis:audit": "tsx src/cli/analysis-audit.ts",
     "generate:matrix": "tsx scripts/generate-n-matrix.ts",
     "generate:k-sweep": "tsx scripts/generate-k-sweep.ts",
-    "generate:dress-rehearsal": "tsx scripts/generate-dress-rehearsal.ts"
+    "generate:dress-rehearsal": "tsx scripts/generate-dress-rehearsal.ts",
+    "generate:m3-freeze": "tsx scripts/generate-m3-freeze-manifest.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

@@ -59,12 +59,13 @@ npm run eval -- --config configs/jev-top5-20.yaml
 npm run eval -- --config configs/llm-top5-20.yaml
 ```
 
-M3 N-matrix configs (baseline / Jev top-5 / LLM top-5 × N ∈ {5,10,25,50,100}) live under `configs/matrix/` and point at `datasets/v0.2/`. Regenerate with `npm run generate:matrix`. Validate any cell without calling a provider:
+M3 N-matrix configs (baseline / Jev top-1 / Jev top-5 × N ∈ {5,10,25,50,100}) live under `configs/matrix/` and point at `datasets/v0.2/`. Regenerate with `npm run generate:matrix`. Pre-execution freeze plan: `npm run generate:m3-freeze` → `analysis/m3-freeze/matrix-plan.json`. Validate any cell without calling a provider:
 
 ```bash
 npm run eval -- --validate --config configs/matrix/baseline-n25.yaml
-npm run eval -- --validate --config configs/matrix/jev-top5-n100.yaml
-npm run eval -- --validate --config configs/matrix/llm-top5-n50.yaml
+npm run eval -- --validate --config configs/matrix/jev-top1-n100.yaml
+npm run eval -- --validate --config configs/matrix/jev-top5-n50.yaml
+npm run matrix -- --validate
 ```
 
 Orchestrate the full matrix (serial cells, resume via `_matrix/<timestamp>.json`, no silent retries). Individual cells remain runnable with `npm run eval`:
@@ -76,6 +77,8 @@ npm run matrix -- --mock --results /tmp/jev-matrix
 npm run matrix -- --mock --resume --timestamp <id> --results /tmp/jev-matrix
 npm run eval -- --config configs/matrix/baseline-n5.yaml --mock
 ```
+
+LLM top-5 matrix YAMLs are archived at `configs/archive/llm-top5-matrix/` (not part of M3).
 
 **Scaling dress rehearsal** (engineering only — do not optimize against its numbers): 50 tasks × baseline / Jev top-1 / Jev top-5 × N ∈ {5,20,50}. See [docs/dress-rehearsal.md](docs/dress-rehearsal.md).
 

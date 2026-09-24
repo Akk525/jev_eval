@@ -1,8 +1,21 @@
 import type { ExperimentConfig } from "../types/config.js";
 import { SCALING_TOOLSPACE_SIZES, type ScalingToolspaceSize } from "../tools/toolspace.js";
 
-/** Fixed top-k for routed M3 matrix cells (Jev and LLM). */
+/**
+ * M3 comparison cells. LLM top-5 remains implemented and available under
+ * `configs/archive/llm-top5-matrix/` but is not part of this matrix.
+ */
+export const MATRIX_CELL_IDS = ["baseline", "jev_top1", "jev_top5"] as const;
+export type MatrixCellId = (typeof MATRIX_CELL_IDS)[number];
+
+/** @deprecated Use MATRIX_CELL_IDS. Kept as alias for older imports during transition. */
+export const MATRIX_ARCHITECTURES = MATRIX_CELL_IDS;
+
+/** Fixed top-k for Jev top-5 cells. */
 export const MATRIX_TOP_K = 5;
+
+/** Top-k for the Jev top-1 control. */
+export const MATRIX_TOP_K_CONTROL = 1;
 
 /** Recommended repetitions for final end-to-end live runs (BRIEF §23). Matrix cells stay at 1. */
 export const FINAL_REPETITIONS = 3;
@@ -10,84 +23,85 @@ export const FINAL_REPETITIONS = 3;
 /** Scaling dataset for the N-matrix. Slice configs keep v0.1. */
 export const MATRIX_DATASET_PATH = "datasets/v0.2/tasks.jsonl";
 
-export const MATRIX_ARCHITECTURES = ["baseline", "jev", "llm"] as const;
-
-export type MatrixArchitecture = (typeof MATRIX_ARCHITECTURES)[number];
+export type MatrixArchitecture = "baseline" | "jev";
 
 export interface MatrixCell {
-  architecture: MatrixArchitecture | "adaptive";
+  /** Stable cell id (e.g. baseline / jev_top1 / jev_top5 / adaptive). */
+  id: string;
+  architecture: string;
   toolspaceSize: number;
-  /** Repo-relative path under configs/matrix/. */
+  /** Repo-relative path under configs/. */
   relativePath: string;
   config: ExperimentConfig;
 }
 
 const AGENT = { provider: "openai", model: "gpt-5.6-sol", temperature: 0 } as const;
 const JEV_ROUTER = { provider: "typesafe", model: "jev-1.13.0" } as const;
-const LLM_ROUTER = { provider: "openai", model: "gpt-5.6-sol" } as const;
 
-/** Filename stem for one matrix cell, e.g. `baseline-n25`, `jev-top5-n100`. */
-export function matrixFileStem(architecture: MatrixArchitecture, n: ScalingToolspaceSize): string {
-  if (architecture === "baseline") return `baseline-n${n}`;
-  if (architecture === "jev") return `jev-top5-n${n}`;
-  return `llm-top5-n${n}`;
+/** Filename stem for one matrix cell, e.g. `baseline-n25`, `jev-top1-n100`. */
+export function matrixFileStem(id: MatrixCellId, n: ScalingToolspaceSize): string {
+  if (id === "baseline") return `baseline-n${n}`;
+  if (id === "jev_top1") return `jev-top1-n${n}`;
+  return `jev-top5-n${n}`;
 }
 
-export function matrixRelativePath(architecture: MatrixArchitecture, n: ScalingToolspaceSize): string {
-  return `configs/matrix/${matrixFileStem(architecture, n)}.yaml`;
+export function matrixRelativePath(id: MatrixCellId, n: ScalingToolspaceSize): string {
+  return `configs/matrix/${matrixFileStem(id, n)}.yaml`;
 }
 
-export function buildMatrixConfig(
-  architecture: MatrixArchitecture,
-  toolspaceSize: ScalingToolspaceSize,
-): ExperimentConfig {
-  if (architecture === "baseline") {
-    return {
-      architecture: "baseline",
-      toolspaceSize,
-      topK: null,
-      datasetPath: MATRIX_DATASET_PATH,
-      repetitions: 1,
-      concurrency: 1,
-      seed: 0,
-      agent: { ...AGENT },
-      router: null,
-      escalateRouter: null,
-      adaptivePolicyPath: null,
-      pricingVersion: "v1",
-      tracing: "noop",
-      routerOnly: false,
-    };
-  }
-
-  return {
-    architecture,
+export function buildMatrixConfig(id: MatrixCellId, toolspaceSize: ScalingToolspaceSize): ExperimentConfig {
+  const base = {
     toolspaceSize,
-    topK: MATRIX_TOP_K,
     datasetPath: MATRIX_DATASET_PATH,
     repetitions: 1,
     concurrency: 1,
     seed: 0,
     agent: { ...AGENT },
-    router: architecture === "jev" ? { ...JEV_ROUTER } : { ...LLM_ROUTER },
     escalateRouter: null,
     adaptivePolicyPath: null,
-    pricingVersion: "v1",
-    tracing: "noop",
+    pricingVersion: "v1" as const,
+    tracing: "noop" as const,
     routerOnly: false,
+  };
+
+  if (id === "baseline") {
+    return {
+      ...base,
+      architecture: "baseline",
+      topK: null,
+      router: null,
+    };
+  }
+
+  if (id === "jev_top1") {
+    return {
+      ...base,
+      architecture: "jev",
+      topK: MATRIX_TOP_K_CONTROL,
+      router: { ...JEV_ROUTER },
+    };
+  }
+
+  return {
+    ...base,
+    architecture: "jev",
+    topK: MATRIX_TOP_K,
+    router: { ...JEV_ROUTER },
   };
 }
 
-/** Full 3 × 5 M3 matrix in stable architecture-then-N order. */
+/** Full 3 × 5 M3 matrix in stable cell-id-then-N order. */
 export function enumerateMatrixCells(): MatrixCell[] {
   const cells: MatrixCell[] = [];
-  for (const architecture of MATRIX_ARCHITECTURES) {
+  for (const id of MATRIX_CELL_IDS) {
     for (const toolspaceSize of SCALING_TOOLSPACE_SIZES) {
+      const config = buildMatrixConfig(id, toolspaceSize);
       cells.push({
-        architecture,
+        id,
+        architecture: config.architecture,
         toolspaceSize,
-        relativePath: matrixRelativePath(architecture, toolspaceSize),
-        config: buildMatrixConfig(architecture, toolspaceSize),
+        relativePath: matrixRelativePath(id, toolspaceSize),
+        config,
       });
     }
   }

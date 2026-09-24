@@ -79,7 +79,8 @@ export function adaptiveEvalCellsAsMatrix(
   cells: readonly AdaptiveEvalCell[] = enumerateAdaptiveEvalCells(),
 ): MatrixCell[] {
   return cells.map((cell) => ({
-    architecture: cell.architecture as MatrixCell["architecture"],
+    id: cell.id,
+    architecture: cell.architecture,
     toolspaceSize: cell.toolspaceSize,
     relativePath: cell.relativePath,
     config: cell.config,

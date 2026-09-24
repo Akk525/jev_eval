@@ -13,16 +13,18 @@ import {
 function fixtureCells(): MatrixCell[] {
   return [
     {
+      id: "baseline",
       architecture: "baseline",
       toolspaceSize: 5,
       relativePath: "configs/matrix/baseline-n5.yaml",
       config: buildMatrixConfig("baseline", 5),
     },
     {
+      id: "jev_top5",
       architecture: "jev",
       toolspaceSize: 5,
       relativePath: "configs/matrix/jev-top5-n5.yaml",
-      config: buildMatrixConfig("jev", 5),
+      config: buildMatrixConfig("jev_top5", 5),
     },
   ];
 }
@@ -44,16 +46,16 @@ describe("runMatrix", () => {
       "configs/matrix/baseline-n25.yaml",
       "configs/matrix/baseline-n50.yaml",
       "configs/matrix/baseline-n100.yaml",
+      "configs/matrix/jev-top1-n5.yaml",
+      "configs/matrix/jev-top1-n10.yaml",
+      "configs/matrix/jev-top1-n25.yaml",
+      "configs/matrix/jev-top1-n50.yaml",
+      "configs/matrix/jev-top1-n100.yaml",
       "configs/matrix/jev-top5-n5.yaml",
       "configs/matrix/jev-top5-n10.yaml",
       "configs/matrix/jev-top5-n25.yaml",
       "configs/matrix/jev-top5-n50.yaml",
       "configs/matrix/jev-top5-n100.yaml",
-      "configs/matrix/llm-top5-n5.yaml",
-      "configs/matrix/llm-top5-n10.yaml",
-      "configs/matrix/llm-top5-n25.yaml",
-      "configs/matrix/llm-top5-n50.yaml",
-      "configs/matrix/llm-top5-n100.yaml",
     ]);
     expect(report.manifestPath).toBeNull();
     expect(report.pending).toBe(15);
@@ -102,8 +104,6 @@ describe("runMatrix", () => {
     blowUpSecond = false;
     calls.length = 0;
 
-    // Failed cells are not silently retried; only pending/running would run.
-    // Mark the failed cell pending to simulate an interrupted (not failed) second cell.
     afterFail.cells[1] = {
       ...afterFail.cells[1]!,
       status: "running",
@@ -173,9 +173,9 @@ describe("runMatrix", () => {
       resultsRoot: root,
       mock: true,
       dryRun: true,
-      only: ["configs/matrix/llm-top5-n50.yaml"],
+      only: ["configs/matrix/jev-top1-n50.yaml"],
     });
     expect(report.cells).toHaveLength(1);
-    expect(report.cells[0]?.relativePath).toBe("configs/matrix/llm-top5-n50.yaml");
+    expect(report.cells[0]?.relativePath).toBe("configs/matrix/jev-top1-n50.yaml");
   });
 });

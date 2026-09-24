@@ -40,6 +40,7 @@ function attempt(overrides: Partial<NormalizedAttempt> = {}): NormalizedAttempt 
     provider_reported_cost_usd: null,
     router_latency_ms: null,
     agent_latency_ms: 5,
+            total_latency_ms: 20,
     recall_at_k: 1,
     lenient_recall_at_k: 1,
     selection_accuracy: 1,

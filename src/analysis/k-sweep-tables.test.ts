@@ -28,6 +28,7 @@ function run(overrides: Partial<ScalingRun> = {}): ScalingRun {
     providerReportedCostUsd: null,
     routerLatencyMs: 5,
     agentLatencyMs: 20,
+    totalLatencyMs: 20,
     ...overrides,
   };
 }

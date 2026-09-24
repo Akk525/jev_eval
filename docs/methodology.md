@@ -122,7 +122,11 @@ If a denominator is 0, the rate is null, not 0. An attempt is counted once. The 
 * `by_repetition` — when `runs.jsonl` contains two or more repetition indexes, quality rates are computed per repetition (R0 still excluded from each repetition's denominators), then summarized across repetitions with the same sample stats. Null when only one repetition is present.
 * `priced_cost_usd` — sum of per-attempt priced costs from token counts and the config pricing version
 * `router_latency_ms` / `agent_latency_ms` — mean, median/p50, p95 over attempts that recorded a latency
+* `total_latency_ms` — mean/median/p50/p95 of runner-path `totalLatencyMs` over **non-R0** attempts only
+* `total_latency_ms_r0` — same summary over **R0** attempts only (empty when none). Do not mix R0 into `total_latency_ms`.
 * `calibration` — provider `confidence` vs empirical hit rate (`recallAtK === 1`), including fixed buckets and Expected Calibration Error. Attempts without confidence (for example the LLM router) stay out of the calibration denominator. Top-1 probability is never substituted for confidence (D4).
+
+`totalLatencyMs` on each `runs.jsonl` line is monotonic wall-clock ms from attempt start through router (when used), agent (when used), synchronous tool execute (when used), and evaluation — measured immediately before append. For R0 it is time until infrastructure failure classification. Tool-executor-only latency remains unavailable and must not be fabricated from totals.
 
 R0 attempts remain in `attempts` / `r0_attempts` and token/cost totals when recorded, but they never enter Execution Success Rate, Recall@k, or the sample / by-repetition quality stats (D6).
 
@@ -136,7 +140,17 @@ Set `repetitions` in the experiment config (positive integer). The runner record
 
 ## N-matrix orchestration
 
-`npm run matrix` runs the checked-in `configs/matrix/` cells serially. A manifest under `<results>/_matrix/<timestamp>.json` records per-cell status. `--resume` skips completed and failed cells and continues pending/running ones (partial result dirs use the existing config-hash resume rules). Failed cells are not retried unless the operator starts a new matrix run. A single cell can still be executed with `npm run eval -- --config configs/matrix/...`.
+`npm run matrix` runs the checked-in `configs/matrix/` cells serially:
+**baseline / Jev top-1 / Jev top-5 × N ∈ {5, 10, 25, 50, 100}**.
+A manifest under `<results>/_matrix/<timestamp>.json` records per-cell status.
+`--resume` skips completed and failed cells and continues pending/running ones
+(partial result dirs use the existing config-hash resume rules). Failed cells
+are not retried unless the operator starts a new matrix run. A single cell can
+still be executed with `npm run eval -- --config configs/matrix/...`.
+
+LLM top-5 configs live under `configs/archive/llm-top5-matrix/` and are not
+part of the frozen M3 comparison. Pre-execution freeze plan:
+`analysis/m3-freeze/matrix-plan.json` (`npm run generate:m3-freeze`).
 
 ## Provider concurrency
 
