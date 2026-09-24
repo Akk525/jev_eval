@@ -77,6 +77,14 @@ npm run matrix -- --mock --resume --timestamp <id> --results /tmp/jev-matrix
 npm run eval -- --config configs/matrix/baseline-n5.yaml --mock
 ```
 
+**Scaling dress rehearsal** (engineering only — do not optimize against its numbers): 50 tasks × baseline / Jev top-1 / Jev top-5 × N ∈ {5,20,50}. See [docs/dress-rehearsal.md](docs/dress-rehearsal.md).
+
+```bash
+npm run dress-rehearsal -- --validate
+npm run dress-rehearsal -- --mock --results /tmp/jev-dress-rehearsal
+npm run dress-rehearsal -- --results results   # live; costs money
+```
+
 Final end-to-end slice configs use `repetitions: 3`. `summary.json` reports mean / sample stddev / 95% CI (`*_stats`, and `by_repetition` when multiple reps are present). Raw `runs.jsonl` lines are kept.
 
 ```bash

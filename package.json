@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "eval": "tsx src/cli/eval.ts",
     "matrix": "tsx src/cli/matrix.ts",
+    "dress-rehearsal": "tsx src/cli/dress-rehearsal.ts",
     "summarize": "tsx src/cli/summarize.ts",
     "k-sweep": "tsx src/cli/k-sweep.ts",
     "adaptive-eval": "tsx src/cli/adaptive-eval.ts",
@@ -27,7 +28,8 @@
     "analysis:holdout-top5": "tsx src/cli/analysis-holdout-top5.ts",
     "analysis:audit": "tsx src/cli/analysis-audit.ts",
     "generate:matrix": "tsx scripts/generate-n-matrix.ts",
-    "generate:k-sweep": "tsx scripts/generate-k-sweep.ts"
+    "generate:k-sweep": "tsx scripts/generate-k-sweep.ts",
+    "generate:dress-rehearsal": "tsx scripts/generate-dress-rehearsal.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",
