@@ -15,6 +15,7 @@
     "k-sweep": "tsx src/cli/k-sweep.ts",
     "check:calibration": "tsx src/cli/check-calibration.ts",
     "analysis:dataset": "tsx src/cli/analysis-dataset.ts",
+    "analysis:figure1": "tsx src/cli/analysis-figure1.ts",
     "generate:matrix": "tsx scripts/generate-n-matrix.ts",
     "generate:k-sweep": "tsx scripts/generate-k-sweep.ts"
   },

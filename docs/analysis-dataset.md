@@ -50,3 +50,7 @@ experiment dimensions (`architecture`, `toolspace_size`, `top_k`,
 `router_only`), frozen controls, and the attempt metrics needed for later
 figures (ESR, Recall@k, tokens, priced cost, latencies, failure codes,
 confidence / top-1 probability kept distinct per D4).
+
+## Downstream figures
+
+* Figure 1 (ESR vs N): `docs/figure1-esr.md` — `npm run analysis:figure1`

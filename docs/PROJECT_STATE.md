@@ -4,23 +4,24 @@ Snapshot date: 2026-09-23
 
 ## Current milestone
 
-M6 — Analysis + Publication (M5 adaptive tables deferred / skipped in analysis dataset)
+M6 — Analysis + Publication (M5 adaptive tables deferred)
 
 ## Completed issues
 
 - #1–#41 — M0–M4 path on `main` through the top-k tradeoff table.
 - #42 — scaffolding only (methodology + checklist); thresholds not locked. Issue remains open.
-- #46 — normalized analysis dataset builder on `main` (`npm run analysis:dataset`).
+- #46 — normalized analysis dataset builder (`npm run analysis:dataset`).
+- #47 — Figure 1 ESR vs N data + SVG (`npm run analysis:figure1`).
 
 ## Issue currently being worked on
 
-None (landing #46).
+None (landing #47).
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D12). Adaptive thresholds must cite a development/held-out source (D7). Confidence ≠ top-1 probability (D4).
+Accepted in `docs/DECISIONS.md` (D1–D12). Adaptive thresholds must cite a development/held-out source (D7). Confidence ≠ top-1 probability (D4). Figure 1 uses Execution Success Rate until E2E Task Success exists.
 
-M5 (#42–#45) stays blocked on calibration-bearing result dirs. M6.1 documents `#45` as skipped until those dirs exist (`docs/analysis-dataset.md`).
+M5 (#42–#45) stays blocked on calibration-bearing result dirs. M6 documents `#45` as skipped until those dirs exist.
 
 ## Known problems
 
@@ -34,9 +35,8 @@ M5 (#42–#45) stays blocked on calibration-bearing result dirs. M6.1 documents 
 
 ## Next recommended action
 
-1. `npm run analysis:dataset -- --results <result-root> --out analysis/dataset` once result dirs exist, **or**
-2. Run a live Jev slice for #42 when ready to unlock M5:
-   `npm run eval -- --config configs/jev-top5-20.yaml` (needs `AGENT_API_KEY` + `TYPESAFE_API_KEY`)
-3. Next M6 figure issue: #47 (ESR vs N) once a normalized dataset can be built from real or fixture dirs.
+1. With result dirs: `analysis:dataset` then `analysis:figure1`.
+2. Next M6 figure issue: **#48** (cost and token figures vs N).
+3. Or unlock M5 with a live Jev calibration-bearing slice when ready.
 
-https://github.com/Akk525/jev_eval/issues/46
+https://github.com/Akk525/jev_eval/issues/47
