@@ -124,6 +124,7 @@ async function processAttempt(
     return;
   }
   await run.tracer.event(handle, { type: "routing_completed", decision });
+  const scoreK = decision.adaptive?.selectedK ?? k;
 
   if (run.config.routerOnly) {
     await finish(
@@ -140,7 +141,7 @@ async function processAttempt(
           agent: { status: "not_run" },
           tool: { status: "not_run" },
         },
-        k,
+        scoreK,
       ),
       decision,
       ZERO_USAGE,
@@ -169,7 +170,7 @@ async function processAttempt(
           agent: { status: "failed", reason: "provider_error" },
           tool: { status: "not_run" },
         },
-        k,
+        scoreK,
       ),
       decision,
       ZERO_USAGE,
@@ -199,7 +200,7 @@ async function processAttempt(
         agent: { status: "valid", turn },
         tool: toolResult === null ? { status: "not_run" } : { status: "result", result: toolResult },
       },
-      k,
+      scoreK,
     ),
     decision,
     turn.usage,
@@ -212,12 +213,24 @@ export function attemptPricedCostUsd(
   config: ExperimentConfig,
   routerUsage: TokenUsage,
   agentUsage: TokenUsage,
+  decision: RouteDecision | null = null,
 ): number {
   if (pricing === null) return 0;
   let total = pricedCostUsd(
     agentUsage,
     requireModelPrice(pricing, config.agent.provider, config.agent.model),
   );
+  if (config.architecture === "adaptive" && decision?.adaptive && config.router && config.escalateRouter) {
+    total += pricedCostUsd(
+      decision.adaptive.jevUsage,
+      requireModelPrice(pricing, config.router.provider, config.router.model),
+    );
+    total += pricedCostUsd(
+      decision.adaptive.escalateUsage,
+      requireModelPrice(pricing, config.escalateRouter.provider, config.escalateRouter.model),
+    );
+    return total;
+  }
   if (config.router !== null) {
     total += pricedCostUsd(
       routerUsage,
@@ -246,6 +259,7 @@ async function finish(
     infrastructureReason: evaluation.infrastructureReason,
   });
   const routerUsage = decision?.usage ?? ZERO_USAGE;
+  const adaptive = decision?.adaptive;
   const record: RunRecord = {
     taskId: task.id,
     repetition,
@@ -256,7 +270,7 @@ async function finish(
     confidence: decision?.confidence ?? null,
     routerUsage,
     agentUsage,
-    pricedCostUsd: attemptPricedCostUsd(run.pricing, run.config, routerUsage, agentUsage),
+    pricedCostUsd: attemptPricedCostUsd(run.pricing, run.config, routerUsage, agentUsage, decision),
     providerReportedCostUsd: null,
     routerLatencyMs: decision?.latencyMs ?? null,
     agentLatencyMs,
@@ -268,6 +282,14 @@ async function finish(
     executionSuccess: evaluation.executionSuccess,
     failureCode: evaluation.code,
     infrastructureReason: evaluation.infrastructureReason,
+    adaptivePolicyVersion: adaptive?.policyVersion ?? null,
+    adaptiveBranch: adaptive?.branch ?? null,
+    adaptiveSelectedK: adaptive?.selectedK ?? null,
+    adaptiveEscalationTarget: adaptive?.escalationTarget ?? null,
+    adaptiveJevUsage: adaptive?.jevUsage ?? null,
+    adaptiveEscalateUsage: adaptive?.escalateUsage ?? null,
+    adaptiveJevLatencyMs: adaptive?.jevLatencyMs ?? null,
+    adaptiveEscalateLatencyMs: adaptive?.escalateLatencyMs ?? null,
   };
   await writeLock.run(() => {
     run.results.append(record);

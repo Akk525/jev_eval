@@ -41,6 +41,8 @@ export function buildKSweepConfig(topK: KSweepTopK): ExperimentConfig {
     seed: 0,
     agent: { ...AGENT },
     router: { ...JEV_ROUTER },
+    escalateRouter: null,
+    adaptivePolicyPath: null,
     pricingVersion: "v1",
     tracing: "noop",
     routerOnly: false,

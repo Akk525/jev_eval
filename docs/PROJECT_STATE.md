@@ -4,17 +4,18 @@ Snapshot date: 2026-09-24
 
 ## Current milestone
 
-M5 — Adaptive Routing (thresholds locked; router implementation next)
+M5 — Adaptive Routing (router implemented; eval vs fixed-k next)
 
 ## Completed issues
 
 - #1–#41 — M0–M4 path on `main`.
 - #42 — adaptive thresholds locked in `policies/adaptive/v1.json` (D13).
+- #43 — adaptive `Router` behind the existing interface; run records carry branch/k/escalation.
 - #46–#54 — M6 analysis pipeline + publication report (null findings until more arches/figures regenerate from live dirs).
 
 ## Issue currently being worked on
 
-None (landing #42). Next: #43 adaptive `Router`.
+None (landing #43). Next: #44 evaluate adaptive vs fixed-k (disjoint from the #42 development dir).
 
 ## Important implementation decisions
 
@@ -29,11 +30,11 @@ Accepted in `docs/DECISIONS.md` (D1–D13). Adaptive branches use provider `conf
 
 ## Open questions
 
-- #43–#45 adaptive implementation and eval vs fixed-k.
+- #44–#45 adaptive evaluation and summary tables.
 - Fill [docs/TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) numeric subsections only from regenerated figure JSON once baseline/LLM dirs exist.
 
 ## Next recommended action
 
-1. #43 — Implement adaptive router reading `policies/adaptive/v1.json`.
+1. #44 — Evaluate adaptive routing against fixed-k baselines (new result dirs, not the #42 development source).
 2. Optionally run baseline + LLM live slices for three-way figures.
-3. #44 / #45 — Evaluate adaptive against fixed-k and add summary tables (disjoint from the #42 development dir).
+3. #45 — Adaptive routing summary tables.

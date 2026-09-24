@@ -18,6 +18,8 @@ function baseline(overrides: Partial<ExperimentConfig> = {}): ExperimentConfig {
     seed: 0,
     agent: { provider: "mock", model: "mock-agent", temperature: 0 },
     router: null,
+    escalateRouter: null,
+    adaptivePolicyPath: null,
     pricingVersion: "v1",
     tracing: "noop",
     routerOnly: false,
@@ -129,5 +131,52 @@ describe("parseExperimentConfig", () => {
     const { routerOnly: _omit, ...without } = baseline();
     void _omit;
     expect(parseExperimentConfig(without).routerOnly).toBe(false);
+  });
+
+  it("accepts adaptive with policy path and escalate router", () => {
+    const config = parseExperimentConfig(
+      baseline({
+        architecture: "adaptive",
+        topK: 5,
+        router: { provider: "typesafe", model: "jev-1.13.0" },
+        escalateRouter: { provider: "openai", model: "gpt-5.6-sol" },
+        adaptivePolicyPath: "policies/adaptive/v1.json",
+      }),
+    );
+    expect(config.architecture).toBe("adaptive");
+    expect(config.adaptivePolicyPath).toBe("policies/adaptive/v1.json");
+    expect(config.escalateRouter?.model).toBe("gpt-5.6-sol");
+  });
+
+  it("rejects adaptive without escalateRouter or policy path", () => {
+    expect(() =>
+      parseExperimentConfig(
+        baseline({
+          architecture: "adaptive",
+          topK: 5,
+          router: { provider: "typesafe", model: "jev-1.13.0" },
+          escalateRouter: { provider: "openai", model: "gpt-5.6-sol" },
+          adaptivePolicyPath: null,
+        }),
+      ),
+    ).toThrow(/adaptivePolicyPath/);
+    expect(() =>
+      parseExperimentConfig(
+        baseline({
+          architecture: "adaptive",
+          topK: 5,
+          router: { provider: "typesafe", model: "jev-1.13.0" },
+          escalateRouter: null,
+          adaptivePolicyPath: "policies/adaptive/v1.json",
+        }),
+      ),
+    ).toThrow(/escalateRouter/);
+  });
+
+  it("loads the adaptive example config", () => {
+    const adaptivePath = fileURLToPath(new URL("../../configs/adaptive-top5-20.yaml", import.meta.url));
+    const loaded = loadExperimentConfig(adaptivePath);
+    expect(loaded.config.architecture).toBe("adaptive");
+    expect(loaded.config.adaptivePolicyPath).toBe("policies/adaptive/v1.json");
   });
 });

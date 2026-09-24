@@ -74,6 +74,8 @@ function config(toolspaceSize: number, overrides: Partial<ExperimentConfig> = {}
     seed: 0,
     agent: { provider: "mock", model: "mock-agent", temperature: 0 },
     router: { provider: "mock", model: "jev-1.13.0" },
+    escalateRouter: null,
+    adaptivePolicyPath: null,
     pricingVersion: "v1",
     tracing: "noop",
     routerOnly: false,
@@ -567,4 +569,76 @@ it("still classifies provider router failures as R0 under concurrency > 1", asyn
   expect(runs).toHaveLength(2);
   expect(runs.every((run) => run.failureCode === "R0")).toBe(true);
   expect(runs.every((run) => run.routingExcluded)).toBe(true);
+});
+
+it("records adaptive branch, k, escalation, and split routing cost fields", async () => {
+  const { createAdaptiveRouter } = await import("../../routers/adaptive/adaptive.js");
+  const { loadAdaptivePolicy } = await import("../../routers/adaptive/policy.js");
+  const { createLlmRouter } = await import("../../routers/llm/llm.js");
+  const { resolve } = await import("node:path");
+
+  const root = mkdtempSync(join(tmpdir(), "jev-adaptive-"));
+  const prompt = "Find the gold file";
+  const cfg = config(10, {
+    architecture: "adaptive",
+    topK: 5,
+    router: { provider: "typesafe", model: "jev-1.13.0" },
+    escalateRouter: { provider: "openai", model: "gpt-5.6-sol" },
+    adaptivePolicyPath: "policies/adaptive/v1.json",
+    agent: { provider: "openai", model: "gpt-5.6-sol", temperature: 0 },
+  });
+  const results = openResultDirectory({
+    root,
+    timestamp: "2026-09-24T010000Z",
+    config: cfg,
+    configHash: "hash",
+    datasetVersion: "1",
+    registryHash: "reg",
+    gitSha: "abc",
+  });
+
+  // confidence 0.2 → low → escalate (policy T_low=0.5)
+  const lowDecision = {
+    scores: { d1: 0.5, gold: 0.3, d2: 0.2 },
+    top1Probability: 0.5,
+    confidence: 0.2,
+    usage: { inputTokens: 4, outputTokens: 1 },
+    raw: null,
+  };
+
+  await runExperiment({
+    config: cfg,
+    tasks: [task("task_0001", prompt)],
+    registry: registry(),
+    router: createAdaptiveRouter({
+      policy: loadAdaptivePolicy(resolve("policies/adaptive/v1.json")),
+      jev: createJevRouter(createMockDecisionProvider([lowDecision])),
+      escalate: createLlmRouter({
+        async rank() {
+          return {
+            text: '["gold","d1","d2","d3","d4"]',
+            usage: { inputTokens: 8, outputTokens: 2 },
+            raw: null,
+          };
+        },
+      }),
+    }),
+    agent: createScriptedAgent(new Map([[prompt, { tool: "gold", arguments: { query: "q" } }]])),
+    tracer: new NoopTracer(),
+    results,
+    pricing: loadPricingTable(pricingPath),
+  });
+
+  const line = results.readRuns()[0];
+  expect(line?.adaptivePolicyVersion).toBe("adaptive-policy-v1");
+  expect(line?.adaptiveBranch).toBe("low");
+  expect(line?.adaptiveSelectedK).toBe(5);
+  expect(line?.adaptiveEscalationTarget).toBe("llm_topk");
+  expect(line?.adaptiveJevUsage).toEqual({ inputTokens: 4, outputTokens: 1 });
+  expect(line?.adaptiveEscalateUsage).toEqual({ inputTokens: 8, outputTokens: 2 });
+  expect(line?.candidates?.[0]).toBe("gold");
+  expect(line?.confidence).toBe(0.2);
+  expect(line?.adaptiveJevLatencyMs).not.toBeNull();
+  expect(line?.adaptiveEscalateLatencyMs).not.toBeNull();
+  expect(line?.pricedCostUsd).toBeGreaterThan(0);
 });

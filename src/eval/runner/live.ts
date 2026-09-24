@@ -12,6 +12,8 @@ import { createTypeSafeDecisionProvider } from "../../providers/typesafe/client.
 import { createBaselineRouter } from "../../routers/baseline/baseline.js";
 import { createJevRouter } from "../../routers/jev/jev.js";
 import { createLlmRouter } from "../../routers/llm/llm.js";
+import { createAdaptiveRouter } from "../../routers/adaptive/adaptive.js";
+import { loadAdaptivePolicy } from "../../routers/adaptive/policy.js";
 import type { Router } from "../../routers/types.js";
 import { openResultDirectory } from "../../results/writer.js";
 import { createCatalogRegistry } from "../../tools/catalog.js";
@@ -22,7 +24,7 @@ import type { Architecture, ExperimentConfig } from "../../types/config.js";
 import { resultTimestamp } from "./smoke.js";
 import { runExperiment } from "./run.js";
 
-const LIVE_ARCHITECTURES = new Set<Architecture>(["baseline", "jev", "llm"]);
+const LIVE_ARCHITECTURES = new Set<Architecture>(["baseline", "jev", "llm", "adaptive"]);
 
 export interface LiveSliceCommand {
   configPath: string;
@@ -51,7 +53,7 @@ export async function runLiveSlice(command: LiveSliceCommand): Promise<string> {
   const env = command.env ?? process.env;
   const loaded = loadExperimentConfig(command.configPath);
   if (!LIVE_ARCHITECTURES.has(loaded.config.architecture)) {
-    throw new Error(`live slice supports baseline, jev, and llm, not ${loaded.config.architecture}`);
+    throw new Error(`live slice supports baseline, jev, llm, and adaptive, not ${loaded.config.architecture}`);
   }
   const architecture = loaded.config.architecture;
   const config: ExperimentConfig = {
@@ -156,22 +158,62 @@ export function resolveLiveRouter(
     );
   }
 
-  throw new Error(`live slice supports baseline, jev, and llm, not ${config.architecture}`);
+  if (config.architecture === "adaptive") {
+    if (config.router === null) throw new Error("adaptive architecture requires a primary Jev router");
+    if (config.escalateRouter === null) throw new Error("adaptive architecture requires escalateRouter");
+    if (config.adaptivePolicyPath === null) throw new Error("adaptive architecture requires adaptivePolicyPath");
+    if (config.router.provider !== "typesafe") {
+      throw new Error(`live adaptive Jev provider ${config.router.provider} is not implemented`);
+    }
+    if (config.escalateRouter.provider !== "openai") {
+      throw new Error(`live adaptive escalate provider ${config.escalateRouter.provider} is not implemented`);
+    }
+    const typesafeKey = env.TYPESAFE_API_KEY?.trim() ?? "";
+    if (typesafeKey === "") throw new Error("TYPESAFE_API_KEY is required for a live adaptive run");
+    const agentKey = env.AGENT_API_KEY?.trim() ?? "";
+    if (agentKey === "") throw new Error("AGENT_API_KEY is required for a live adaptive escalate router");
+    return createAdaptiveRouter({
+      policy: loadAdaptivePolicy(resolve(config.adaptivePolicyPath)),
+      jev: createJevRouter(
+        createTypeSafeDecisionProvider({ apiKey: typesafeKey, model: config.router.model }),
+      ),
+      escalate: createLlmRouter(
+        createOpenAIRankProvider({
+          apiKey: agentKey,
+          model: config.escalateRouter.model,
+          temperature: 0,
+          ...(fetchImpl === undefined ? {} : { fetch: fetchImpl }),
+        }),
+      ),
+    });
+  }
+
+  throw new Error(`live slice supports baseline, jev, llm, and adaptive, not ${config.architecture}`);
 }
 
 function requireLiveKeys(config: ExperimentConfig, env: NodeJS.ProcessEnv): void {
-  if (config.architecture === "jev" && (env.TYPESAFE_API_KEY?.trim() ?? "") === "") {
-    throw new Error("TYPESAFE_API_KEY is required for a live Jev run");
+  if (
+    (config.architecture === "jev" || config.architecture === "adaptive") &&
+    (env.TYPESAFE_API_KEY?.trim() ?? "") === ""
+  ) {
+    throw new Error(
+      config.architecture === "adaptive"
+        ? "TYPESAFE_API_KEY is required for a live adaptive run"
+        : "TYPESAFE_API_KEY is required for a live Jev run",
+    );
   }
 
   const needsAgentKey =
     config.architecture === "llm" ||
+    config.architecture === "adaptive" ||
     (!config.routerOnly && (config.architecture === "baseline" || config.architecture === "jev"));
   if (needsAgentKey && (env.AGENT_API_KEY?.trim() ?? "") === "") {
     throw new Error(
       config.architecture === "llm"
         ? "AGENT_API_KEY is required for a live LLM router run"
-        : "AGENT_API_KEY is required for a live run",
+        : config.architecture === "adaptive"
+          ? "AGENT_API_KEY is required for a live adaptive run"
+          : "AGENT_API_KEY is required for a live run",
     );
   }
 

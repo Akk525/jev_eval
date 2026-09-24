@@ -47,6 +47,8 @@ function config(architecture: "baseline" | "jev" | "llm", n: number, topK: numbe
         : architecture === "jev"
           ? { provider: "typesafe", model: "jev-1.13.0" }
           : { provider: "openai", model: "gpt-5.6-sol" },
+    escalateRouter: null,
+    adaptivePolicyPath: null,
     pricingVersion: "v1",
     tracing: "noop" as const,
     routerOnly: false,

@@ -22,4 +22,20 @@ export interface RouteDecision {
   usage: TokenUsage;
   latencyMs: number;
   raw: unknown;
+  /** Present when the adaptive router selected a policy branch (#43). */
+  adaptive?: AdaptiveRouteMeta;
+}
+
+export interface AdaptiveRouteMeta {
+  policyVersion: string;
+  branch: "high" | "medium" | "low";
+  selectedK: number;
+  /** Null when the branch stayed on Jev. */
+  escalationTarget: "llm_topk" | null;
+  jevConfidence: number | null;
+  jevTop1Probability: number | null;
+  jevUsage: TokenUsage;
+  jevLatencyMs: number;
+  escalateUsage: TokenUsage;
+  escalateLatencyMs: number;
 }

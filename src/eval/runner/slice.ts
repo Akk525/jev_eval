@@ -4,6 +4,8 @@ import { createScriptedAgent, type ScriptedCall } from "../../agent/mock.js";
 import { createBaselineRouter } from "../../routers/baseline/baseline.js";
 import { createJevRouter } from "../../routers/jev/jev.js";
 import { createLlmRouter, type RankProvider } from "../../routers/llm/llm.js";
+import { createAdaptiveRouter } from "../../routers/adaptive/adaptive.js";
+import { loadAdaptivePolicy } from "../../routers/adaptive/policy.js";
 import type { Router } from "../../routers/types.js";
 import { configHash, loadExperimentConfig } from "../../config/load.js";
 import { loadDataset, type BenchmarkTask } from "../../dataset/schema.js";
@@ -18,7 +20,7 @@ import type { Architecture, ExperimentConfig } from "../../types/config.js";
 import { resultTimestamp } from "./smoke.js";
 import { runExperiment } from "./run.js";
 
-const MOCKED_ARCHITECTURES = new Set<Architecture>(["baseline", "jev", "llm"]);
+const MOCKED_ARCHITECTURES = new Set<Architecture>(["baseline", "jev", "llm", "adaptive"]);
 
 export interface MockedSliceCommand {
   configPath: string;
@@ -48,7 +50,7 @@ export interface MockedSliceCommand {
 export async function runMockedSlice(command: MockedSliceCommand): Promise<string> {
   const loaded = loadExperimentConfig(command.configPath);
   if (!MOCKED_ARCHITECTURES.has(loaded.config.architecture)) {
-    throw new Error(`mocked slice supports baseline, jev, and llm, not ${loaded.config.architecture}`);
+    throw new Error(`mocked slice supports baseline, jev, llm, and adaptive, not ${loaded.config.architecture}`);
   }
   const architecture = loaded.config.architecture;
 
@@ -99,12 +101,24 @@ function routerFor(config: ExperimentConfig, preferredByPrompt: ReadonlyMap<stri
   if (config.architecture === "baseline") return createBaselineRouter();
   if (config.architecture === "jev") return createJevRouter(createPreferredDecisionProvider(preferredByPrompt));
   if (config.architecture === "llm") return createLlmRouter(createPreferredRankProvider(preferredByPrompt));
-  throw new Error(`mocked slice supports baseline, jev, and llm, not ${config.architecture}`);
+  if (config.architecture === "adaptive") {
+    if (config.adaptivePolicyPath === null) throw new Error("adaptive mocked slice requires adaptivePolicyPath");
+    return createAdaptiveRouter({
+      policy: loadAdaptivePolicy(resolve(config.adaptivePolicyPath)),
+      jev: createJevRouter(createPreferredDecisionProvider(preferredByPrompt)),
+      escalate: createLlmRouter(createPreferredRankProvider(preferredByPrompt)),
+    });
+  }
+  throw new Error(`mocked slice supports baseline, jev, llm, and adaptive, not ${config.architecture}`);
 }
 
 function failingRouter(architecture: Architecture): Router {
+  const id =
+    architecture === "baseline" || architecture === "jev" || architecture === "llm" || architecture === "adaptive"
+      ? architecture
+      : "mock";
   return {
-    id: architecture,
+    id,
     async route() {
       throw new Error("provider down");
     },

@@ -147,6 +147,8 @@ describe("buildKTradeoffTable", () => {
         seed: 0,
         agent: { provider: "openai", model: "gpt-5.6-sol", temperature: 0 },
         router: { provider: "typesafe", model: "jev-1.13.0" },
+        escalateRouter: null,
+        adaptivePolicyPath: null,
         pricingVersion: "v1",
         tracing: "noop" as const,
         routerOnly: false,

@@ -13,7 +13,7 @@ const modelRefSchema = z
 
 export const experimentConfigSchema = z
   .object({
-    architecture: z.enum(["baseline", "jev", "llm", "mock"]),
+    architecture: z.enum(["baseline", "jev", "llm", "mock", "adaptive"]),
     toolspaceSize: z.number().int().positive(),
     topK: z.number().int().positive().nullable(),
     datasetPath: z.string().min(1),
@@ -22,6 +22,8 @@ export const experimentConfigSchema = z
     seed: z.number().int(),
     agent: modelRefSchema.extend({ temperature: z.number() }).strict(),
     router: modelRefSchema.nullable(),
+    escalateRouter: modelRefSchema.nullable().default(null),
+    adaptivePolicyPath: z.string().min(1).nullable().default(null),
     pricingVersion: z.string().min(1),
     tracing: z.enum(["noop", "memora"]),
     /** Omit or false for full agent runs. True stops after routing and scores Recall@k only. */
@@ -39,6 +41,9 @@ export const experimentConfigSchema = z
 
     rejectUnpinnedModel(config.agent.model, ["agent", "model"], ctx);
     if (config.router) rejectUnpinnedModel(config.router.model, ["router", "model"], ctx);
+    if (config.escalateRouter) {
+      rejectUnpinnedModel(config.escalateRouter.model, ["escalateRouter", "model"], ctx);
+    }
 
     if (config.architecture === "baseline") {
       if (config.topK !== null) {
@@ -53,6 +58,20 @@ export const experimentConfigSchema = z
           code: z.ZodIssueCode.custom,
           path: ["router"],
           message: "must be null for baseline",
+        });
+      }
+      if (config.escalateRouter !== null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["escalateRouter"],
+          message: "must be null for baseline",
+        });
+      }
+      if (config.adaptivePolicyPath !== null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["adaptivePolicyPath"],
+          message: "must be null unless architecture is adaptive",
         });
       }
     }
@@ -78,6 +97,57 @@ export const experimentConfigSchema = z
           message: "is required",
         });
       }
+      if (config.escalateRouter !== null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["escalateRouter"],
+          message: "must be null unless architecture is adaptive",
+        });
+      }
+      if (config.adaptivePolicyPath !== null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["adaptivePolicyPath"],
+          message: "must be null unless architecture is adaptive",
+        });
+      }
+    }
+
+    if (config.architecture === "adaptive") {
+      if (config.topK === null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["topK"],
+          message: "is required",
+        });
+      } else if (config.topK > config.toolspaceSize) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["topK"],
+          message: "must be less than or equal to toolspaceSize",
+        });
+      }
+      if (config.router === null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["router"],
+          message: "is required (primary Jev router)",
+        });
+      }
+      if (config.escalateRouter === null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["escalateRouter"],
+          message: "is required",
+        });
+      }
+      if (config.adaptivePolicyPath === null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["adaptivePolicyPath"],
+          message: "is required",
+        });
+      }
     }
 
     if (
@@ -90,6 +160,23 @@ export const experimentConfigSchema = z
         path: ["topK"],
         message: "must be less than or equal to toolspaceSize",
       });
+    }
+
+    if (config.architecture === "mock") {
+      if (config.escalateRouter !== null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["escalateRouter"],
+          message: "must be null unless architecture is adaptive",
+        });
+      }
+      if (config.adaptivePolicyPath !== null) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["adaptivePolicyPath"],
+          message: "must be null unless architecture is adaptive",
+        });
+      }
     }
   });
 

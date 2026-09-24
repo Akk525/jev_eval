@@ -90,6 +90,8 @@ it("does not fail the experiment when Memora throws", async () => {
     seed: 0,
     agent: { provider: "mock", model: "mock-agent", temperature: 0 },
     router: null,
+    escalateRouter: null,
+    adaptivePolicyPath: null,
     pricingVersion: "v1",
     tracing: "memora",
     routerOnly: false,

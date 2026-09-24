@@ -16,6 +16,8 @@ function request(root: string, overrides: Partial<ResultDirectoryRequest> = {}):
     seed: 0,
     agent: { provider: "mock", model: "mock-agent", temperature: 0 },
     router: null,
+    escalateRouter: null,
+    adaptivePolicyPath: null,
     pricingVersion: "v1",
     tracing: "noop",
     routerOnly: false,
@@ -55,6 +57,14 @@ function run(taskId: string, repetition = 0): RunRecord {
     executionSuccess: true,
     failureCode: null,
     infrastructureReason: null,
+    adaptivePolicyVersion: null,
+    adaptiveBranch: null,
+    adaptiveSelectedK: null,
+    adaptiveEscalationTarget: null,
+    adaptiveJevUsage: null,
+    adaptiveEscalateUsage: null,
+    adaptiveJevLatencyMs: null,
+    adaptiveEscalateLatencyMs: null,
   };
 }
 

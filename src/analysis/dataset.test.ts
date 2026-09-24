@@ -36,6 +36,14 @@ function run(overrides: Partial<RunRecord> = {}): RunRecord {
     executionSuccess: true,
     failureCode: null,
     infrastructureReason: null,
+    adaptivePolicyVersion: null,
+    adaptiveBranch: null,
+    adaptiveSelectedK: null,
+    adaptiveEscalationTarget: null,
+    adaptiveJevUsage: null,
+    adaptiveEscalateUsage: null,
+    adaptiveJevLatencyMs: null,
+    adaptiveEscalateLatencyMs: null,
     ...overrides,
   };
 }
@@ -61,6 +69,8 @@ function storedConfig(
         : architecture === "jev"
           ? { provider: "typesafe", model: "jev-1.13.0" }
           : { provider: "openai", model: "gpt-5.6-sol" },
+    escalateRouter: null,
+    adaptivePolicyPath: null,
     pricingVersion: "v1",
     tracing: "noop",
     routerOnly: false,

@@ -38,6 +38,20 @@ export interface RunRecord {
   executionSuccess: boolean;
   failureCode: FailureCode | null;
   infrastructureReason: InfrastructureReason | null;
+  /** Adaptive policy version when architecture is adaptive. Null otherwise. */
+  adaptivePolicyVersion: string | null;
+  /** Selected adaptive branch. Null when not adaptive or router failed. */
+  adaptiveBranch: "high" | "medium" | "low" | null;
+  /** Effective candidate k after the policy. Null when not adaptive or router failed. */
+  adaptiveSelectedK: number | null;
+  /** Escalation target when the low branch fired. Null otherwise. */
+  adaptiveEscalationTarget: "llm_topk" | null;
+  /** Jev-only tokens inside an adaptive turn. Null when not adaptive. */
+  adaptiveJevUsage: TokenUsage | null;
+  /** Escalate-router tokens inside an adaptive turn. Null when not adaptive. */
+  adaptiveEscalateUsage: TokenUsage | null;
+  adaptiveJevLatencyMs: number | null;
+  adaptiveEscalateLatencyMs: number | null;
 }
 
 export type ResultSummary = AggregateSummary;

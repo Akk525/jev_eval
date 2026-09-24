@@ -71,4 +71,4 @@ Required:
 
 ## Relationship to implementation (#43)
 
-#43 implements the adaptive `Router` only after a non-pending policy file exists with concrete thresholds. Escalations remain explicit in the run record. Malformed escalations stay `R0`.
+#43 implements the adaptive `Router` in `src/routers/adaptive/`. Example config: `configs/adaptive-top5-20.yaml`. Escalations are explicit on each run record (`adaptiveBranch`, `adaptiveSelectedK`, `adaptiveEscalationTarget`, split Jev/escalate usage and latency). Malformed or failed escalations stay `R0`. Policy version is recorded as `adaptivePolicyVersion`.

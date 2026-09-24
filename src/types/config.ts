@@ -1,4 +1,4 @@
-export type Architecture = "baseline" | "jev" | "llm" | "mock";
+export type Architecture = "baseline" | "jev" | "llm" | "mock" | "adaptive";
 
 export type TracingMode = "noop" | "memora";
 
@@ -28,6 +28,14 @@ export interface ExperimentConfig {
   agent: AgentModelRef;
   /** Null when the architecture does not call a routing model. */
   router: ModelRef | null;
+  /**
+   * Escalation router for adaptive architecture (LLM top-k). Null otherwise.
+   */
+  escalateRouter: ModelRef | null;
+  /**
+   * Path to a locked adaptive policy JSON (`thresholds_locked`). Null unless architecture is adaptive.
+   */
+  adaptivePolicyPath: string | null;
   pricingVersion: string;
   tracing: TracingMode;
   /**

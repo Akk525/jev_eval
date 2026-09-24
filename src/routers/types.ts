@@ -8,6 +8,6 @@ export interface RouteInput {
 }
 
 export interface Router {
-  readonly id: "baseline" | "jev" | "llm" | "mock";
+  readonly id: "baseline" | "jev" | "llm" | "mock" | "adaptive";
   route(input: RouteInput): Promise<RouteDecision>;
 }
