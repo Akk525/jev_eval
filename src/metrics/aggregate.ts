@@ -1,11 +1,15 @@
 import {
   executionSuccessRate,
   summarizeLatency,
+  summarizeSamples,
   type LatencySummary,
+  type SampleSummary,
 } from "./metrics.js";
 
 /** Minimal run fields needed to recompute summary aggregates. */
 export interface AggregateRun {
+  /** Repetition index for this attempt. Defaults to 0 when omitted (legacy fixtures). */
+  repetition?: number;
   routingExcluded: boolean;
   executionExcluded: boolean;
   executionSuccess: boolean;
@@ -39,14 +43,39 @@ export interface CalibrationSummary {
   buckets: CalibrationBucket[];
 }
 
+/**
+ * Per-repetition quality rates, then mean / sample stddev / 95% CI across repetitions.
+ * Null when fewer than two distinct repetition indexes appear in the raw runs.
+ */
+export interface RepetitionStats {
+  repetitions: number;
+  execution_success_rate: SampleSummary;
+  recall_at_k: SampleSummary;
+}
+
 export interface AggregateSummary {
   attempts: number;
   r0_attempts: number;
   routing_scored: number;
   execution_scored: number;
   execution_success_rate: number | null;
+  /**
+   * Mean / sample stddev / 95% CI over execution-scored attempt outcomes (0/1).
+   * R0 / execution-excluded attempts are omitted. Empty denominator → null mean.
+   */
+  execution_success_rate_stats: SampleSummary;
   /** Mean primary Recall@k over routing-scored attempts. Null when none. */
   recall_at_k: number | null;
+  /**
+   * Mean / sample stddev / 95% CI over primary Recall@k on routing-scored attempts.
+   * R0 / routing-excluded attempts are omitted.
+   */
+  recall_at_k_stats: SampleSummary;
+  /**
+   * When raw runs cover 2+ repetition indexes, quality rates are computed per repetition
+   * (still excluding R0 from each repetition's denominators), then summarized across reps.
+   */
+  by_repetition: RepetitionStats | null;
   router_input_tokens: number;
   router_output_tokens: number;
   agent_input_tokens: number;
@@ -73,6 +102,9 @@ export function aggregateRuns(runs: readonly AggregateRun[]): AggregateSummary {
   const recalls = routingScored
     .map((run) => run.recallAtK)
     .filter((value): value is number => value !== null);
+  const executionOutcomes = runs
+    .filter((run) => !run.executionExcluded)
+    .map((run) => (run.executionSuccess ? 1 : 0));
   const providerCosts = runs
     .map((run) => run.providerReportedCostUsd)
     .filter((value): value is number => value !== null);
@@ -83,7 +115,10 @@ export function aggregateRuns(runs: readonly AggregateRun[]): AggregateSummary {
     routing_scored: routingScored.length,
     execution_scored: runs.filter((run) => !run.executionExcluded).length,
     execution_success_rate: executionSuccessRate(runs),
+    execution_success_rate_stats: summarizeSamples(executionOutcomes),
     recall_at_k: recalls.length === 0 ? null : mean(recalls),
+    recall_at_k_stats: summarizeSamples(recalls),
+    by_repetition: aggregateByRepetition(runs),
     router_input_tokens: sum(runs.map((run) => run.routerUsage.inputTokens)),
     router_output_tokens: sum(runs.map((run) => run.routerUsage.outputTokens)),
     agent_input_tokens: sum(runs.map((run) => run.agentUsage.inputTokens)),
@@ -97,6 +132,41 @@ export function aggregateRuns(runs: readonly AggregateRun[]): AggregateSummary {
       runs.map((run) => run.agentLatencyMs).filter((value): value is number => value !== null),
     ),
     calibration: calibrateConfidence(routingScored),
+  };
+}
+
+/**
+ * One quality rate per repetition index, then sample stats across repetitions.
+ * Returns null when only one repetition index is present.
+ */
+export function aggregateByRepetition(runs: readonly AggregateRun[]): RepetitionStats | null {
+  const byRep = new Map<number, AggregateRun[]>();
+  for (const run of runs) {
+    const rep = run.repetition ?? 0;
+    const bucket = byRep.get(rep);
+    if (bucket === undefined) byRep.set(rep, [run]);
+    else bucket.push(run);
+  }
+  if (byRep.size < 2) return null;
+
+  const ordered = [...byRep.entries()].sort(([left], [right]) => left - right);
+  const executionRates: number[] = [];
+  const recallRates: number[] = [];
+
+  for (const [, group] of ordered) {
+    const esr = executionSuccessRate(group);
+    if (esr !== null) executionRates.push(esr);
+    const recalls = group
+      .filter((run) => !run.routingExcluded)
+      .map((run) => run.recallAtK)
+      .filter((value): value is number => value !== null);
+    if (recalls.length > 0) recallRates.push(mean(recalls));
+  }
+
+  return {
+    repetitions: byRep.size,
+    execution_success_rate: summarizeSamples(executionRates),
+    recall_at_k: summarizeSamples(recallRates),
   };
 }
 

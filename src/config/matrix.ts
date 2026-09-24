@@ -4,6 +4,9 @@ import { SCALING_TOOLSPACE_SIZES, type ScalingToolspaceSize } from "../tools/too
 /** Fixed top-k for routed M3 matrix cells (Jev and LLM). */
 export const MATRIX_TOP_K = 5;
 
+/** Recommended repetitions for final end-to-end live runs (BRIEF §23). Matrix cells stay at 1. */
+export const FINAL_REPETITIONS = 3;
+
 /** Scaling dataset for the N-matrix. Slice configs keep v0.1. */
 export const MATRIX_DATASET_PATH = "datasets/v0.2/tasks.jsonl";
 

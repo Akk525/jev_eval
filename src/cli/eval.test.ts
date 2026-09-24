@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { expect, it } from "vitest";
+import { loadExperimentConfig } from "../config/load.js";
 
 const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
 
@@ -39,7 +40,7 @@ it("validates the baseline, Jev, LLM, and router-only example configs without ca
   expect(llm.stdout).toContain("router=openai/gpt-5.6-sol");
   expect(routerOnly.stdout).toContain("mode=router-only");
   expect(routerOnly.stdout).toContain("router=typesafe/jev-1.13.0");
-});
+}, 20_000);
 
 it("validates every N-matrix config without calling a provider", () => {
   const paths = [
@@ -64,6 +65,15 @@ it("validates every N-matrix config without calling a provider", () => {
     expect(run.status, `${configPath}\n${run.stderr}`).toBe(0);
     expect(run.stdout).toContain("agent=openai/gpt-5.6-sol");
     expect(run.stdout).not.toContain("jev-latest");
+  }
+}, 30_000);
+
+it("validates final end-to-end configs with repetitions=3", () => {
+  for (const name of ["baseline-20.yaml", "jev-top5-20.yaml", "llm-top5-20.yaml"]) {
+    const configPath = `configs/final/${name}`;
+    const run = cli(["--validate", "--config", configPath]);
+    expect(run.status, `${configPath}\n${run.stderr}`).toBe(0);
+    expect(loadExperimentConfig(join(repoRoot, configPath)).config.repetitions).toBe(3);
   }
 });
 

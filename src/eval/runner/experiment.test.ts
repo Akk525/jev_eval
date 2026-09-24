@@ -395,3 +395,57 @@ it("stores token counts that recompute priced_cost_usd from the pricing table", 
   };
   expect(summary.priced_cost_usd).toBe(2.042);
 });
+
+it("writes three raw attempts per task and by_repetition stats when repetitions is 3", async () => {
+  const root = mkdtempSync(join(tmpdir(), "jev-reps-"));
+  const first = task("task_0001", "first");
+  const second = task("task_0002", "second");
+  const repeated = config(10, { repetitions: 3 });
+  const results = openResultDirectory({
+    root,
+    timestamp: "2026-09-23T160500Z",
+    config: repeated,
+    configHash: "hash",
+    datasetVersion: "1",
+    registryHash: "reg",
+    gitSha: "abc",
+  });
+  const decisions = Array.from({ length: 6 }, () => decision);
+  await runExperiment({
+    config: repeated,
+    tasks: [first, second],
+    registry: registry(),
+    router: createJevRouter(createMockDecisionProvider(decisions)),
+    agent: createScriptedAgent(
+      new Map([
+        [first.prompt, { tool: "gold", arguments: { query: "q" } }],
+        [second.prompt, { tool: "gold", arguments: { query: "q" } }],
+      ]),
+    ),
+    tracer: new NoopTracer(),
+    results,
+    pricing: null,
+  });
+
+  const runs = results.readRuns();
+  expect(runs).toHaveLength(6);
+  expect(runs.map((run) => [run.taskId, run.repetition])).toEqual([
+    ["task_0001", 0],
+    ["task_0001", 1],
+    ["task_0001", 2],
+    ["task_0002", 0],
+    ["task_0002", 1],
+    ["task_0002", 2],
+  ]);
+  const summary = JSON.parse(readFileSync(join(results.directory, "summary.json"), "utf8")) as {
+    attempts: number;
+    execution_success_rate: number;
+    execution_success_rate_stats: { mean: number; stddev: number | null };
+    by_repetition: { repetitions: number; execution_success_rate: { mean: number } };
+  };
+  expect(summary.attempts).toBe(6);
+  expect(summary.execution_success_rate).toBe(1);
+  expect(summary.execution_success_rate_stats.mean).toBe(1);
+  expect(summary.by_repetition.repetitions).toBe(3);
+  expect(summary.by_repetition.execution_success_rate.mean).toBe(1);
+});

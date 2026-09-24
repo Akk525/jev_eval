@@ -117,9 +117,17 @@ If a denominator is 0, the rate is null, not 0. An attempt is counted once. The 
 `summary.json` is recomputed from `runs.jsonl` after every append. Fields:
 
 * `recall_at_k` — mean primary Recall@k over routing-scored attempts
+* `recall_at_k_stats` / `execution_success_rate_stats` — mean, sample standard deviation (n − 1), and 95% CI (`summarizeSamples`) over the same scored attempts. Empty denominators stay null; values are never invented.
+* `by_repetition` — when `runs.jsonl` contains two or more repetition indexes, quality rates are computed per repetition (R0 still excluded from each repetition's denominators), then summarized across repetitions with the same sample stats. Null when only one repetition is present.
 * `priced_cost_usd` — sum of per-attempt priced costs from token counts and the config pricing version
 * `router_latency_ms` / `agent_latency_ms` — mean, median/p50, p95 over attempts that recorded a latency
 * `calibration` — provider `confidence` vs empirical hit rate (`recallAtK === 1`), including fixed buckets and Expected Calibration Error. Attempts without confidence (for example the LLM router) stay out of the calibration denominator. Top-1 probability is never substituted for confidence (D4).
+
+R0 attempts remain in `attempts` / `r0_attempts` and token/cost totals when recorded, but they never enter Execution Success Rate, Recall@k, or the sample / by-repetition quality stats (D6).
+
+## Repetitions
+
+Set `repetitions` in the experiment config (positive integer). The runner records one `runs.jsonl` line per `(task_id, repetition)` and never drops raw lines after aggregation. Matrix cells default to `repetitions: 1`. Final end-to-end slice configs under `configs/final/` use `repetitions: 3`.
 
 ## Source of truth
 

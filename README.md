@@ -75,4 +75,12 @@ npm run matrix -- --mock --resume --timestamp <id> --results /tmp/jev-matrix
 npm run eval -- --config configs/matrix/baseline-n5.yaml --mock
 ```
 
+Final end-to-end slice configs use `repetitions: 3`. `summary.json` reports mean / sample stddev / 95% CI (`*_stats`, and `by_repetition` when multiple reps are present). Raw `runs.jsonl` lines are kept.
+
+```bash
+npm run eval -- --config configs/final/baseline-20.yaml --mock
+npm run eval -- --config configs/final/jev-top5-20.yaml --mock
+npm run eval -- --config configs/final/llm-top5-20.yaml --mock
+```
+
 No invented benchmark numbers. Conclusions come from result directories only.
