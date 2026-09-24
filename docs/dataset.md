@@ -1,6 +1,6 @@
 # Dataset v0.1
 
-`datasets/v0.1/tasks.jsonl` is the first labeled slice: 50 single-step tasks over the 20-tool catalog. It is not the later ~500-task set.
+`datasets/v0.1/tasks.jsonl` is the first labeled slice: 50 single-step tasks over the original 20-tool vertical-slice set. The registry now has 100 tools for M3 scaling; later dataset versions may label against the full catalog. This file is not the later ~500-task set.
 
 Labels were written from the tool descriptions and `src/tools/fixtures/catalog.ts`. They were not revised from model output.
 
