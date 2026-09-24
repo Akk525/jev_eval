@@ -110,3 +110,38 @@ npm run check:calibration -- --results results
 ```
 
 No invented benchmark numbers. Conclusions come from result directories only.
+
+## Results
+
+Quantitative results are **pending regenerable result directories**. The harness and
+figure pipeline are in place; this README does not publish invented scores.
+
+See the full narrative (six research questions, null/negative findings, citation
+table):
+
+* [docs/TECHNICAL_REPORT.md](docs/TECHNICAL_REPORT.md)
+* Provenance gate: [docs/reproducibility-audit.md](docs/reproducibility-audit.md)
+
+Regenerate after a results root exists:
+
+```bash
+npm run analysis:dataset -- --results <result-root> --out analysis/dataset
+npm run analysis:audit -- --dataset analysis/dataset/analysis-dataset.json
+npm run analysis:figure1 -- --dataset analysis/dataset/analysis-dataset.json
+npm run analysis:figure2 -- --dataset analysis/dataset/analysis-dataset.json
+npm run analysis:figure3 -- --dataset analysis/dataset/analysis-dataset.json
+npm run analysis:figure4 -- --dataset analysis/dataset/analysis-dataset.json
+npm run analysis:figure5 -- --dataset analysis/dataset/analysis-dataset.json
+npm run analysis:figure6 -- --dataset analysis/dataset/analysis-dataset.json
+```
+
+| Question | Current finding | Cite when numbers exist |
+|---|---|---|
+| Tool selection vs growing N | **Null** | `figure1-esr.json` / `npm run summarize` |
+| When pre-routing helps | **Null** | Figures 1–3 under one compatibility key |
+| Jev vs baseline/LLM on ESR, cost, tokens, latency | **Null** | Figures 1–3 |
+| Failure movement under pre-routing | **Null** | `figure6-failures.json` (R0 separate) |
+| k tradeoff | **Null**; no optimal-k claim | `k-tradeoff.json`, `figure4-recall.json` |
+| Confidence for adaptive routing | **Null**; M5 deferred | `figure5-calibration.json`, `check:calibration` |
+
+The project is not framed as proving that Jev is better than an LLM. Negative results are results.
