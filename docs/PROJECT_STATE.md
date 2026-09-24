@@ -4,7 +4,11 @@ Snapshot date: 2026-09-24
 
 ## Current milestone
 
-M3 freeze preparation (**pending approval**). Dress rehearsal passed engineering gate at commit `2a99ed2` (`2026-09-24T053415Z`). Do **not** launch live M3 until freeze review is approved.
+M4 freeze preparation (pre-execution). N=100, k∈{1,3,5,10}, fresh four-cell run (D14).
+Do **not** launch live M4 until freeze review is approved.
+
+M3 live matrix **complete** (`2026-09-24T055854Z` @ `fc9fb2a`) — immutable.
+Paired scaling analysis accepted.
 
 ## Completed issues
 
@@ -17,11 +21,13 @@ M3 freeze preparation (**pending approval**). Dress rehearsal passed engineering
 
 ## Issue currently being worked on
 
-M3 freeze: matrix = baseline / jev_top1 / jev_top5 × N∈{5,10,25,50,100}; `totalLatencyMs` on runner; plan at [m3-freeze.md](m3-freeze.md) / `analysis/m3-freeze/matrix-plan.json`.
+M4 freeze: Jev k-ablation at N=100 with cells `jev_k1_n100` / `jev_k3_n100` /
+`jev_k5_n100` / `jev_k10_n100`. Plan at [m4-freeze.md](m4-freeze.md) /
+`analysis/m4-freeze/k-sweep-plan.json`. Fresh execution only — M3 k=1/k=5 dirs not reused.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D13). Adaptive confidence→k stopped after holdout negative result. M3 drops LLM top-5 from the comparison (archived under `configs/archive/llm-top5-matrix/`). Runner records `totalLatencyMs` (R0 latencies summarized separately).
+Accepted in `docs/DECISIONS.md` (D1–D14). Adaptive confidence→k stopped after holdout negative result. M3 drops LLM top-5 from the comparison (archived under `configs/archive/llm-top5-matrix/`). Runner records `totalLatencyMs` (R0 latencies summarized separately). D14 amends D12: M4 fixed N = 100.
 
 ## Known problems
 
@@ -31,6 +37,6 @@ Accepted in `docs/DECISIONS.md` (D1–D13). Adaptive confidence→k stopped afte
 
 ## Next recommended action
 
-1. Freeze review approval (see [m3-freeze.md](m3-freeze.md)).
-2. Only after approval: `npm run matrix -- --results results` (live).
-3. Do not retune adaptive thresholds or re-mine the n=24 holdout.
+1. Freeze-review M4 package ([m4-freeze.md](m4-freeze.md)).
+2. After approval: launch `npm run k-sweep` (live, not mock).
+3. Post-run: summarize, tradeoff, marginal routing utility — no optimal-k claim.

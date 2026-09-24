@@ -105,16 +105,20 @@ npm run summarize -- --results /tmp/jev-matrix --format json
 npm run summarize -- --results /tmp/jev-matrix --format csv --out analysis/scaling.csv
 ```
 
-M4 Jev top-k sweep (fixed N = 25, k ∈ {1, 3, 5, 10}; only `topK` varies — D12):
+M4 Jev top-k sweep (fixed N = 100, k ∈ {1, 3, 5, 10}; only `topK` varies — D14):
 
 ```bash
 npm run generate:k-sweep
-npm run eval -- --validate --config configs/k-sweep/jev-top1-n25.yaml
+npm run generate:m4-freeze
+npm run eval -- --validate --config configs/k-sweep/jev-top1-n100.yaml
 npm run k-sweep -- --dry-run
 npm run k-sweep -- --mock --results /tmp/jev-ksweep
 npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out analysis/k-sweep.csv
 npm run k-sweep -- --tradeoff --results /tmp/jev-ksweep --out analysis/k-tradeoff.json
+npm run k-sweep -- --marginal-utility --results /tmp/jev-ksweep --out analysis/m4-freeze/marginal-utility.json
 ```
+
+See [docs/m4-freeze.md](docs/m4-freeze.md). Do not launch live M4 until freeze review is approved.
 
 Adaptive policy (M5 / #42–#44) — thresholds locked; compare adaptive vs fixed-k on the holdout split:
 

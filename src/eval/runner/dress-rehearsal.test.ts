@@ -12,8 +12,8 @@ import {
 function task(id: string): BenchmarkTask {
   return {
     id,
-    version: "0.2",
-    difficulty: "easy",
+    version: 2,
+    difficulty: "explicit",
     prompt: `p-${id}`,
     required_tools: ["read_email"],
     acceptable_tools: [],

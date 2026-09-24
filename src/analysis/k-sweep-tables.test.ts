@@ -22,6 +22,7 @@ function run(overrides: Partial<ScalingRun> = {}): ScalingRun {
     confidence: 0.8,
     selectionAccuracy: 1,
     candidates: ["gold", "d1"],
+    lenientRecallAtK: 1,
     routerUsage: { inputTokens: 10, outputTokens: 1 },
     agentUsage: { inputTokens: 100, outputTokens: 2 },
     pricedCostUsd: 0.05,
@@ -103,7 +104,7 @@ describe("buildKSweepTables", () => {
     expect(tables.rows.map((row) => row.top_k)).toEqual([1, 5]);
 
     const k1 = tables.rows[0] as KSweepTableRow;
-    expect(k1.toolspace_size).toBe(25);
+    expect(k1.toolspace_size).toBe(100);
     expect(k1.attempts).toBe(2);
     expect(k1.recall_at_k).toBe(0.5);
     expect(k1.selection_accuracy).toBe(0.5);
@@ -111,24 +112,27 @@ describe("buildKSweepTables", () => {
     expect(k1.mean_candidate_count).toBe(1);
     expect(k1.priced_cost_usd).toBeCloseTo(0.3);
     expect(k1.agent_input_tokens).toBe(100);
+    expect(k1.total_tokens).toBe(122);
 
     const k5 = tables.rows[1] as KSweepTableRow;
     expect(k5.recall_at_k).toBe(1);
     expect(k5.mean_candidate_count).toBe(5);
     expect(k5.agent_input_tokens).toBe(200);
     expect(k5.priced_cost_usd).toBeCloseTo(0.3);
+    expect(k5.total_latency_ms.mean).not.toBeNull();
   });
 
   it("loads k-sweep epochs from disk and emits csv", () => {
     const root = mkdtempSync(join(tmpdir(), "jev-k-sweep-tables-"));
     for (const topK of [1, 3] as const) {
-      const directory = join(root, `2026-01-01T000000Z_jev_n25_k${topK}_abc`);
+      const directory = join(root, `2026-01-01T000000Z_jev_n100_k${topK}_abc`);
       mkdirSync(directory, { recursive: true });
       writeFileSync(join(directory, "config.json"), `${JSON.stringify(config(topK), null, 2)}\n`);
       const runs = [
         run({
           candidates: Array.from({ length: topK }, (_, i) => `t${i}`),
           recallAtK: topK === 1 ? 0 : 1,
+          lenientRecallAtK: topK === 1 ? 0 : 1,
           selectionAccuracy: topK === 1 ? 0 : 1,
           pricedCostUsd: 0.01 * topK,
         }),
@@ -143,10 +147,13 @@ describe("buildKSweepTables", () => {
     expect(tables.rows[1]!.mean_candidate_count).toBe(3);
     expect(tables.rows[0]!.recall_at_k).toBe(0);
     expect(tables.rows[1]!.recall_at_k).toBe(1);
+    expect(tables.rows[1]!.lenient_recall_at_k).toBe(1);
 
     const csv = kSweepTablesToCsv(tables);
     expect(csv.split("\n")[0]).toContain("mean_candidate_count");
-    expect(csv).toContain("jev,25,1,");
-    expect(csv).toContain("jev,25,3,");
+    expect(csv.split("\n")[0]).toContain("lenient_recall_at_k");
+    expect(csv.split("\n")[0]).toContain("total_latency_ms_mean");
+    expect(csv).toContain("jev,100,1,");
+    expect(csv).toContain("jev,100,3,");
   });
 });

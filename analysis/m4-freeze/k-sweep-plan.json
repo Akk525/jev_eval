@@ -1,0 +1,278 @@
+{
+  "version": 1,
+  "kind": "m4_k_sweep_freeze_plan",
+  "status": "frozen_pending_approval",
+  "note": "Pre-execution scientific plan. Do not launch live M4 until freeze review is approved. M3 live matrix 2026-09-24T055854Z @ fc9fb2a remains immutable. k=1 and k=5 are freshly re-executed (not reused from M3).",
+  "decision": "D14",
+  "execution_policy": {
+    "mode": "fresh_ablation",
+    "reuse_m3_k1_k5": false,
+    "reason": "Prefer one shared execution timestamp/environment for all four cells; do not silently mix M3 dirs into M4 aggregates.",
+    "manifest_dir": "results/_k-sweep/",
+    "m3_dirs_immutable": true
+  },
+  "scientific_controls": {
+    "dataset_path": "datasets/v0.2/tasks.jsonl",
+    "dataset_version": 2,
+    "task_count": 78,
+    "task_ids": [
+      "task_0001",
+      "task_0002",
+      "task_0003",
+      "task_0004",
+      "task_0005",
+      "task_0006",
+      "task_0007",
+      "task_0008",
+      "task_0009",
+      "task_0010",
+      "task_0011",
+      "task_0012",
+      "task_0013",
+      "task_0014",
+      "task_0015",
+      "task_0016",
+      "task_0017",
+      "task_0018",
+      "task_0019",
+      "task_0020",
+      "task_0021",
+      "task_0022",
+      "task_0023",
+      "task_0024",
+      "task_0025",
+      "task_0026",
+      "task_0027",
+      "task_0028",
+      "task_0029",
+      "task_0030",
+      "task_0031",
+      "task_0032",
+      "task_0033",
+      "task_0034",
+      "task_0035",
+      "task_0036",
+      "task_0037",
+      "task_0038",
+      "task_0039",
+      "task_0040",
+      "task_0041",
+      "task_0042",
+      "task_0043",
+      "task_0044",
+      "task_0045",
+      "task_0046",
+      "task_0047",
+      "task_0048",
+      "task_0049",
+      "task_0050",
+      "task_0051",
+      "task_0052",
+      "task_0053",
+      "task_0054",
+      "task_0055",
+      "task_0056",
+      "task_0057",
+      "task_0058",
+      "task_0059",
+      "task_0060",
+      "task_0061",
+      "task_0062",
+      "task_0063",
+      "task_0064",
+      "task_0065",
+      "task_0066",
+      "task_0067",
+      "task_0068",
+      "task_0069",
+      "task_0070",
+      "task_0071",
+      "task_0072",
+      "task_0073",
+      "task_0074",
+      "task_0075",
+      "task_0076",
+      "task_0077",
+      "task_0078"
+    ],
+    "registry_tool_count": 100,
+    "registry_hash": "b2a7accc8bca767e126be54908567f48f3d852d826ab2f2f6d38b38b5e99a0dd",
+    "nested_toolspace": "required_tools ∪ prefix(distractor_sequence, N − |required|); sizes nest",
+    "distractor_ordering": "preserved from frozen M3 / methodology (per-task distractor_sequence)",
+    "routing_summaries": "preserved (same dataset + registry + Jev model)",
+    "toolspace_size": 100,
+    "top_ks": [
+      1,
+      3,
+      5,
+      10
+    ],
+    "treatment_only": "topK",
+    "jev_model": {
+      "provider": "typesafe",
+      "model": "jev-1.13.0"
+    },
+    "agent_model": {
+      "provider": "openai",
+      "model": "gpt-5.6-sol",
+      "temperature": 0
+    },
+    "pricing_version": "v1",
+    "repetitions": 1,
+    "concurrency": 1,
+    "seed": 0,
+    "tracing": "noop",
+    "matches_m3_jev_n100_except_topk": true,
+    "failure_taxonomy": "R0–R6",
+    "esr_definition": "executionSuccess among non-executionExcluded attempts",
+    "denominator_policies": "R0 excluded from ESR / Recall@k / selection; R0 latency in total_latency_ms_r0"
+  },
+  "primary_metrics": [
+    "strict_recall_at_k",
+    "lenient_recall_at_k",
+    "execution_success_rate",
+    "selection_accuracy",
+    "failure_taxonomy_R0_R6",
+    "router_tokens",
+    "agent_tokens",
+    "total_tokens",
+    "priced_cost_usd",
+    "router_latency_ms",
+    "agent_latency_ms",
+    "total_latency_ms"
+  ],
+  "offline_analyses": {
+    "k_sweep_tables": "npm run k-sweep -- --summarize",
+    "k_tradeoff": "npm run k-sweep -- --tradeoff (decision_rule: null; no optimal-k claim)",
+    "marginal_routing_utility": "Adjacent transitions k=1→3, 3→5, 5→10: coverage vs coverage-with-utility"
+  },
+  "latency": {
+    "totalLatencyMs": "Monotonic wall-clock ms for the complete attempted runner path (attempt start → append). Always written. For R0, time until infrastructure failure classification. Tool-executor-only latency is unavailable and must not be fabricated.",
+    "summary_total_latency_ms": "Non-R0 attempts only",
+    "summary_total_latency_ms_r0": "R0 attempts only",
+    "component_fields_preserved": [
+      "routerLatencyMs",
+      "agentLatencyMs"
+    ]
+  },
+  "r0_policy": {
+    "quality_denominators": "R0 excluded from ESR, Recall@k, selection accuracy (executionExcluded / routingExcluded)",
+    "latency_denominators": "R0 excluded from total_latency_ms; reported in total_latency_ms_r0",
+    "tokens_and_cost": "R0 rows remain in attempts / token+cost totals when recorded"
+  },
+  "persistent_r3_r4": "Remain in the benchmark; do not remove or relabel from M3. Analyze routing-insensitive behavior separately after the run.",
+  "expected_attempted_runs": 312,
+  "cost_estimate": {
+    "method": "Extrapolate from M3 live jev-top1-n100 ($0.0856) and jev-top5-n100 ($0.1224); assume router tokens ≈ fixed at N=100 and agent/cost grow roughly with k between anchors.",
+    "m3_anchors_usd_total": {
+      "k1": 0.085637372,
+      "k5": 0.122405372
+    },
+    "per_cell_usd_estimate": {
+      "k1": 0.086,
+      "k3": 0.104,
+      "k5": 0.122,
+      "k10": 0.17
+    },
+    "total_usd_estimate": 0.48,
+    "total_usd_range": [
+      0.45,
+      0.55
+    ],
+    "note": "Fresh four-cell run; M3 dirs not reused. Estimates only — not a bid."
+  },
+  "cells": [
+    {
+      "id": "jev_k1_n100",
+      "relativePath": "configs/k-sweep/jev-top1-n100.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 100,
+      "topK": 1,
+      "config_hash": "52c1ec755beb40e2df3ba42575907bbcf014125eccdce87392512f2ef989d5b0",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_k3_n100",
+      "relativePath": "configs/k-sweep/jev-top3-n100.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 100,
+      "topK": 3,
+      "config_hash": "3f89ef0e1ee36834d956f4841d7739b63456724486918bf38a1a4cf8b8b6b8b7",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_k5_n100",
+      "relativePath": "configs/k-sweep/jev-top5-n100.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 100,
+      "topK": 5,
+      "config_hash": "3f514a0c5cdbc4536e5d8bc91c8376da0904de08e9c5c3e6947aabc37fb7df87",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    },
+    {
+      "id": "jev_k10_n100",
+      "relativePath": "configs/k-sweep/jev-top10-n100.yaml",
+      "architecture": "jev",
+      "toolspaceSize": 100,
+      "topK": 10,
+      "config_hash": "2008bc0eefe1450d97d4a4de7fd90aa3f5416f2c158c1f86b3a77688de4712fc",
+      "datasetPath": "datasets/v0.2/tasks.jsonl",
+      "repetitions": 1,
+      "concurrency": 1,
+      "seed": 0,
+      "agent": {
+        "provider": "openai",
+        "model": "gpt-5.6-sol",
+        "temperature": 0
+      },
+      "router": {
+        "provider": "typesafe",
+        "model": "jev-1.13.0"
+      },
+      "pricingVersion": "v1",
+      "tracing": "noop"
+    }
+  ]
+}

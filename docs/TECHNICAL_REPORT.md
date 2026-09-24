@@ -95,10 +95,11 @@ pre-routing quality.
 
 **Finding: null for a winning k; method ready.**
 
-M4 holds N = 25 and varies Jev `topK ∈ {1,3,5,10}` (D12). Cite:
+M4 holds N = 100 and varies Jev `topK ∈ {1,3,5,10}` (D14). Cite:
 
-* `npm run k-sweep -- --summarize` → per-k aggregates  
-* `npm run k-sweep -- --tradeoff` → tradeoff table with `decision_rule: null`  
+* `npm run k-sweep -- --summarize` → per-k aggregates
+* `npm run k-sweep -- --tradeoff` → tradeoff table with `decision_rule: null`
+* `npm run k-sweep -- --marginal-utility` → adjacent-k coverage vs utility
 * Figure 4 strict vs lenient Recall@k vs k ([figure4-recall.md](figure4-recall.md))
 
 **Negative finding (by design):** the harness does **not** select an optimal k.

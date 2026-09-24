@@ -10,9 +10,13 @@ const FAILURE_CODES = ["R0", "R1", "R2", "R3", "R4", "R5", "R6"] as const;
 export type FailureTaxonomy = Record<(typeof FAILURE_CODES)[number] | "none", number>;
 
 export interface ScalingRun extends AggregateRun {
+  /** Present on current runs.jsonl lines; optional for legacy fixtures. */
+  taskId?: string;
   selectionAccuracy: number | null;
   /** Ordered candidate tool names after routing. Null when the router failed. */
   candidates: readonly string[] | null;
+  /** Lenient Recall@k when present on the run line. */
+  lenientRecallAtK: number | null;
 }
 
 export interface ResultDirectoryLoad {
@@ -326,13 +330,17 @@ function readRunsJsonl(path: string): ScalingRun[] {
     .filter((line) => line.trim() !== "")
     .map((line) => {
       const raw = JSON.parse(line) as AggregateRun & {
+        taskId?: string;
         selectionAccuracy?: number | null;
         candidates?: readonly string[] | null;
+        lenientRecallAtK?: number | null;
       };
       return {
         ...raw,
+        ...(raw.taskId === undefined ? {} : { taskId: raw.taskId }),
         selectionAccuracy: raw.selectionAccuracy ?? null,
         candidates: raw.candidates ?? null,
+        lenientRecallAtK: raw.lenientRecallAtK ?? null,
       };
     });
 }

@@ -1,0 +1,1756 @@
+{
+  "version": 1,
+  "kind": "m3_matrix_live_results",
+  "note": "Frozen M3 observed results only. No interpretation, no winner, no retune.",
+  "commit_sha": "fc9fb2a4a24ce0e31ff3bb8bcd72abac5a36fcea",
+  "freeze_plan": "analysis/m3-freeze/matrix-plan.json",
+  "timestamp": "2026-09-24T055854Z",
+  "mock": false,
+  "wall_time_ms": 1999424,
+  "wall_time_human": "33m 19s",
+  "manifest": "results/_matrix/2026-09-24T055854Z.json",
+  "totals": {
+    "cells_completed": 15,
+    "cells_failed": 0,
+    "attempts": 1170,
+    "r0_attempts": 1,
+    "priced_cost_usd_total": 2.9901696720000004
+  },
+  "nesting": {
+    "baseline": {
+      "ok": true,
+      "checked": 312,
+      "Ns": [
+        5,
+        10,
+        25,
+        50,
+        100
+      ],
+      "fail_sample": []
+    },
+    "jev_top1": {
+      "ok": true,
+      "checked": 312,
+      "Ns": [
+        5,
+        10,
+        25,
+        50,
+        100
+      ],
+      "fail_sample": []
+    },
+    "jev_top5": {
+      "ok": true,
+      "checked": 312,
+      "Ns": [
+        5,
+        10,
+        25,
+        50,
+        100
+      ],
+      "fail_sample": []
+    }
+  },
+  "secret_hits": 0,
+  "issues": [],
+  "cells": [
+    {
+      "cell": "baseline-n5.yaml",
+      "id": "baseline",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n5_kall_fc9fb2a4a24c",
+      "architecture": "baseline",
+      "toolspaceSize": 5,
+      "topK": null,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.8076923076923077,
+      "execution_scored": 78,
+      "recall_at_k": null,
+      "routing_scored": 78,
+      "selection_accuracy": 0.8974358974358975,
+      "selection_scored": 78,
+      "failures": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 3,
+        "R3": 8,
+        "R4": 4,
+        "R5": 0,
+        "R6": 0,
+        "ok": 63
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 281.9102564102564,
+          "median": 282
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 281.9102564102564,
+          "median": 282
+        },
+        "router_input_sum": 0,
+        "router_output_sum": 0,
+        "agent_input_sum": 20437,
+        "agent_output_sum": 1552
+      },
+      "cost": {
+        "priced_total_usd": 0.11278799999999999,
+        "priced_per_attempt_usd": 0.0014459999999999998,
+        "summary_priced_cost_usd": 0.11278799999999999
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1277.632233923077,
+          "median": 1252.8645830000023
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1277.8046111538451,
+          "median": 1253.3895414999934
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1277.8046111538454,
+          "median": 1241.425292,
+          "p50": 1241.425292,
+          "p95": 1770.0583749999932
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 0,
+          "median": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1277.6322339230771,
+          "median": 1241.3400830000028,
+          "p50": 1241.3400830000028,
+          "p95": 1769.9037499999977
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "baseline-n10.yaml",
+      "id": "baseline",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n10_kall_fc9fb2a4a24c",
+      "architecture": "baseline",
+      "toolspaceSize": 10,
+      "topK": null,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.782051282051282,
+      "execution_scored": 78,
+      "recall_at_k": null,
+      "routing_scored": 78,
+      "selection_accuracy": 0.782051282051282,
+      "selection_scored": 78,
+      "failures": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 8,
+        "R3": 7,
+        "R4": 2,
+        "R5": 0,
+        "R6": 0,
+        "ok": 61
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 411.0897435897436,
+          "median": 408
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 411.0897435897436,
+          "median": 408
+        },
+        "router_input_sum": 0,
+        "router_output_sum": 0,
+        "agent_input_sum": 30542,
+        "agent_output_sum": 1523
+      },
+      "cost": {
+        "priced_total_usd": 0.15262799999999999,
+        "priced_per_attempt_usd": 0.0019567692307692307,
+        "summary_priced_cost_usd": 0.15262799999999999
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1701.184792717949,
+          "median": 1412.156104499998
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1701.2864604358979,
+          "median": 1412.3143745000052
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1701.2864604358979,
+          "median": 1411.4000410000008,
+          "p50": 1411.4000410000008,
+          "p95": 3243.649916000024
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 0,
+          "median": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1701.184792717949,
+          "median": 1411.3477499999863,
+          "p50": 1411.3477499999863,
+          "p95": 3243.603999999992
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "baseline-n25.yaml",
+      "id": "baseline",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n25_kall_fc9fb2a4a24c",
+      "architecture": "baseline",
+      "toolspaceSize": 25,
+      "topK": null,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7435897435897436,
+      "execution_scored": 78,
+      "recall_at_k": null,
+      "routing_scored": 78,
+      "selection_accuracy": 0.7435897435897436,
+      "selection_scored": 78,
+      "failures": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 12,
+        "R3": 7,
+        "R4": 1,
+        "R5": 0,
+        "R6": 0,
+        "ok": 58
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 826.1410256410256,
+          "median": 825.5
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 826.1410256410256,
+          "median": 825.5
+        },
+        "router_input_sum": 0,
+        "router_output_sum": 0,
+        "agent_input_sum": 62917,
+        "agent_output_sum": 1522
+      },
+      "cost": {
+        "priced_total_usd": 0.2821079999999999,
+        "priced_per_attempt_usd": 0.00361676923076923,
+        "summary_priced_cost_usd": 0.2821079999999999
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1463.5901442179481,
+          "median": 1350.447833499973
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1463.6714123589743,
+          "median": 1350.5190629999997
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1463.6714123589743,
+          "median": 1345.6525419999962,
+          "p50": 1345.6525419999962,
+          "p95": 2340.526165999996
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 0,
+          "median": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1463.5901442179481,
+          "median": 1345.5768749999697,
+          "p50": 1345.5768749999697,
+          "p95": 2340.3389580000076
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "baseline-n50.yaml",
+      "id": "baseline",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n50_kall_fc9fb2a4a24c",
+      "architecture": "baseline",
+      "toolspaceSize": 50,
+      "topK": null,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7692307692307693,
+      "execution_scored": 78,
+      "recall_at_k": null,
+      "routing_scored": 78,
+      "selection_accuracy": 0.7564102564102564,
+      "selection_scored": 78,
+      "failures": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 11,
+        "R3": 7,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "ok": 60
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 1532.6153846153845,
+          "median": 1532.5
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 1532.6153846153845,
+          "median": 1532.5
+        },
+        "router_input_sum": 0,
+        "router_output_sum": 0,
+        "agent_input_sum": 118037,
+        "agent_output_sum": 1507
+      },
+      "cost": {
+        "priced_total_usd": 0.5022879999999998,
+        "priced_per_attempt_usd": 0.006439589743589742,
+        "summary_priced_cost_usd": 0.5022879999999998
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1475.1866213205137,
+          "median": 1318.4753335000132
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1475.2622201025697,
+          "median": 1318.5484374999942
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1475.2622201025697,
+          "median": 1312.9786670000176,
+          "p50": 1312.9786670000176,
+          "p95": 2482.9732920000097
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 0,
+          "median": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1475.1866213205137,
+          "median": 1312.8902499999967,
+          "p50": 1312.8902499999967,
+          "p95": 2482.8756669999566
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "baseline-n100.yaml",
+      "id": "baseline",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n100_kall_fc9fb2a4a24c",
+      "architecture": "baseline",
+      "toolspaceSize": 100,
+      "topK": null,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7692307692307693,
+      "execution_scored": 78,
+      "recall_at_k": null,
+      "routing_scored": 78,
+      "selection_accuracy": 0.7307692307692307,
+      "selection_scored": 78,
+      "failures": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 11,
+        "R3": 7,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "ok": 60
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 2981.576923076923,
+          "median": 2980
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 2981.576923076923,
+          "median": 2980
+        },
+        "router_input_sum": 0,
+        "router_output_sum": 0,
+        "agent_input_sum": 231054,
+        "agent_output_sum": 1509
+      },
+      "cost": {
+        "priced_total_usd": 0.9543960000000001,
+        "priced_per_attempt_usd": 0.012235846153846156,
+        "summary_priced_cost_usd": 0.9543960000000001
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 0,
+          "median": 0
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1953.4764187564112,
+          "median": 1750.2313960000465
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1953.5811495769176,
+          "median": 1750.3075830000162
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1953.5811495769176,
+          "median": 1742.6343329999945,
+          "p50": 1742.6343329999945,
+          "p95": 3427.0449159999844
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 0,
+          "median": 0,
+          "p50": 0,
+          "p95": 0
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1953.4764187564112,
+          "median": 1742.5534580000094,
+          "p50": 1742.5534580000094,
+          "p95": 3426.981291000033
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top1-n5.yaml",
+      "id": "jev_top1",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n5_k1_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 5,
+      "topK": 1,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7692307692307693,
+      "execution_scored": 78,
+      "recall_at_k": 0.9230769230769231,
+      "routing_scored": 78,
+      "selection_accuracy": 1,
+      "selection_scored": 72,
+      "failures": {
+        "R0": 0,
+        "R1": 3,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R5": 0,
+        "R6": 0,
+        "ok": 60
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 451.28205128205127,
+          "median": 452
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 168.85897435897436,
+          "median": 168
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 168.85897435897436,
+          "median": 168
+        },
+        "router_input_sum": 30555,
+        "router_output_sum": 4645,
+        "agent_input_sum": 11612,
+        "agent_output_sum": 1559
+      },
+      "cost": {
+        "priced_total_usd": 0.07891131,
+        "priced_per_attempt_usd": 0.0010116834615384615,
+        "summary_priced_cost_usd": 0.07891131
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 350.0413766923026,
+          "median": 288.79575000004843
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1505.2934598717898,
+          "median": 1264.2571454999852
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1855.429699820514,
+          "median": 1644.7682914999314
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1855.429699820514,
+          "median": 1642.3384159998968,
+          "p50": 1642.3384159998968,
+          "p95": 2939.6596669999417
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 350.0413766923026,
+          "median": 285.96658300003037,
+          "p50": 285.96658300003037,
+          "p95": 620.6891670000041
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1505.2934598717898,
+          "median": 1245.0395000000717,
+          "p50": 1245.0395000000717,
+          "p95": 2782.064458000008
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top1-n10.yaml",
+      "id": "jev_top1",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n10_k1_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 10,
+      "topK": 1,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 1,
+      "esr": 0.7532467532467533,
+      "execution_scored": 77,
+      "recall_at_k": 0.9090909090909091,
+      "routing_scored": 77,
+      "selection_accuracy": 1,
+      "selection_scored": 70,
+      "failures": {
+        "R0": 1,
+        "R1": 4,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R5": 0,
+        "R6": 0,
+        "ok": 58
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 576.8974358974359,
+          "median": 584
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 166.52564102564102,
+          "median": 167
+        },
+        "agent_total_when_ran": {
+          "n": 77,
+          "mean": 168.6883116883117,
+          "median": 167
+        },
+        "router_input_sum": 37315,
+        "router_output_sum": 7683,
+        "agent_input_sum": 11451,
+        "agent_output_sum": 1538
+      },
+      "cost": {
+        "priced_total_usd": 0.07813123000000001,
+        "priced_per_attempt_usd": 0.001001682435897436,
+        "summary_priced_cost_usd": 0.07813123000000001
+      },
+      "latency": {
+        "router_ms": {
+          "n": 77,
+          "mean": 321.914504246759,
+          "median": 284.7292080000043
+        },
+        "agent_ms": {
+          "n": 77,
+          "mean": 1689.666813870133,
+          "median": 1166.1885000000475
+        },
+        "total_ms_non_r0": {
+          "n": 77,
+          "mean": 2011.733688259733,
+          "median": 1520.0356659999816
+        },
+        "total_ms_r0": {
+          "n": 1,
+          "mean": 99.9161670000758,
+          "median": 99.9161670000758
+        },
+        "summary_total_latency_ms": {
+          "mean": 2011.733688259733,
+          "median": 1520.0356659999816,
+          "p50": 1520.0356659999816,
+          "p95": 3590.4902500000317
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": 99.9161670000758,
+          "median": 99.9161670000758,
+          "p50": 99.9161670000758,
+          "p95": 99.9161670000758
+        },
+        "summary_router_latency_ms": {
+          "mean": 321.914504246759,
+          "median": 284.7292080000043,
+          "p50": 284.7292080000043,
+          "p95": 634.9339160000673
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1689.666813870133,
+          "median": 1166.1885000000475,
+          "p50": 1166.1885000000475,
+          "p95": 3384.4825420000125
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top1-n25.yaml",
+      "id": "jev_top1",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n25_k1_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 25,
+      "topK": 1,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7051282051282052,
+      "execution_scored": 78,
+      "recall_at_k": 0.8717948717948718,
+      "routing_scored": 78,
+      "selection_accuracy": 1,
+      "selection_scored": 68,
+      "failures": {
+        "R0": 0,
+        "R1": 9,
+        "R2": 0,
+        "R3": 8,
+        "R4": 6,
+        "R5": 0,
+        "R6": 0,
+        "ok": 55
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 979.0641025641025,
+          "median": 979
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 169.07692307692307,
+          "median": 166.5
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 169.07692307692307,
+          "median": 166.5
+        },
+        "router_input_sum": 59224,
+        "router_output_sum": 17143,
+        "agent_input_sum": 11592,
+        "agent_output_sum": 1596
+      },
+      "cost": {
+        "priced_total_usd": 0.08077540799999998,
+        "priced_per_attempt_usd": 0.0010355821538461537,
+        "summary_priced_cost_usd": 0.08077540799999998
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 263.81180614101675,
+          "median": 182.32139599998482
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1451.7994059743628,
+          "median": 1196.4724169999827
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1715.6902478846143,
+          "median": 1457.250457999995
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1715.6902478846143,
+          "median": 1455.4180829999968,
+          "p50": 1455.4180829999968,
+          "p95": 3033.6952499999898
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 263.81180614101675,
+          "median": 180.60379199997988,
+          "p50": 180.60379199997988,
+          "p95": 692.8694169999799
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1451.7994059743628,
+          "median": 1193.7252919999883,
+          "p50": 1193.7252919999883,
+          "p95": 2656.177875000052
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top1-n50.yaml",
+      "id": "jev_top1",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n50_k1_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 50,
+      "topK": 1,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7051282051282052,
+      "execution_scored": 78,
+      "recall_at_k": 0.8589743589743589,
+      "routing_scored": 78,
+      "selection_accuracy": 1,
+      "selection_scored": 67,
+      "failures": {
+        "R0": 0,
+        "R1": 10,
+        "R2": 0,
+        "R3": 8,
+        "R4": 5,
+        "R5": 0,
+        "R6": 0,
+        "ok": 55
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 1653.7435897435898,
+          "median": 1653
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 169.17948717948718,
+          "median": 167
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 169.17948717948718,
+          "median": 167
+        },
+        "router_input_sum": 95551,
+        "router_output_sum": 33441,
+        "agent_input_sum": 11595,
+        "agent_output_sum": 1601
+      },
+      "cost": {
+        "priced_total_usd": 0.08241314199999997,
+        "priced_per_attempt_usd": 0.0010565787435897432,
+        "summary_priced_cost_usd": 0.08241314199999997
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 197.92237921794637,
+          "median": 171.64247900003102
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1325.18352402564,
+          "median": 1239.254186999984
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1523.1897483333282,
+          "median": 1428.417833500076
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1523.1897483333282,
+          "median": 1410.5705000001471,
+          "p50": 1410.5705000001471,
+          "p95": 2442.7431250000373
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 197.92237921794637,
+          "median": 171.31320800003596,
+          "p50": 171.31320800003596,
+          "p95": 383.2764999999199
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1325.18352402564,
+          "median": 1238.5474159999285,
+          "p50": 1238.5474159999285,
+          "p95": 2299.0209580000956
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top1-n100.yaml",
+      "id": "jev_top1",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n100_k1_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 100,
+      "topK": 1,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.6923076923076923,
+      "execution_scored": 78,
+      "recall_at_k": 0.8717948717948718,
+      "routing_scored": 78,
+      "selection_accuracy": 1,
+      "selection_scored": 68,
+      "failures": {
+        "R0": 0,
+        "R1": 9,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R5": 0,
+        "R6": 0,
+        "ok": 54
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 3035.5897435897436,
+          "median": 3035
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 169.26923076923077,
+          "median": 167.5
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 169.26923076923077,
+          "median": 167.5
+        },
+        "router_input_sum": 169366,
+        "router_output_sum": 67410,
+        "agent_input_sum": 11596,
+        "agent_output_sum": 1607
+      },
+      "cost": {
+        "priced_total_usd": 0.085637372,
+        "priced_per_attempt_usd": 0.0010979150256410256,
+        "summary_priced_cost_usd": 0.085637372
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 234.83888784614808,
+          "median": 179.38202100002673
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1358.2671725769194,
+          "median": 1263.7505004999693
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1593.214145820528,
+          "median": 1492.4301250000717
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1593.214145820528,
+          "median": 1473.8165410000365,
+          "p50": 1473.8165410000365,
+          "p95": 2520.744249999989
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 234.83888784614808,
+          "median": 178.61525000003166,
+          "p50": 178.61525000003166,
+          "p95": 476.285208000103
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1358.2671725769194,
+          "median": 1247.3427089999896,
+          "p50": 1247.3427089999896,
+          "p95": 2243.5957090000156
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top5-n5.yaml",
+      "id": "jev_top5",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n5_k5_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 5,
+      "topK": 5,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.8205128205128205,
+      "execution_scored": 78,
+      "recall_at_k": 1,
+      "routing_scored": 78,
+      "selection_accuracy": 0.9102564102564102,
+      "selection_scored": 78,
+      "failures": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 2,
+        "R3": 8,
+        "R4": 4,
+        "R5": 0,
+        "R6": 0,
+        "ok": 64
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 451.28205128205127,
+          "median": 452
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 281.9230769230769,
+          "median": 283
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 281.9230769230769,
+          "median": 283
+        },
+        "router_input_sum": 30555,
+        "router_output_sum": 4645,
+        "agent_input_sum": 20437,
+        "agent_output_sum": 1553
+      },
+      "cost": {
+        "priced_total_usd": 0.11409131000000002,
+        "priced_per_attempt_usd": 0.0014627091025641028,
+        "summary_priced_cost_usd": 0.11409131000000002
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 172.45489207694294,
+          "median": 162.60895849997178
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1451.6097013974436,
+          "median": 1157.4110205001198
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1624.1521987051326,
+          "median": 1335.9528960000025
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1624.1521987051326,
+          "median": 1333.0646669999696,
+          "p50": 1333.0646669999696,
+          "p95": 2443.4152909999248
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 172.45489207694294,
+          "median": 161.47979200002737,
+          "p50": 161.47979200002737,
+          "p95": 277.1529590000864
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1451.6097013974436,
+          "median": 1149.469750000164,
+          "p50": 1149.469750000164,
+          "p95": 2248.8850419998635
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top5-n10.yaml",
+      "id": "jev_top5",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n10_k5_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 10,
+      "topK": 5,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.782051282051282,
+      "execution_scored": 78,
+      "recall_at_k": 1,
+      "routing_scored": 78,
+      "selection_accuracy": 0.8205128205128205,
+      "selection_scored": 78,
+      "failures": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 6,
+        "R3": 7,
+        "R4": 4,
+        "R5": 0,
+        "R6": 0,
+        "ok": 61
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 584.525641025641,
+          "median": 584.5
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 271.7564102564103,
+          "median": 270.5
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 271.7564102564103,
+          "median": 270.5
+        },
+        "router_input_sum": 37809,
+        "router_output_sum": 7784,
+        "agent_input_sum": 19660,
+        "agent_output_sum": 1537
+      },
+      "cost": {
+        "priced_total_usd": 0.11096797799999998,
+        "priced_per_attempt_usd": 0.0014226663846153844,
+        "summary_priced_cost_usd": 0.11096797799999998
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 181.81349773077258,
+          "median": 157.9437915000599
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1610.0555015384573,
+          "median": 1241.4624789998634
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1792.1631052820578,
+          "median": 1430.0313540000934
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1792.1631052820578,
+          "median": 1423.7938330001198,
+          "p50": 1423.7938330001198,
+          "p95": 3520.2818750001024
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 181.81349773077258,
+          "median": 157.6687910000328,
+          "p50": 157.6687910000328,
+          "p95": 392.4566249998752
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1610.0555015384573,
+          "median": 1219.0134159999434,
+          "p50": 1219.0134159999434,
+          "p95": 3405.543374999892
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top5-n25.yaml",
+      "id": "jev_top5",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n25_k5_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 25,
+      "topK": 5,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7692307692307693,
+      "execution_scored": 78,
+      "recall_at_k": 0.9487179487179487,
+      "routing_scored": 78,
+      "selection_accuracy": 0.8378378378378378,
+      "selection_scored": 74,
+      "failures": {
+        "R0": 0,
+        "R1": 3,
+        "R2": 5,
+        "R3": 8,
+        "R4": 2,
+        "R5": 0,
+        "R6": 0,
+        "ok": 60
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 979.0641025641025,
+          "median": 979
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 282.2307692307692,
+          "median": 280
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 282.2307692307692,
+          "median": 280
+        },
+        "router_input_sum": 59224,
+        "router_output_sum": 17143,
+        "agent_input_sum": 20475,
+        "agent_output_sum": 1539
+      },
+      "cost": {
+        "priced_total_usd": 0.115167408,
+        "priced_per_attempt_usd": 0.0014765052307692307,
+        "summary_priced_cost_usd": 0.115167408
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 394.98968215385236,
+          "median": 171.52139549993444
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1656.8302338846172,
+          "median": 1231.748499999987
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 2051.9652853205125,
+          "median": 1481.7548130000941
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 2051.9652853205125,
+          "median": 1459.9167920001782,
+          "p50": 1459.9167920001782,
+          "p95": 4294.874291999964
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 394.98968215385236,
+          "median": 169.7840829999186,
+          "p50": 169.7840829999186,
+          "p95": 539.9005000002217
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1656.8302338846172,
+          "median": 1207.5536249999423,
+          "p50": 1207.5536249999423,
+          "p95": 4129.01270800014
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top5-n50.yaml",
+      "id": "jev_top5",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n50_k5_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 50,
+      "topK": 5,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7564102564102564,
+      "execution_scored": 78,
+      "recall_at_k": 0.9487179487179487,
+      "routing_scored": 78,
+      "selection_accuracy": 0.8513513513513513,
+      "selection_scored": 74,
+      "failures": {
+        "R0": 0,
+        "R1": 3,
+        "R2": 6,
+        "R3": 8,
+        "R4": 2,
+        "R5": 0,
+        "R6": 0,
+        "ok": 59
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 1653.7435897435898,
+          "median": 1653
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 284.2307692307692,
+          "median": 283
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 284.2307692307692,
+          "median": 283
+        },
+        "router_input_sum": 95551,
+        "router_output_sum": 33441,
+        "agent_input_sum": 20622,
+        "agent_output_sum": 1548
+      },
+      "cost": {
+        "priced_total_usd": 0.11746114200000002,
+        "priced_per_attempt_usd": 0.0015059120769230772,
+        "summary_priced_cost_usd": 0.11746114200000002
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 228.3011228846034,
+          "median": 162.01691699994262
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1604.1401730127818,
+          "median": 1333.9508544999408
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1832.716998935895,
+          "median": 1509.9011664999416
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1832.716998935895,
+          "median": 1506.0112920000684,
+          "p50": 1506.0112920000684,
+          "p95": 3305.011124999961
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 228.3011228846034,
+          "median": 161.09954199986532,
+          "p50": 161.09954199986532,
+          "p95": 461.0775000001304
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1604.1401730127818,
+          "median": 1325.178541999776,
+          "p50": 1325.178541999776,
+          "p95": 3133.2216250000056
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    },
+    {
+      "cell": "jev-top5-n100.yaml",
+      "id": "jev_top5",
+      "status": "completed",
+      "directory": "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n100_k5_fc9fb2a4a24c",
+      "architecture": "jev",
+      "toolspaceSize": 100,
+      "topK": 5,
+      "pricingVersion": "v1",
+      "gitShaPrefix": "fc9fb2a4a24c",
+      "attempts": 78,
+      "r0": 0,
+      "esr": 0.7564102564102564,
+      "execution_scored": 78,
+      "recall_at_k": 0.9487179487179487,
+      "routing_scored": 78,
+      "selection_accuracy": 0.8648648648648649,
+      "selection_scored": 74,
+      "failures": {
+        "R0": 0,
+        "R1": 4,
+        "R2": 4,
+        "R3": 8,
+        "R4": 3,
+        "R5": 0,
+        "R6": 0,
+        "ok": 59
+      },
+      "tokens": {
+        "router_total_per_attempt": {
+          "n": 78,
+          "mean": 3035.576923076923,
+          "median": 3035
+        },
+        "agent_total_per_attempt": {
+          "n": 78,
+          "mean": 289.7307692307692,
+          "median": 287
+        },
+        "agent_total_when_ran": {
+          "n": 78,
+          "mean": 289.7307692307692,
+          "median": 287
+        },
+        "router_input_sum": 169366,
+        "router_output_sum": 67409,
+        "agent_input_sum": 21043,
+        "agent_output_sum": 1556
+      },
+      "cost": {
+        "priced_total_usd": 0.12240537200000004,
+        "priced_per_attempt_usd": 0.0015692996410256416,
+        "summary_priced_cost_usd": 0.12240537200000004
+      },
+      "latency": {
+        "router_ms": {
+          "n": 78,
+          "mean": 236.7056650769097,
+          "median": 174.81793750007637
+        },
+        "agent_ms": {
+          "n": 78,
+          "mean": 1504.1854315384692,
+          "median": 1373.1583335001487
+        },
+        "total_ms_non_r0": {
+          "n": 78,
+          "mean": 1741.3508647948725,
+          "median": 1664.731417000061
+        },
+        "total_ms_r0": {
+          "n": 0,
+          "mean": null,
+          "median": null
+        },
+        "summary_total_latency_ms": {
+          "mean": 1741.3508647948725,
+          "median": 1654.8534170000348,
+          "p50": 1654.8534170000348,
+          "p95": 2867.6159580000676
+        },
+        "summary_total_latency_ms_r0": {
+          "mean": null,
+          "median": null,
+          "p50": null,
+          "p95": null
+        },
+        "summary_router_latency_ms": {
+          "mean": 236.7056650769097,
+          "median": 174.38608300010674,
+          "p50": 174.38608300010674,
+          "p95": 482.7593339998275
+        },
+        "summary_agent_latency_ms": {
+          "mean": 1504.1854315384692,
+          "median": 1349.5326670000795,
+          "p50": 1349.5326670000795,
+          "p95": 2623.1008329999167
+        }
+      },
+      "integrity": {
+        "gold_missing_from_toolspace": 0,
+        "candidate_constraint_issues": 0,
+        "missing_totalLatencyMs": 0,
+        "artifacts": [
+          "checkpoint.json",
+          "config.json",
+          "failures.jsonl",
+          "runs.jsonl",
+          "summary.json"
+        ]
+      }
+    }
+  ]
+}

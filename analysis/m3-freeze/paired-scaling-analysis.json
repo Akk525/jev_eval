@@ -1,0 +1,1383 @@
+{
+  "version": 1,
+  "kind": "m3_paired_scaling_analysis",
+  "note": "Offline paired analysis of frozen M3 live results. No new runs. Observed differences only — no equivalence claims.",
+  "source": {
+    "timestamp": "2026-09-24T055854Z",
+    "commit": "fc9fb2a4a24ce0e31ff3bb8bcd72abac5a36fcea",
+    "live_results": "analysis/m3-freeze/live-results.json",
+    "task_count": 78
+  },
+  "scaling_series": {
+    "baseline": [
+      {
+        "N": 5,
+        "esr": 0.8076923076923077,
+        "cost_per_attempt": 0.0014459999999999998,
+        "cost_total": 0.11278799999999999,
+        "recall_at_k": null,
+        "selection_accuracy": 0.8974358974358975,
+        "agent_tok_mean": 281.9102564102564,
+        "router_tok_mean": 0,
+        "total_lat_mean": 1277.8046111538451,
+        "router_lat_mean": 0,
+        "agent_lat_mean": 1277.632233923077,
+        "R1": 0,
+        "R2": 3,
+        "R3": 8,
+        "R4": 4,
+        "R0": 0
+      },
+      {
+        "N": 10,
+        "esr": 0.782051282051282,
+        "cost_per_attempt": 0.0019567692307692307,
+        "cost_total": 0.15262799999999999,
+        "recall_at_k": null,
+        "selection_accuracy": 0.782051282051282,
+        "agent_tok_mean": 411.0897435897436,
+        "router_tok_mean": 0,
+        "total_lat_mean": 1701.2864604358979,
+        "router_lat_mean": 0,
+        "agent_lat_mean": 1701.184792717949,
+        "R1": 0,
+        "R2": 8,
+        "R3": 7,
+        "R4": 2,
+        "R0": 0
+      },
+      {
+        "N": 25,
+        "esr": 0.7435897435897436,
+        "cost_per_attempt": 0.00361676923076923,
+        "cost_total": 0.2821079999999999,
+        "recall_at_k": null,
+        "selection_accuracy": 0.7435897435897436,
+        "agent_tok_mean": 826.1410256410256,
+        "router_tok_mean": 0,
+        "total_lat_mean": 1463.6714123589743,
+        "router_lat_mean": 0,
+        "agent_lat_mean": 1463.5901442179481,
+        "R1": 0,
+        "R2": 12,
+        "R3": 7,
+        "R4": 1,
+        "R0": 0
+      },
+      {
+        "N": 50,
+        "esr": 0.7692307692307693,
+        "cost_per_attempt": 0.006439589743589742,
+        "cost_total": 0.5022879999999998,
+        "recall_at_k": null,
+        "selection_accuracy": 0.7564102564102564,
+        "agent_tok_mean": 1532.6153846153845,
+        "router_tok_mean": 0,
+        "total_lat_mean": 1475.2622201025697,
+        "router_lat_mean": 0,
+        "agent_lat_mean": 1475.1866213205137,
+        "R1": 0,
+        "R2": 11,
+        "R3": 7,
+        "R4": 0,
+        "R0": 0
+      },
+      {
+        "N": 100,
+        "esr": 0.7692307692307693,
+        "cost_per_attempt": 0.012235846153846156,
+        "cost_total": 0.9543960000000001,
+        "recall_at_k": null,
+        "selection_accuracy": 0.7307692307692307,
+        "agent_tok_mean": 2981.576923076923,
+        "router_tok_mean": 0,
+        "total_lat_mean": 1953.5811495769176,
+        "router_lat_mean": 0,
+        "agent_lat_mean": 1953.4764187564112,
+        "R1": 0,
+        "R2": 11,
+        "R3": 7,
+        "R4": 0,
+        "R0": 0
+      }
+    ],
+    "top1": [
+      {
+        "N": 5,
+        "esr": 0.7692307692307693,
+        "cost_per_attempt": 0.0010116834615384615,
+        "cost_total": 0.07891131,
+        "recall_at_k": 0.9230769230769231,
+        "selection_accuracy": 1,
+        "agent_tok_mean": 168.85897435897436,
+        "router_tok_mean": 451.28205128205127,
+        "total_lat_mean": 1855.429699820514,
+        "router_lat_mean": 350.0413766923026,
+        "agent_lat_mean": 1505.2934598717898,
+        "R1": 3,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R0": 0
+      },
+      {
+        "N": 10,
+        "esr": 0.7532467532467533,
+        "cost_per_attempt": 0.001001682435897436,
+        "cost_total": 0.07813123000000001,
+        "recall_at_k": 0.9090909090909091,
+        "selection_accuracy": 1,
+        "agent_tok_mean": 166.52564102564102,
+        "router_tok_mean": 576.8974358974359,
+        "total_lat_mean": 2011.733688259733,
+        "router_lat_mean": 321.914504246759,
+        "agent_lat_mean": 1689.666813870133,
+        "R1": 4,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R0": 1
+      },
+      {
+        "N": 25,
+        "esr": 0.7051282051282052,
+        "cost_per_attempt": 0.0010355821538461537,
+        "cost_total": 0.08077540799999998,
+        "recall_at_k": 0.8717948717948718,
+        "selection_accuracy": 1,
+        "agent_tok_mean": 169.07692307692307,
+        "router_tok_mean": 979.0641025641025,
+        "total_lat_mean": 1715.6902478846143,
+        "router_lat_mean": 263.81180614101675,
+        "agent_lat_mean": 1451.7994059743628,
+        "R1": 9,
+        "R2": 0,
+        "R3": 8,
+        "R4": 6,
+        "R0": 0
+      },
+      {
+        "N": 50,
+        "esr": 0.7051282051282052,
+        "cost_per_attempt": 0.0010565787435897432,
+        "cost_total": 0.08241314199999997,
+        "recall_at_k": 0.8589743589743589,
+        "selection_accuracy": 1,
+        "agent_tok_mean": 169.17948717948718,
+        "router_tok_mean": 1653.7435897435898,
+        "total_lat_mean": 1523.1897483333282,
+        "router_lat_mean": 197.92237921794637,
+        "agent_lat_mean": 1325.18352402564,
+        "R1": 10,
+        "R2": 0,
+        "R3": 8,
+        "R4": 5,
+        "R0": 0
+      },
+      {
+        "N": 100,
+        "esr": 0.6923076923076923,
+        "cost_per_attempt": 0.0010979150256410256,
+        "cost_total": 0.085637372,
+        "recall_at_k": 0.8717948717948718,
+        "selection_accuracy": 1,
+        "agent_tok_mean": 169.26923076923077,
+        "router_tok_mean": 3035.5897435897436,
+        "total_lat_mean": 1593.214145820528,
+        "router_lat_mean": 234.83888784614808,
+        "agent_lat_mean": 1358.2671725769194,
+        "R1": 9,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R0": 0
+      }
+    ],
+    "top5": [
+      {
+        "N": 5,
+        "esr": 0.8205128205128205,
+        "cost_per_attempt": 0.0014627091025641028,
+        "cost_total": 0.11409131000000002,
+        "recall_at_k": 1,
+        "selection_accuracy": 0.9102564102564102,
+        "agent_tok_mean": 281.9230769230769,
+        "router_tok_mean": 451.28205128205127,
+        "total_lat_mean": 1624.1521987051326,
+        "router_lat_mean": 172.45489207694294,
+        "agent_lat_mean": 1451.6097013974436,
+        "R1": 0,
+        "R2": 2,
+        "R3": 8,
+        "R4": 4,
+        "R0": 0
+      },
+      {
+        "N": 10,
+        "esr": 0.782051282051282,
+        "cost_per_attempt": 0.0014226663846153844,
+        "cost_total": 0.11096797799999998,
+        "recall_at_k": 1,
+        "selection_accuracy": 0.8205128205128205,
+        "agent_tok_mean": 271.7564102564103,
+        "router_tok_mean": 584.525641025641,
+        "total_lat_mean": 1792.1631052820578,
+        "router_lat_mean": 181.81349773077258,
+        "agent_lat_mean": 1610.0555015384573,
+        "R1": 0,
+        "R2": 6,
+        "R3": 7,
+        "R4": 4,
+        "R0": 0
+      },
+      {
+        "N": 25,
+        "esr": 0.7692307692307693,
+        "cost_per_attempt": 0.0014765052307692307,
+        "cost_total": 0.115167408,
+        "recall_at_k": 0.9487179487179487,
+        "selection_accuracy": 0.8378378378378378,
+        "agent_tok_mean": 282.2307692307692,
+        "router_tok_mean": 979.0641025641025,
+        "total_lat_mean": 2051.9652853205125,
+        "router_lat_mean": 394.98968215385236,
+        "agent_lat_mean": 1656.8302338846172,
+        "R1": 3,
+        "R2": 5,
+        "R3": 8,
+        "R4": 2,
+        "R0": 0
+      },
+      {
+        "N": 50,
+        "esr": 0.7564102564102564,
+        "cost_per_attempt": 0.0015059120769230772,
+        "cost_total": 0.11746114200000002,
+        "recall_at_k": 0.9487179487179487,
+        "selection_accuracy": 0.8513513513513513,
+        "agent_tok_mean": 284.2307692307692,
+        "router_tok_mean": 1653.7435897435898,
+        "total_lat_mean": 1832.716998935895,
+        "router_lat_mean": 228.3011228846034,
+        "agent_lat_mean": 1604.1401730127818,
+        "R1": 3,
+        "R2": 6,
+        "R3": 8,
+        "R4": 2,
+        "R0": 0
+      },
+      {
+        "N": 100,
+        "esr": 0.7564102564102564,
+        "cost_per_attempt": 0.0015692996410256416,
+        "cost_total": 0.12240537200000004,
+        "recall_at_k": 0.9487179487179487,
+        "selection_accuracy": 0.8648648648648649,
+        "agent_tok_mean": 289.7307692307692,
+        "router_tok_mean": 3035.576923076923,
+        "total_lat_mean": 1741.3508647948725,
+        "router_lat_mean": 236.7056650769097,
+        "agent_lat_mean": 1504.1854315384692,
+        "R1": 4,
+        "R2": 4,
+        "R3": 8,
+        "R4": 3,
+        "R0": 0
+      }
+    ]
+  },
+  "cost_delta_n5_to_n100": {
+    "baseline": {
+      "from": 0.0014459999999999998,
+      "to": 0.012235846153846156,
+      "ratio": 8.46185764443026,
+      "abs": 0.010789846153846157
+    },
+    "top1": {
+      "from": 0.0010116834615384615,
+      "to": 0.0010979150256410256,
+      "ratio": 1.085235715894211,
+      "abs": 0.00008623156410256412
+    },
+    "top5": {
+      "from": 0.0014627091025641028,
+      "to": 0.0015692996410256416,
+      "ratio": 1.07287200050556,
+      "abs": 0.00010659053846153875
+    },
+    "baseline_agent_tokens": {
+      "from": 281.9102564102564,
+      "to": 2981.576923076923,
+      "ratio": 10.576333621356133,
+      "abs": 2699.6666666666665
+    },
+    "top5_agent_tokens": {
+      "from": 281.9230769230769,
+      "to": 289.7307692307692,
+      "ratio": 1.0276944065484312,
+      "abs": 7.807692307692321
+    },
+    "top5_router_tokens": {
+      "from": 451.28205128205127,
+      "to": 3035.576923076923,
+      "ratio": 6.7265625,
+      "abs": 2584.2948717948716
+    }
+  },
+  "latency_compare": [
+    {
+      "N": 5,
+      "baseline": 1277.8046111538451,
+      "top1": 1855.429699820514,
+      "top5": 1624.1521987051326,
+      "top5_minus_baseline": 346.34758755128746,
+      "top1_minus_baseline": 577.625088666669
+    },
+    {
+      "N": 10,
+      "baseline": 1701.2864604358979,
+      "top1": 2011.733688259733,
+      "top5": 1792.1631052820578,
+      "top5_minus_baseline": 90.87664484615993,
+      "top1_minus_baseline": 310.4472278238352
+    },
+    {
+      "N": 25,
+      "baseline": 1463.6714123589743,
+      "top1": 1715.6902478846143,
+      "top5": 2051.9652853205125,
+      "top5_minus_baseline": 588.2938729615382,
+      "top1_minus_baseline": 252.01883552564004
+    },
+    {
+      "N": 50,
+      "baseline": 1475.2622201025697,
+      "top1": 1523.1897483333282,
+      "top5": 1832.716998935895,
+      "top5_minus_baseline": 357.45477883332524,
+      "top1_minus_baseline": 47.927528230758526
+    },
+    {
+      "N": 100,
+      "baseline": 1953.5811495769176,
+      "top1": 1593.214145820528,
+      "top5": 1741.3508647948725,
+      "top5_minus_baseline": -212.23028478204515,
+      "top1_minus_baseline": -360.3670037563895
+    }
+  ],
+  "n100_disagreement": {
+    "contingency": {
+      "both_success": 54,
+      "baseline_success_top5_failure": 6,
+      "baseline_failure_top5_success": 5,
+      "both_failure": 13
+    },
+    "esr_baseline": 0.7692307692307693,
+    "esr_top5": 0.7564102564102564,
+    "observed_esr_diff_pp": 1.2820512820512886,
+    "cost_ratio_baseline_over_top5": 7.797010739038479,
+    "details": {
+      "both_ok": [
+        "task_0002",
+        "task_0003",
+        "task_0004",
+        "task_0005",
+        "task_0007",
+        "task_0008",
+        "task_0009",
+        "task_0010",
+        "task_0011",
+        "task_0012",
+        "task_0013",
+        "task_0014",
+        "task_0015",
+        "task_0016",
+        "task_0017",
+        "task_0018",
+        "task_0019",
+        "task_0020",
+        "task_0021",
+        "task_0025",
+        "task_0026",
+        "task_0027",
+        "task_0029",
+        "task_0031",
+        "task_0032",
+        "task_0033",
+        "task_0035",
+        "task_0036",
+        "task_0037",
+        "task_0044",
+        "task_0046",
+        "task_0047",
+        "task_0048",
+        "task_0049",
+        "task_0050",
+        "task_0052",
+        "task_0053",
+        "task_0054",
+        "task_0055",
+        "task_0056",
+        "task_0058",
+        "task_0060",
+        "task_0061",
+        "task_0063",
+        "task_0064",
+        "task_0065",
+        "task_0067",
+        "task_0068",
+        "task_0070",
+        "task_0071",
+        "task_0073",
+        "task_0074",
+        "task_0075",
+        "task_0076"
+      ],
+      "base_ok_top5_fail": [
+        {
+          "taskId": "task_0028",
+          "top5": "R3"
+        },
+        {
+          "taskId": "task_0034",
+          "top5": "R2"
+        },
+        {
+          "taskId": "task_0040",
+          "top5": "R1"
+        },
+        {
+          "taskId": "task_0041",
+          "top5": "R1"
+        },
+        {
+          "taskId": "task_0043",
+          "top5": "R2"
+        },
+        {
+          "taskId": "task_0045",
+          "top5": "R4"
+        }
+      ],
+      "base_fail_top5_ok": [
+        {
+          "taskId": "task_0022",
+          "baseline": "R2"
+        },
+        {
+          "taskId": "task_0023",
+          "baseline": "R2"
+        },
+        {
+          "taskId": "task_0030",
+          "baseline": "R2"
+        },
+        {
+          "taskId": "task_0057",
+          "baseline": "R3"
+        },
+        {
+          "taskId": "task_0072",
+          "baseline": "R2"
+        }
+      ],
+      "both_fail": [
+        {
+          "taskId": "task_0001",
+          "baseline": "R3",
+          "top5": "R3"
+        },
+        {
+          "taskId": "task_0006",
+          "baseline": "R3",
+          "top5": "R3"
+        },
+        {
+          "taskId": "task_0024",
+          "baseline": "R2",
+          "top5": "R4"
+        },
+        {
+          "taskId": "task_0038",
+          "baseline": "R2",
+          "top5": "R2"
+        },
+        {
+          "taskId": "task_0039",
+          "baseline": "R2",
+          "top5": "R1"
+        },
+        {
+          "taskId": "task_0042",
+          "baseline": "R2",
+          "top5": "R1"
+        },
+        {
+          "taskId": "task_0051",
+          "baseline": "R3",
+          "top5": "R3"
+        },
+        {
+          "taskId": "task_0059",
+          "baseline": "R3",
+          "top5": "R3"
+        },
+        {
+          "taskId": "task_0062",
+          "baseline": "R3",
+          "top5": "R3"
+        },
+        {
+          "taskId": "task_0066",
+          "baseline": "R3",
+          "top5": "R3"
+        },
+        {
+          "taskId": "task_0069",
+          "baseline": "R2",
+          "top5": "R3"
+        },
+        {
+          "taskId": "task_0077",
+          "baseline": "R2",
+          "top5": "R4"
+        },
+        {
+          "taskId": "task_0078",
+          "baseline": "R2",
+          "top5": "R2"
+        }
+      ]
+    }
+  },
+  "baseline_flip_n5_ok_n100_fail": [
+    {
+      "taskId": "task_0022",
+      "n5": null,
+      "n10": "R2",
+      "n25": "R2",
+      "n50": null,
+      "n100": "R2",
+      "failAt100": "R2"
+    },
+    {
+      "taskId": "task_0023",
+      "n5": null,
+      "n10": null,
+      "n25": "R2",
+      "n50": "R2",
+      "n100": "R2",
+      "failAt100": "R2"
+    },
+    {
+      "taskId": "task_0038",
+      "n5": null,
+      "n10": "R2",
+      "n25": "R2",
+      "n50": "R2",
+      "n100": "R2",
+      "failAt100": "R2"
+    },
+    {
+      "taskId": "task_0039",
+      "n5": null,
+      "n10": null,
+      "n25": "R2",
+      "n50": "R2",
+      "n100": "R2",
+      "failAt100": "R2"
+    },
+    {
+      "taskId": "task_0042",
+      "n5": null,
+      "n10": "R2",
+      "n25": "R2",
+      "n50": "R2",
+      "n100": "R2",
+      "failAt100": "R2"
+    },
+    {
+      "taskId": "task_0057",
+      "n5": null,
+      "n10": null,
+      "n25": null,
+      "n50": null,
+      "n100": "R3",
+      "failAt100": "R3"
+    },
+    {
+      "taskId": "task_0072",
+      "n5": null,
+      "n10": "R2",
+      "n25": "R2",
+      "n50": "R2",
+      "n100": "R2",
+      "failAt100": "R2"
+    }
+  ],
+  "baseline_n100_failures": [
+    {
+      "taskId": "task_0001",
+      "code": "R3"
+    },
+    {
+      "taskId": "task_0006",
+      "code": "R3"
+    },
+    {
+      "taskId": "task_0022",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0023",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0024",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0030",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0038",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0039",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0042",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0051",
+      "code": "R3"
+    },
+    {
+      "taskId": "task_0057",
+      "code": "R3"
+    },
+    {
+      "taskId": "task_0059",
+      "code": "R3"
+    },
+    {
+      "taskId": "task_0062",
+      "code": "R3"
+    },
+    {
+      "taskId": "task_0066",
+      "code": "R3"
+    },
+    {
+      "taskId": "task_0069",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0072",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0077",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0078",
+      "code": "R2"
+    }
+  ],
+  "baseline_n100_r2": [
+    {
+      "taskId": "task_0022",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0023",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0024",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0030",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0038",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0039",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0042",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0069",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0072",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0077",
+      "code": "R2"
+    },
+    {
+      "taskId": "task_0078",
+      "code": "R2"
+    }
+  ],
+  "baseline_fail_profile_by_N": {
+    "5": {
+      "n_fail": 15,
+      "by_code": {
+        "R3": 8,
+        "R2": 3,
+        "R4": 4
+      },
+      "r2_tasks": [
+        "task_0024",
+        "task_0030",
+        "task_0046"
+      ]
+    },
+    "10": {
+      "n_fail": 17,
+      "by_code": {
+        "R3": 7,
+        "R2": 8,
+        "R4": 2
+      },
+      "r2_tasks": [
+        "task_0022",
+        "task_0024",
+        "task_0038",
+        "task_0042",
+        "task_0047",
+        "task_0069",
+        "task_0072",
+        "task_0074"
+      ]
+    },
+    "25": {
+      "n_fail": 20,
+      "by_code": {
+        "R3": 7,
+        "R2": 12,
+        "R4": 1
+      },
+      "r2_tasks": [
+        "task_0003",
+        "task_0022",
+        "task_0023",
+        "task_0024",
+        "task_0038",
+        "task_0039",
+        "task_0040",
+        "task_0042",
+        "task_0047",
+        "task_0069",
+        "task_0072",
+        "task_0078"
+      ]
+    },
+    "50": {
+      "n_fail": 18,
+      "by_code": {
+        "R3": 7,
+        "R2": 11
+      },
+      "r2_tasks": [
+        "task_0023",
+        "task_0024",
+        "task_0038",
+        "task_0039",
+        "task_0042",
+        "task_0043",
+        "task_0047",
+        "task_0069",
+        "task_0072",
+        "task_0077",
+        "task_0078"
+      ]
+    },
+    "100": {
+      "n_fail": 18,
+      "by_code": {
+        "R3": 7,
+        "R2": 11
+      },
+      "r2_tasks": [
+        "task_0022",
+        "task_0023",
+        "task_0024",
+        "task_0030",
+        "task_0038",
+        "task_0039",
+        "task_0042",
+        "task_0069",
+        "task_0072",
+        "task_0077",
+        "task_0078"
+      ]
+    }
+  },
+  "rescued_by_top5_at_n100": [
+    {
+      "taskId": "task_0022",
+      "baselineCode": "R2",
+      "top5Code": null,
+      "top5Recall": 1,
+      "top5Sel": 1
+    },
+    {
+      "taskId": "task_0023",
+      "baselineCode": "R2",
+      "top5Code": null,
+      "top5Recall": 1,
+      "top5Sel": 1
+    },
+    {
+      "taskId": "task_0030",
+      "baselineCode": "R2",
+      "top5Code": null,
+      "top5Recall": 1,
+      "top5Sel": 1
+    },
+    {
+      "taskId": "task_0057",
+      "baselineCode": "R3",
+      "top5Code": null,
+      "top5Recall": 1,
+      "top5Sel": 1
+    },
+    {
+      "taskId": "task_0072",
+      "baselineCode": "R2",
+      "top5Code": null,
+      "top5Recall": 1,
+      "top5Sel": 1
+    }
+  ],
+  "lost_by_top5_at_n100": [
+    {
+      "taskId": "task_0028",
+      "top5Code": "R3",
+      "top5Recall": 1,
+      "top5Sel": 1,
+      "top1Ok": false,
+      "top1Code": "R3",
+      "top1Recall": 1
+    },
+    {
+      "taskId": "task_0034",
+      "top5Code": "R2",
+      "top5Recall": 1,
+      "top5Sel": 0,
+      "top1Ok": true,
+      "top1Code": null,
+      "top1Recall": 1
+    },
+    {
+      "taskId": "task_0040",
+      "top5Code": "R1",
+      "top5Recall": 0,
+      "top5Sel": null,
+      "top1Ok": true,
+      "top1Code": null,
+      "top1Recall": 0
+    },
+    {
+      "taskId": "task_0041",
+      "top5Code": "R1",
+      "top5Recall": 0,
+      "top5Sel": null,
+      "top1Ok": false,
+      "top1Code": "R1",
+      "top1Recall": 0
+    },
+    {
+      "taskId": "task_0043",
+      "top5Code": "R2",
+      "top5Recall": 1,
+      "top5Sel": 0,
+      "top1Ok": false,
+      "top1Code": "R1",
+      "top1Recall": 0
+    },
+    {
+      "taskId": "task_0045",
+      "top5Code": "R4",
+      "top5Recall": 1,
+      "top5Sel": 1,
+      "top1Ok": false,
+      "top1Code": "R4",
+      "top1Recall": 1
+    }
+  ],
+  "r3": {
+    "frequency_across_15_cells": [
+      {
+        "taskId": "task_0001",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0006",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0051",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0059",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0062",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0066",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0028",
+        "cells": 14
+      },
+      {
+        "taskId": "task_0069",
+        "cells": 10
+      },
+      {
+        "taskId": "task_0057",
+        "cells": 1
+      }
+    ],
+    "always_r3_all_15_cells": [
+      "task_0001",
+      "task_0006",
+      "task_0051",
+      "task_0059",
+      "task_0062",
+      "task_0066"
+    ],
+    "at_least_12_of_15": [
+      {
+        "taskId": "task_0001",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0006",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0051",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0059",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0062",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0066",
+        "cells": 15
+      },
+      {
+        "taskId": "task_0028",
+        "cells": 14
+      }
+    ],
+    "by_N_intersection": {
+      "5": {
+        "baseline": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "top1": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "top5": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "all_three": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "baseline_only": []
+      },
+      "10": {
+        "baseline": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "top1": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "top5": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "all_three": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "baseline_only": []
+      },
+      "25": {
+        "baseline": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "top1": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "top5": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "all_three": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "baseline_only": []
+      },
+      "50": {
+        "baseline": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "top1": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "top5": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "all_three": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "baseline_only": []
+      },
+      "100": {
+        "baseline": [
+          "task_0001",
+          "task_0006",
+          "task_0051",
+          "task_0057",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "top1": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "top5": [
+          "task_0001",
+          "task_0006",
+          "task_0028",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066",
+          "task_0069"
+        ],
+        "all_three": [
+          "task_0001",
+          "task_0006",
+          "task_0051",
+          "task_0059",
+          "task_0062",
+          "task_0066"
+        ],
+        "baseline_only": [
+          "task_0057"
+        ]
+      }
+    },
+    "baseline_always_r3_across_N": [
+      "task_0001",
+      "task_0006",
+      "task_0051",
+      "task_0059",
+      "task_0062",
+      "task_0066"
+    ]
+  },
+  "r4": {
+    "frequency_across_15_cells": [
+      {
+        "taskId": "task_0045",
+        "cells": 11
+      },
+      {
+        "taskId": "task_0077",
+        "cells": 11
+      },
+      {
+        "taskId": "task_0078",
+        "cells": 9
+      },
+      {
+        "taskId": "task_0074",
+        "cells": 8
+      },
+      {
+        "taskId": "task_0044",
+        "cells": 5
+      },
+      {
+        "taskId": "task_0048",
+        "cells": 5
+      },
+      {
+        "taskId": "task_0046",
+        "cells": 3
+      },
+      {
+        "taskId": "task_0024",
+        "cells": 2
+      }
+    ],
+    "at_least_5_of_15": [
+      {
+        "taskId": "task_0045",
+        "cells": 11
+      },
+      {
+        "taskId": "task_0077",
+        "cells": 11
+      },
+      {
+        "taskId": "task_0078",
+        "cells": 9
+      },
+      {
+        "taskId": "task_0074",
+        "cells": 8
+      },
+      {
+        "taskId": "task_0044",
+        "cells": 5
+      },
+      {
+        "taskId": "task_0048",
+        "cells": 5
+      }
+    ]
+  },
+  "r1_persistence": {
+    "top1_by_N": {
+      "5": [
+        "task_0024",
+        "task_0039",
+        "task_0040"
+      ],
+      "10": [
+        "task_0024",
+        "task_0038",
+        "task_0039",
+        "task_0041"
+      ],
+      "25": [
+        "task_0022",
+        "task_0024",
+        "task_0037",
+        "task_0038",
+        "task_0039",
+        "task_0041",
+        "task_0042",
+        "task_0046",
+        "task_0050"
+      ],
+      "50": [
+        "task_0022",
+        "task_0024",
+        "task_0038",
+        "task_0039",
+        "task_0041",
+        "task_0042",
+        "task_0043",
+        "task_0046",
+        "task_0050",
+        "task_0077"
+      ],
+      "100": [
+        "task_0022",
+        "task_0038",
+        "task_0039",
+        "task_0041",
+        "task_0042",
+        "task_0043",
+        "task_0050",
+        "task_0067",
+        "task_0077"
+      ]
+    },
+    "top5_by_N": {
+      "5": [],
+      "10": [],
+      "25": [
+        "task_0039",
+        "task_0040",
+        "task_0042"
+      ],
+      "50": [
+        "task_0039",
+        "task_0040",
+        "task_0042"
+      ],
+      "100": [
+        "task_0039",
+        "task_0040",
+        "task_0041",
+        "task_0042"
+      ]
+    },
+    "top1_r1_at_n5_still_at_n100": [
+      "task_0039"
+    ],
+    "top5_r1_at_n5_still_at_n100": [],
+    "top1_new_r1_at_n100": [
+      "task_0022",
+      "task_0038",
+      "task_0041",
+      "task_0042",
+      "task_0043",
+      "task_0050",
+      "task_0067",
+      "task_0077"
+    ]
+  },
+  "invariants": {
+    "baseline_always_ok": 52,
+    "baseline_always_fail": 10,
+    "baseline_always_fail_ids": [
+      "task_0001",
+      "task_0006",
+      "task_0024",
+      "task_0051",
+      "task_0059",
+      "task_0062",
+      "task_0066",
+      "task_0069",
+      "task_0077",
+      "task_0078"
+    ]
+  }
+}

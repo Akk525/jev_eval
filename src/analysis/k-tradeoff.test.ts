@@ -23,7 +23,7 @@ function kSweepFixture(): KSweepTables {
     rows: [
       {
         architecture: "jev",
-        toolspace_size: 25,
+        toolspace_size: K_SWEEP_TOOLSPACE_SIZE,
         top_k: 1,
         source_directories: ["/tmp/k1"],
         attempts: 2,
@@ -32,6 +32,8 @@ function kSweepFixture(): KSweepTables {
         routing_scored: 2,
         recall_at_k: 0.5,
         recall_at_k_stats: emptyStats(0.5),
+        lenient_recall_at_k: 0.5,
+        lenient_recall_at_k_stats: emptyStats(0.5),
         selection_scored: 2,
         selection_accuracy: 0.5,
         selection_accuracy_stats: emptyStats(0.5),
@@ -44,13 +46,16 @@ function kSweepFixture(): KSweepTables {
         router_output_tokens: 2,
         agent_input_tokens: 100,
         agent_output_tokens: 4,
+        total_tokens: 126,
         priced_cost_usd: 0.2,
         router_latency_ms: emptyLatency(),
         agent_latency_ms: emptyLatency(),
+        total_latency_ms: emptyLatency(),
+        total_latency_ms_r0: emptyLatency(),
       },
       {
         architecture: "jev",
-        toolspace_size: 25,
+        toolspace_size: K_SWEEP_TOOLSPACE_SIZE,
         top_k: 5,
         source_directories: ["/tmp/k5"],
         attempts: 2,
@@ -59,6 +64,8 @@ function kSweepFixture(): KSweepTables {
         routing_scored: 2,
         recall_at_k: 1,
         recall_at_k_stats: emptyStats(1),
+        lenient_recall_at_k: 1,
+        lenient_recall_at_k_stats: emptyStats(1),
         selection_scored: 2,
         selection_accuracy: 1,
         selection_accuracy_stats: emptyStats(1),
@@ -71,9 +78,12 @@ function kSweepFixture(): KSweepTables {
         router_output_tokens: 2,
         agent_input_tokens: 400,
         agent_output_tokens: 4,
+        total_tokens: 426,
         priced_cost_usd: 0.6,
         router_latency_ms: emptyLatency(),
         agent_latency_ms: emptyLatency(),
+        total_latency_ms: emptyLatency(),
+        total_latency_ms_r0: emptyLatency(),
       },
     ],
   };
@@ -126,15 +136,16 @@ describe("buildKTradeoffTable", () => {
         confidence: 0.8,
         selectionAccuracy: 1,
         candidates: ["a"],
+        lenientRecallAtK: 1,
         routerUsage: { inputTokens: 10, outputTokens: 0 },
         agentUsage: { inputTokens: 40, outputTokens: 0 },
         pricedCostUsd: 0.05,
         providerReportedCostUsd: null,
         routerLatencyMs: 5,
         agentLatencyMs: 15,
-    totalLatencyMs: 20,
+        totalLatencyMs: 20,
         ...overrides,
-      };
+      } as ScalingRun;
     }
 
     function config(topK: number) {

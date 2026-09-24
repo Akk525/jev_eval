@@ -21,6 +21,7 @@ function run(overrides: Partial<AdaptiveEvalRun> = {}): AdaptiveEvalRun {
     selectionAccuracy: 1,
     confidence: 0.8,
     candidates: ["gold"],
+    lenientRecallAtK: 1,
     routerUsage: { inputTokens: 10, outputTokens: 1 },
     agentUsage: { inputTokens: 20, outputTokens: 2 },
     pricedCostUsd: 0.01,
@@ -32,7 +33,7 @@ function run(overrides: Partial<AdaptiveEvalRun> = {}): AdaptiveEvalRun {
     adaptiveEscalationTarget: null,
     adaptiveSelectedK: null,
     ...overrides,
-  };
+  } as AdaptiveEvalRun;
 }
 
 function load(

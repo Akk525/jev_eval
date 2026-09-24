@@ -306,19 +306,45 @@ Both example configs use dataset `datasets/v0.1/tasks.jsonl`, toolspace 20, seed
 
 ## D12. M4 Jev k-sweep fixed N
 
-**Decision.** The M4 Jev top-k ablation holds toolspace size at **N = 25** and varies only `topK ∈ {1, 3, 5, 10}`. Dataset is `datasets/v0.2/tasks.jsonl`. Agent, Jev model, prompts, `routingSummary` text, pricing version, seed, and other scientific controls match the M3 Jev matrix cells (D10).
+**Decision.** ~~The M4 Jev top-k ablation holds toolspace size at **N = 25**~~  
+**Superseded by D14.** Historical text retained for audit. Original choice was N = 25
+with `topK ∈ {1, 3, 5, 10}` on `datasets/v0.2/tasks.jsonl`, matching M3 Jev pins (D10).
 
-**Reason.** k = 10 requires N ≥ 10. Among the formal M3 sizes, N = 25 is the smallest mid-range value that fits every sweep k, stays nested with the scaling experiment, and costs less than N = 50 or 100 for a four-config ablation. Fixing N keeps the only intended variable on k.
+**Reason (historical).** k = 10 requires N ≥ 10; N = 25 was the smallest mid-range formal size.
+
+**Date.** 2026-09-23
+
+---
+
+## D14. M4 fixed N amended to 100 (post-M3)
+
+**Decision.** The M4 Jev top-k ablation holds toolspace size at **N = 100** and varies only
+`topK ∈ {1, 3, 5, 10}`. All other scientific controls match frozen M3 Jev N=100 cells
+(dataset v0.2 / 78 tasks, registry, distractors, routing summaries, Jev `jev-1.13.0`,
+agent `gpt-5.6-sol` T=0, pricing `v1`, concurrency 1, seed 0, tracing noop, failure
+taxonomy and denominators, `totalLatencyMs` rules).
+
+**Execution policy.** M4 runs all four cells as a **fresh** ablation under
+`results/_k-sweep/`. Immutable M3 `jev-top1-n100` / `jev-top5-n100` directories are **not**
+reused or mixed into M4 manifests or aggregates (timestamp/environment consistency).
+
+**Reason.** M3 paired scaling analysis showed N=100 simultaneously exhibits routing-coverage
+pressure, downstream selection (R2) pressure, and large context/cost separation versus
+baseline. N was predeclared from that analysis purpose — not by searching additional N
+or retuning k.
 
 **Alternatives considered.**
 
-* N = 100. Rejected for the first k-sweep because it multiplies agent schema load without answering whether k matters at a moderate N.
-* N = 20 (vertical-slice size). Rejected because M4 should sit on the same nested toolspace construction and dataset version as M3.
-* Sweeping LLM top-k in the same configs. Rejected; this issue is Jev-only.
+* N = 25 (D12). Superseded; insufficient cost/latency separation for the post-M3 question.
+* N = 50. Cheaper but weaker latency/cost contrast in the M3 sample.
+* Reusing M3 k=1/k=5 dirs analytically. Rejected for the live ablation to keep one
+  execution timestamp/environment; M3 dirs remain immutable for M3 analysis only.
 
-**Consequences.** Checked-in files live under `configs/k-sweep/`. Changing N or any frozen control after the first k-sweep result directory requires a new version and a DECISIONS entry.
+**Consequences.** Configs under `configs/k-sweep/` use N=100. Prior N=25 YAMLs archived at
+`configs/archive/k-sweep-n25/`. No optimal-k claim from M4 unless a decision rule is
+versioned before the run (tradeoff curve is the result).
 
-**Date.** 2026-09-23
+**Date.** 2026-09-24
 
 ---
 

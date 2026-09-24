@@ -1,6 +1,6 @@
 /**
  * Writes the M4 Jev top-k sweep configs under configs/k-sweep/.
- * Only topK varies; N and all other scientific controls stay fixed (D12).
+ * Only topK varies; N=100 and all other scientific controls stay fixed (D14).
  *
  *   npx tsx scripts/generate-k-sweep.ts
  */

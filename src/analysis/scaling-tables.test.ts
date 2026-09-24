@@ -21,6 +21,7 @@ function run(overrides: Partial<ScalingRun> = {}): ScalingRun {
     confidence: 0.8,
     selectionAccuracy: 1,
     candidates: ["gold"],
+    lenientRecallAtK: 1,
     routerUsage: { inputTokens: 10, outputTokens: 1 },
     agentUsage: { inputTokens: 20, outputTokens: 2 },
     pricedCostUsd: 0.01,
@@ -29,7 +30,7 @@ function run(overrides: Partial<ScalingRun> = {}): ScalingRun {
     agentLatencyMs: 10,
     totalLatencyMs: 20,
     ...overrides,
-  };
+  } as ScalingRun;
 }
 
 function config(architecture: "baseline" | "jev" | "llm", n: number, topK: number | null) {

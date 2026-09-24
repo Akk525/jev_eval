@@ -61,8 +61,9 @@ Exit code **0** = pipeline regenerates. Exit **1** = missing/invalid inputs or a
 | Artifact | Regeneration | Notes |
 |---|---|---|
 | Scaling tables | `npm run summarize` | arch × N from `runs.jsonl` |
-| K-sweep tables | `npm run k-sweep -- --summarize` | Jev N=25, k∈{1,3,5,10} (D12) |
+| K-sweep tables | `npm run k-sweep -- --summarize` | Jev N=100, k∈{1,3,5,10} (D14) |
 | K tradeoff | `npm run k-sweep -- --tradeoff` | `decision_rule: null` — no optimal-k claim |
+| Marginal routing utility | `npm run k-sweep -- --marginal-utility` | Adjacent k coverage vs utility |
 | Calibration readiness | `npm run check:calibration` | gates M5 threshold lock (#42) |
 
 ## Methodology vs implementation

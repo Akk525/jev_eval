@@ -7,12 +7,17 @@ export const K_SWEEP_TOP_KS = [1, 3, 5, 10] as const;
 export type KSweepTopK = (typeof K_SWEEP_TOP_KS)[number];
 
 /**
- * Fixed toolspace size for the M4 Jev k-sweep (D12).
- * Chosen from the formal M3 sizes so k=10 fits and N stays mid-range.
+ * Fixed toolspace size for the M4 Jev k-sweep (D14; amends D12).
+ * Chosen from M3 paired analysis: N=100 exhibits routing-coverage pressure,
+ * downstream selection pressure, and context/cost separation simultaneously.
  */
-export const K_SWEEP_TOOLSPACE_SIZE = 25 as const;
+export const K_SWEEP_TOOLSPACE_SIZE = 100 as const;
+
+/** Stable cell ids for the frozen M4 ablation. */
+export type KSweepCellId = "jev_k1_n100" | "jev_k3_n100" | "jev_k5_n100" | "jev_k10_n100";
 
 export interface KSweepCell {
+  id: KSweepCellId;
   topK: KSweepTopK;
   /** Repo-relative path under configs/k-sweep/. */
   relativePath: string;
@@ -21,6 +26,10 @@ export interface KSweepCell {
 
 const AGENT = { provider: "openai", model: "gpt-5.6-sol", temperature: 0 } as const;
 const JEV_ROUTER = { provider: "typesafe", model: "jev-1.13.0" } as const;
+
+export function kSweepCellId(topK: KSweepTopK): KSweepCellId {
+  return `jev_k${topK}_n${K_SWEEP_TOOLSPACE_SIZE}` as KSweepCellId;
+}
 
 export function kSweepFileStem(topK: KSweepTopK): string {
   return `jev-top${topK}-n${K_SWEEP_TOOLSPACE_SIZE}`;
@@ -49,9 +58,10 @@ export function buildKSweepConfig(topK: KSweepTopK): ExperimentConfig {
   };
 }
 
-/** Jev k ∈ {1, 3, 5, 10} at fixed N, in ascending k order. */
+/** Jev k ∈ {1, 3, 5, 10} at fixed N=100, in ascending k order. */
 export function enumerateKSweepCells(): KSweepCell[] {
   return K_SWEEP_TOP_KS.map((topK) => ({
+    id: kSweepCellId(topK),
     topK,
     relativePath: kSweepRelativePath(topK),
     config: buildKSweepConfig(topK),

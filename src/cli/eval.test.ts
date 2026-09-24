@@ -82,10 +82,10 @@ it("validates final end-to-end configs with repetitions=3", () => {
 
 it("validates every Jev k-sweep config and keeps only topK different", () => {
   const paths = [
-    "configs/k-sweep/jev-top1-n25.yaml",
-    "configs/k-sweep/jev-top3-n25.yaml",
-    "configs/k-sweep/jev-top5-n25.yaml",
-    "configs/k-sweep/jev-top10-n25.yaml",
+    "configs/k-sweep/jev-top1-n100.yaml",
+    "configs/k-sweep/jev-top3-n100.yaml",
+    "configs/k-sweep/jev-top5-n100.yaml",
+    "configs/k-sweep/jev-top10-n100.yaml",
   ];
   const loaded = paths.map((configPath) => {
     const run = cli(["--validate", "--config", configPath]);
@@ -94,6 +94,7 @@ it("validates every Jev k-sweep config and keeps only topK different", () => {
     return loadExperimentConfig(join(repoRoot, configPath)).config;
   });
   expect(loaded.map((config) => config.topK)).toEqual([1, 3, 5, 10]);
+  expect(loaded.every((config) => config.toolspaceSize === 100)).toBe(true);
   const controls = loaded.map((config) => {
     const { topK: _omit, ...rest } = config;
     void _omit;

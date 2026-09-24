@@ -11,6 +11,11 @@ import {
   kTradeoffTableToCsv,
   kTradeoffTableToJson,
 } from "../analysis/k-tradeoff.js";
+import {
+  buildMarginalRoutingUtility,
+  marginalRoutingUtilityToCsv,
+  marginalRoutingUtilityToJson,
+} from "../analysis/marginal-routing-utility.js";
 import { enumerateKSweepCells } from "../config/k-sweep.js";
 import { loadExperimentConfig } from "../config/load.js";
 import { loadDotEnv } from "../env/load.js";
@@ -31,6 +36,7 @@ const { values } = parseArgs({
     validate: { type: "boolean", default: false },
     summarize: { type: "boolean", default: false },
     tradeoff: { type: "boolean", default: false },
+    "marginal-utility": { type: "boolean", default: false },
     format: { type: "string", default: "json" },
     out: { type: "string" },
   },
@@ -40,7 +46,7 @@ const { values } = parseArgs({
 if (values.help) {
   console.log(`Usage: npm run k-sweep -- [options]
 
-Execute the M4 Jev top-k sweep (k ∈ {1, 3, 5, 10} at N = 25) or aggregate its result dirs.
+Execute the M4 Jev top-k sweep (k ∈ {1, 3, 5, 10} at N = 100) or aggregate its result dirs.
 Cells run serially. Each cell keeps its own immutable result directory.
 Manifests live under <results>/_k-sweep/.
 
@@ -53,8 +59,9 @@ Manifests live under <results>/_k-sweep/.
 --validate          Load every selected k-sweep config and exit.
 --summarize         Rebuild full per-k aggregates from result dirs (no new runs).
 --tradeoff          Rebuild the compact k tradeoff table (no optimal-k claim).
---format json|csv   Summarize/tradeoff output format. Default: json.
---out <file>        Write summarize/tradeoff output to this path (default: stdout).
+--marginal-utility  Offline paired adjacent-k marginal routing utility (no optimal-k claim).
+--format json|csv   Summarize/tradeoff/marginal-utility output format. Default: json.
+--out <file>        Write summarize/tradeoff/marginal-utility output (default: stdout).
 
 Examples:
   npm run k-sweep -- --dry-run
@@ -62,6 +69,7 @@ Examples:
   npm run k-sweep -- --mock --results /tmp/jev-ksweep
   npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out analysis/k-sweep.csv
   npm run k-sweep -- --tradeoff --results /tmp/jev-ksweep --out analysis/k-tradeoff.json
+  npm run k-sweep -- --marginal-utility --results /tmp/jev-ksweep --out analysis/m4-freeze/marginal-utility.json
 `);
   process.exit(0);
 }
@@ -89,16 +97,27 @@ try {
   }
 
   if (values.summarize && values.tradeoff) {
-    throw new Error("pass only one of --summarize or --tradeoff");
+    throw new Error("pass only one of --summarize, --tradeoff, or --marginal-utility");
+  }
+  if (
+    (values.summarize && values["marginal-utility"]) ||
+    (values.tradeoff && values["marginal-utility"])
+  ) {
+    throw new Error("pass only one of --summarize, --tradeoff, or --marginal-utility");
   }
 
-  if (values.summarize || values.tradeoff) {
+  if (values.summarize || values.tradeoff || values["marginal-utility"]) {
     const format = values.format === "csv" ? "csv" : values.format === "json" ? "json" : null;
     if (format === null) throw new Error(`unknown format: ${values.format}`);
     const resultsRoot = resolve(values.results);
     let text: string;
     let rowCount: number;
-    if (values.tradeoff) {
+    if (values["marginal-utility"]) {
+      const report = buildMarginalRoutingUtility(resultsRoot);
+      text =
+        format === "csv" ? marginalRoutingUtilityToCsv(report) : marginalRoutingUtilityToJson(report);
+      rowCount = report.transitions.length;
+    } else if (values.tradeoff) {
       const table = buildKTradeoffTable(resultsRoot);
       text = format === "csv" ? kTradeoffTableToCsv(table) : kTradeoffTableToJson(table);
       rowCount = table.rows.length;

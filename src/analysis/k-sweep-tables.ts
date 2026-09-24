@@ -24,6 +24,9 @@ export interface KSweepTableRow {
   /** Strict / primary Recall@k mean over routing-scored attempts. */
   recall_at_k: number | null;
   recall_at_k_stats: SampleSummary;
+  /** Lenient Recall@k mean over routing-scored attempts with a lenient score. */
+  lenient_recall_at_k: number | null;
+  lenient_recall_at_k_stats: SampleSummary;
   selection_scored: number;
   selection_accuracy: number | null;
   selection_accuracy_stats: SampleSummary;
@@ -37,9 +40,12 @@ export interface KSweepTableRow {
   router_output_tokens: number;
   agent_input_tokens: number;
   agent_output_tokens: number;
+  total_tokens: number;
   priced_cost_usd: number;
   router_latency_ms: LatencySummary;
   agent_latency_ms: LatencySummary;
+  total_latency_ms: LatencySummary;
+  total_latency_ms_r0: LatencySummary;
 }
 
 export interface KSweepTables {
@@ -106,14 +112,17 @@ export function kSweepTablesToCsv(tables: KSweepTables): string {
     "infrastructure_failure_rate",
     "routing_scored",
     "recall_at_k",
+    "lenient_recall_at_k",
     "selection_accuracy",
     "execution_success_rate",
     "mean_candidate_count",
     "router_input_tokens",
     "agent_input_tokens",
+    "total_tokens",
     "priced_cost_usd",
     "router_latency_ms_mean",
     "agent_latency_ms_mean",
+    "total_latency_ms_mean",
   ];
   const lines = [headers.join(",")];
   for (const row of tables.rows) {
@@ -128,14 +137,17 @@ export function kSweepTablesToCsv(tables: KSweepTables): string {
         csvNumber(row.infrastructure_failure_rate),
         row.routing_scored,
         csvNumber(row.recall_at_k),
+        csvNumber(row.lenient_recall_at_k),
         csvNumber(row.selection_accuracy),
         csvNumber(row.execution_success_rate),
         csvNumber(row.mean_candidate_count),
         row.router_input_tokens,
         row.agent_input_tokens,
+        row.total_tokens,
         csvNumber(row.priced_cost_usd),
         csvNumber(row.router_latency_ms.mean),
         csvNumber(row.agent_latency_ms.mean),
+        csvNumber(row.total_latency_ms.mean),
       ].join(","),
     );
   }
@@ -158,6 +170,10 @@ function rowFromGroup(topK: number, group: readonly ResultDirectoryLoad[]): KSwe
   const selection = runs
     .map((run) => run.selectionAccuracy)
     .filter((value): value is number => value !== null);
+  const lenient = runs
+    .filter((run) => !run.routingExcluded)
+    .map((run) => run.lenientRecallAtK)
+    .filter((value): value is number => value !== null);
   const candidateCounts = runs
     .map((run) => candidatesLength(run))
     .filter((value): value is number => value !== null);
@@ -175,6 +191,8 @@ function rowFromGroup(topK: number, group: readonly ResultDirectoryLoad[]): KSwe
     routing_scored: summary.routing_scored,
     recall_at_k: summary.recall_at_k,
     recall_at_k_stats: summary.recall_at_k_stats,
+    lenient_recall_at_k: lenient.length === 0 ? null : mean(lenient),
+    lenient_recall_at_k_stats: summarizeSamples(lenient),
     selection_scored: selection.length,
     selection_accuracy: selection.length === 0 ? null : mean(selection),
     selection_accuracy_stats: summarizeSamples(selection),
@@ -187,9 +205,16 @@ function rowFromGroup(topK: number, group: readonly ResultDirectoryLoad[]): KSwe
     router_output_tokens: summary.router_output_tokens,
     agent_input_tokens: summary.agent_input_tokens,
     agent_output_tokens: summary.agent_output_tokens,
+    total_tokens:
+      summary.router_input_tokens +
+      summary.router_output_tokens +
+      summary.agent_input_tokens +
+      summary.agent_output_tokens,
     priced_cost_usd: summary.priced_cost_usd,
     router_latency_ms: summary.router_latency_ms,
     agent_latency_ms: summary.agent_latency_ms,
+    total_latency_ms: summary.total_latency_ms,
+    total_latency_ms_r0: summary.total_latency_ms_r0,
   };
 }
 

@@ -162,11 +162,13 @@ part of the frozen M3 comparison. Pre-execution freeze plan:
 
 ## M4 Jev top-k sweep
 
-M4 holds every scientific control fixed and varies only Jev `topK ∈ {1, 3, 5, 10}` at **N = 25** (D12). Configs live under `configs/k-sweep/` (`datasets/v0.2/`, D10 pins). Regenerate with `npm run generate:k-sweep`. Result directories record k in the directory name via the existing `k<k>` segment.
+M4 holds every scientific control fixed and varies only Jev `topK ∈ {1, 3, 5, 10}` at **N = 100** (D14; amends D12). Configs live under `configs/k-sweep/` (`datasets/v0.2/`, D10 pins). Regenerate with `npm run generate:k-sweep`. Result directories record k in the directory name via the existing `k<k>` segment.
 
-`npm run k-sweep` orchestrates those configs serially (manifest under `_k-sweep/`, mock path for CI). `npm run k-sweep -- --summarize` rebuilds per-k aggregates from `runs.jsonl`: strict Recall@k, mean candidate count, selection accuracy, ESR, tokens, cost, and latency. Individual result directories stay immutable; there is no optimal-k claim in the aggregate.
+`npm run k-sweep` orchestrates those configs serially (manifest under `_k-sweep/`, mock path for CI). `npm run k-sweep -- --summarize` rebuilds per-k aggregates from `runs.jsonl`: strict/lenient Recall@k, mean candidate count, selection accuracy, ESR, tokens, cost, and latency. Individual result directories stay immutable; there is no optimal-k claim in the aggregate.
 
 `npm run k-sweep -- --tradeoff` emits the compact tradeoff table for the research question (k vs recall vs context/tokens vs ESR vs cost vs latency), including deltas versus the previous k. The artifact sets `decision_rule: null` and does not choose an optimal k. A future decision rule must be versioned separately and kept out of the evaluation labeling loop.
+
+`npm run k-sweep -- --marginal-utility` reports paired adjacent transitions (`1→3`, `3→5`, `5→10`) distinguishing additional routing coverage from coverage that produces downstream execution utility.
 
 ## Adaptive routing policy (M5)
 

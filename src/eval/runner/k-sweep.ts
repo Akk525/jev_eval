@@ -20,7 +20,7 @@ export type KSweepOrchestratorOptions = Omit<MatrixOrchestratorOptions, "cells" 
 /** Map k-sweep cells onto the shared matrix orchestrator cell shape. */
 export function kSweepCellsAsMatrix(cells: readonly KSweepCell[] = enumerateKSweepCells()): MatrixCell[] {
   return cells.map((cell) => ({
-    id: `jev_top${cell.config.topK}`,
+    id: cell.id,
     architecture: "jev",
     toolspaceSize: K_SWEEP_TOOLSPACE_SIZE,
     relativePath: cell.relativePath,

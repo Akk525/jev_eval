@@ -9,9 +9,10 @@ import {
   K_SWEEP_TOP_KS,
   buildKSweepConfig,
   enumerateKSweepCells,
+  kSweepCellId,
   renderKSweepYaml,
 } from "./k-sweep.js";
-import { MATRIX_DATASET_PATH } from "./matrix.js";
+import { MATRIX_DATASET_PATH, buildMatrixConfig } from "./matrix.js";
 
 const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
 
@@ -22,18 +23,26 @@ function withoutTopK(config: ReturnType<typeof buildKSweepConfig>) {
 }
 
 describe("Jev k-sweep configs", () => {
-  it("enumerates k ∈ {1, 3, 5, 10} at the fixed M4 N", () => {
+  it("enumerates k ∈ {1, 3, 5, 10} at N=100 with stable cell ids", () => {
     const cells = enumerateKSweepCells();
     expect(cells.map((cell) => cell.topK)).toEqual([...K_SWEEP_TOP_KS]);
+    expect(cells.map((cell) => cell.id)).toEqual([
+      "jev_k1_n100",
+      "jev_k3_n100",
+      "jev_k5_n100",
+      "jev_k10_n100",
+    ]);
     expect(cells.map((cell) => cell.relativePath)).toEqual([
-      "configs/k-sweep/jev-top1-n25.yaml",
-      "configs/k-sweep/jev-top3-n25.yaml",
-      "configs/k-sweep/jev-top5-n25.yaml",
-      "configs/k-sweep/jev-top10-n25.yaml",
+      "configs/k-sweep/jev-top1-n100.yaml",
+      "configs/k-sweep/jev-top3-n100.yaml",
+      "configs/k-sweep/jev-top5-n100.yaml",
+      "configs/k-sweep/jev-top10-n100.yaml",
     ]);
     for (const cell of cells) {
       expect(cell.config.toolspaceSize).toBe(K_SWEEP_TOOLSPACE_SIZE);
+      expect(cell.config.toolspaceSize).toBe(100);
       expect(cell.config.toolspaceSize).toBeGreaterThanOrEqual(cell.topK);
+      expect(cell.id).toBe(kSweepCellId(cell.topK));
     }
   });
 
@@ -57,6 +66,15 @@ describe("Jev k-sweep configs", () => {
       expect(cell.config.tracing).toBe("noop");
       expect(cell.config.routerOnly).toBe(false);
     }
+  });
+
+  it("matches M3 Jev N=100 controls except topK treatment", () => {
+    const m3Top5 = withoutTopK(buildMatrixConfig("jev_top5", 100));
+    const m4Top5 = withoutTopK(buildKSweepConfig(5));
+    expect(m4Top5).toEqual(m3Top5);
+    expect(buildKSweepConfig(1).topK).toBe(1);
+    expect(buildMatrixConfig("jev_top1", 100).topK).toBe(1);
+    expect(withoutTopK(buildKSweepConfig(1))).toEqual(withoutTopK(buildMatrixConfig("jev_top1", 100)));
   });
 
   it("loads every checked-in k-sweep config and matches the generator render", () => {
