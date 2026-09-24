@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "eval": "tsx src/cli/eval.ts",
     "matrix": "tsx src/cli/matrix.ts",
+    "summarize": "tsx src/cli/summarize.ts",
     "generate:matrix": "tsx scripts/generate-n-matrix.ts"
   },
   "devDependencies": {

@@ -141,6 +141,10 @@ Set `repetitions` in the experiment config (positive integer). The runner record
 
 `concurrency` in the experiment config caps how many `(task_id, repetition)` attempts may call the router/agent at once (bound: 1..8, `MAX_PROVIDER_CONCURRENCY`). Default configs keep `concurrency: 1`. The value is stored on `config.json`. Toolspace construction and ranking inputs stay deterministic per task; `runs.jsonl` append order may follow completion order. Resume keys remain `(task_id, repetition)`. Provider failures still classify as `R0`. There is no unbounded `Promise.all` over the task list.
 
+## Scaling summary tables
+
+`npm run summarize` rebuilds architecture × N comparison tables from result directories under a results root. It recomputes from `runs.jsonl` only (ignores stored `summary.json`). Rows include Execution Success Rate, selection accuracy, Recall@k, tokens, priced cost, latency, failure taxonomy (R0 kept separate), and infrastructure failure rate. Router-only and full-agent epochs are not merged into the same cell. Output is JSON or CSV — no plots and no interpretive claims.
+
 ## Versioning after the first result
 
 After the first real result directory exists, any methodological change needs a new dataset version, registry hash, prompt version, or pricing version, plus a `docs/DECISIONS.md` entry. Old result directories are never rewritten.

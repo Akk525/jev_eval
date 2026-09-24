@@ -16,6 +16,7 @@ M3 — Toolspace Scaling
 - #35 Add scaling experiment runner orchestration — on `main`. `npm run matrix` with dry-run, resume manifests, fail-loud (no silent retries).
 - #36 Add repetition and statistical aggregation — on `main`. `summary.json` gains `*_stats` + `by_repetition`; `configs/final/` uses `repetitions: 3`.
 - #37 Add bounded provider concurrency — on `main`. `concurrency` 1..8 via `mapPool`; default configs stay at 1.
+- #38 Add scaling experiment summary tables — on `main`. `npm run summarize` rebuilds architecture × N JSON/CSV from result dirs.
 
 ## Issue currently being worked on
 
@@ -23,7 +24,7 @@ None.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separately from the M1/M2 vertical-slice file. Labels are not model-tuned (D7). Matrix scientific fields live in versioned YAML, not runner hard-codes. Matrix cells still run serially across configs; within a cell, `concurrency` bounds in-flight attempts. Quality sample stats exclude R0 (D6).
+Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separately from the M1/M2 vertical-slice file. Labels are not model-tuned (D7). Matrix scientific fields live in versioned YAML, not runner hard-codes. Matrix cells still run serially across configs; within a cell, `concurrency` bounds in-flight attempts. Quality sample stats exclude R0 (D6). Summary tables recompute from `runs.jsonl` only.
 
 ## Known problems
 
@@ -39,6 +40,6 @@ Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separat
 
 ## Next recommended issue
 
-#38 Add scaling experiment summary tables
+#39 Add Jev top-k sweep experiment configs
 
-https://github.com/Akk525/jev_eval/issues/38
+https://github.com/Akk525/jev_eval/issues/39
