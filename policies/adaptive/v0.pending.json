@@ -1,0 +1,26 @@
+{
+  "version": "adaptive-policy-v0",
+  "status": "pending_thresholds",
+  "confidence_field": "confidence",
+  "never_use_top1_probability_as_confidence": true,
+  "branches": [
+    {
+      "id": "high",
+      "description": "confidence >= T_high",
+      "action": { "type": "jev_topk", "k": 1 }
+    },
+    {
+      "id": "medium",
+      "description": "T_low <= confidence < T_high",
+      "action": { "type": "jev_topk", "k": 5 }
+    },
+    {
+      "id": "low",
+      "description": "confidence < T_low",
+      "action": { "type": "escalate", "target": "llm_topk", "k": 5 }
+    }
+  ],
+  "thresholds": null,
+  "threshold_source": null,
+  "notes": "Numeric thresholds are intentionally unset until npm run check:calibration passes on real calibration-bearing result directories. See docs/adaptive-policy.md."
+}

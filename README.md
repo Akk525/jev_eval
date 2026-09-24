@@ -103,4 +103,10 @@ npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out anal
 npm run k-sweep -- --tradeoff --results /tmp/jev-ksweep --out analysis/k-tradeoff.json
 ```
 
+Adaptive policy readiness (M5 / #42) — fails until real Jev calibration dirs exist:
+
+```bash
+npm run check:calibration -- --results results
+```
+
 No invented benchmark numbers. Conclusions come from result directories only.
