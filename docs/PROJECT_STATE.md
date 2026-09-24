@@ -4,48 +4,45 @@ Snapshot date: 2026-09-24
 
 ## Current milestone
 
-**Paper / report construction.** Live evidence frozen. No further live experiments
-without a new freeze. Regenerate publication artifacts with:
+**Publication checkpoint `ed3dd18` — experimental machinery frozen.**
+
+Do **not** modify the benchmark, launch live runs, retune k, or fit adaptive
+policies unless a write-up exposes a separately preregistered follow-up.
+
+Next work is narrative only: polish [`docs/TECHNICAL_REPORT.md`](TECHNICAL_REPORT.md)
+from [`analysis/synthesis/`](../analysis/synthesis/). Regenerate numbers solely via:
 
 ```bash
 npm run analysis:synthesis
 ```
 
-## Frozen live epochs
+## Thesis (locked for the write-up)
 
-| Epoch | Manifest | Commit |
-|---|---|---|
-| M3 matrix | `results/_matrix/2026-09-24T055854Z.json` | `fc9fb2a` |
-| M4 k-sweep | `results/_k-sweep/2026-09-24T140621Z.json` | `5f9e7c3` |
-| Adaptive holdout | `results/_adaptive-eval/2026-09-24T045743Z.json` | (see adaptive summary) |
+Pre-routing does not simply make large toolspaces “work.” Large toolspaces
+remained usable here. Pre-routing changes **economics and failure structure**:
+it keeps expensive agent context nearly constant as capability space grows,
+while trading routing coverage against downstream selection difficulty.
 
-Synthesis SoT: [`analysis/synthesis/`](../analysis/synthesis/) (JSON canonical; SVG derived).
+The systems question is controlling how much of the capability space reaches
+the expensive reasoning model.
 
-## Completed issues
+## Frozen checkpoints
 
-- #1–#41 — M0–M4 path on `main`.
-- #42–#45 — adaptive thresholds, router, eval, summary tables; holdout negative on confidence→k.
-- #46–#54 — M6 analysis pipeline + publication report scaffolding.
-- M3 live + paired scaling analysis accepted.
-- M4 live k-ablation complete (`2026-09-24T140621Z`); fresh four cells; no optimal-k.
+| Role | ID |
+|---|---|
+| Publication / analysis SoT | **`ed3dd18`** |
+| M3 live matrix | `2026-09-24T055854Z` @ `fc9fb2a` |
+| M4 live k-sweep | `2026-09-24T140621Z` @ `5f9e7c3` |
+| Adaptive holdout | `2026-09-24T045743Z` |
 
-## Issue currently being worked on
+## Completed
 
-Publication synthesis + paired uncertainty (D15). Manifest-scoped analysis required.
-
-## Important implementation decisions
-
-Accepted in `docs/DECISIONS.md` (D1–D15). D14: M4 N=100. D15: fail-closed `--manifest`
-for offline aggregates; synthesis is the regenerable paper evidence pack.
-
-## Known problems
-
-- Live runs cost money and are not part of CI.
-- Tool-executor-only latency remains unavailable (not fabricated).
-- Latency evidence is weaker than cost/token evidence across epochs — omitted from headline synthesis figures.
+- M0–M6 harness, figures pipeline, adaptive path (negative on confidence→k).
+- M3 scaling + paired analysis; M4 k-ablation; D15 manifest-scoped analysis.
+- Synthesis JSON→SVG publication pack.
 
 ## Next recommended action
 
-1. Review `analysis/synthesis/synthesis.md` and figure SVGs.
-2. Update TECHNICAL_REPORT claims only by citing synthesis / figure JSON paths.
-3. Do **not** launch new live runs or retune k/thresholds.
+1. Iterate the technical report / paper draft only.
+2. Cite `analysis/synthesis/` paths; do not invent numbers.
+3. No new experiments without a new freeze decision.

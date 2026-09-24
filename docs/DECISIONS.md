@@ -388,3 +388,30 @@ JSON under `analysis/synthesis/` is canonical; SVG under `rendered/` is derived.
 **Consequences.** #43 may implement the adaptive `Router` against `policies/adaptive/v1.json`. Final adaptive evaluation dirs must be disjoint from the cited development directory. Changing thresholds requires a new policy version and a new DECISIONS entry.
 
 **Date.** 2026-09-24
+
+---
+
+## D16. Publication checkpoint `ed3dd18`
+
+**Decision.** Freeze **`ed3dd18`** as the analysis/publication checkpoint. Experimental
+machinery (benchmark, live runs, k retunes, adaptive policy fitting) stays closed
+unless a write-up exposes a separately preregistered follow-up. Publication claims
+regenerate only via `npm run analysis:synthesis` from the three frozen manifests
+(M3 / M4 / adaptive).
+
+**Reason.** Manifest-scoped analysis (D15) and the synthesis SoT close the
+reproducibility loop. Further experimental churn would reopen contamination and
+decision-rule risks without answering a new predeclared question.
+
+**Alternatives considered.**
+
+* Continuing k or adaptive experiments “to strengthen the paper.” Rejected —
+  evidence already supports the economics/failure-structure thesis with honest
+  uncertainty (ΔESR CI crosses zero; 6-vs-5 discordance).
+* Declaring top-5 equivalent to baseline. Rejected — paired CI and discordance
+  forbid an equivalence claim.
+
+**Consequences.** Next work is narrative. Docs cite `analysis/synthesis/`. No new
+live runs on this checkpoint.
+
+**Date.** 2026-09-24
