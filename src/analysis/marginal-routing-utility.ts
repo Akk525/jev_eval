@@ -1,12 +1,10 @@
 import { resolve } from "node:path";
 import {
   K_SWEEP_TOOLSPACE_SIZE,
-  K_SWEEP_TOP_KS,
   type KSweepTopK,
 } from "../config/k-sweep.js";
+import { loadCompletedCellsFromManifest, refuseResultsRootScan } from "./manifest-scope.js";
 import {
-  discoverResultDirectories,
-  loadResultDirectory,
   type ResultDirectoryLoad,
   type ScalingRun,
 } from "./scaling-tables.js";
@@ -96,14 +94,17 @@ export const MARGINAL_ROUTING_UTILITY_NOTE =
   "Does not select an optimal k.";
 
 /**
- * Build the offline marginal routing-utility report from a k-sweep results root.
- * Uses only Jev dirs at the locked M4 N; one run per (k, taskId) expected.
+ * @deprecated Prefer buildMarginalRoutingUtilityFromManifest.
  */
-export function buildMarginalRoutingUtility(resultsRoot: string): MarginalRoutingUtilityReport {
-  const loads = discoverResultDirectories(resultsRoot)
-    .map(loadResultDirectory)
-    .filter(isKSweepDirectory);
-  return buildMarginalRoutingUtilityFromLoads(loads);
+export function buildMarginalRoutingUtility(_resultsRoot: string): MarginalRoutingUtilityReport {
+  refuseResultsRootScan("buildMarginalRoutingUtility");
+}
+
+export function buildMarginalRoutingUtilityFromManifest(
+  manifestPath: string,
+): MarginalRoutingUtilityReport {
+  const scoped = loadCompletedCellsFromManifest(manifestPath);
+  return buildMarginalRoutingUtilityFromLoads(scoped.directories.filter(isKSweepDirectory));
 }
 
 export function buildMarginalRoutingUtilityFromLoads(

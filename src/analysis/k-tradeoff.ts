@@ -1,9 +1,10 @@
 import {
-  buildKSweepTables,
+  buildKSweepTablesFromManifest,
   buildKSweepTablesFromLoads,
   type KSweepTableRow,
   type KSweepTables,
 } from "./k-sweep-tables.js";
+import { refuseResultsRootScan } from "./manifest-scope.js";
 import type { ResultDirectoryLoad } from "./scaling-tables.js";
 
 /**
@@ -60,9 +61,13 @@ export const K_TRADEOFF_QUESTION =
 export const K_TRADEOFF_NOTE =
   "This table reports the k tradeoff only. It does not select a winning k.";
 
-/** Build the tradeoff table from a results root (recomputes via k-sweep aggregates). */
-export function buildKTradeoffTable(resultsRoot: string): KTradeoffTable {
-  return buildKTradeoffTableFromKSweep(buildKSweepTables(resultsRoot));
+/** @deprecated Prefer buildKTradeoffTableFromManifest. */
+export function buildKTradeoffTable(_resultsRoot: string): KTradeoffTable {
+  refuseResultsRootScan("buildKTradeoffTable");
+}
+
+export function buildKTradeoffTableFromManifest(manifestPath: string): KTradeoffTable {
+  return buildKTradeoffTableFromKSweep(buildKSweepTablesFromManifest(manifestPath));
 }
 
 export function buildKTradeoffTableFromLoads(directories: readonly ResultDirectoryLoad[]): KTradeoffTable {

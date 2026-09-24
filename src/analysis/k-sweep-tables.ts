@@ -5,9 +5,8 @@ import {
   K_SWEEP_TOP_KS,
   type KSweepTopK,
 } from "../config/k-sweep.js";
+import { loadCompletedCellsFromManifest, refuseResultsRootScan } from "./manifest-scope.js";
 import {
-  discoverResultDirectories,
-  loadResultDirectory,
   type ResultDirectoryLoad,
   type ScalingRun,
 } from "./scaling-tables.js";
@@ -61,14 +60,16 @@ export class KSweepTableError extends Error {
 }
 
 /**
- * Aggregate M4 Jev k-sweep result directories by topK.
- * Ignores non-Jev dirs and dirs whose N is not the locked k-sweep N.
+ * @deprecated Prefer buildKSweepTablesFromManifest. Bare results-root scans are forbidden.
  */
-export function buildKSweepTables(resultsRoot: string): KSweepTables {
-  const loads = discoverResultDirectories(resultsRoot)
-    .map(loadResultDirectory)
-    .filter(isKSweepDirectory);
-  return buildKSweepTablesFromLoads(loads);
+export function buildKSweepTables(_resultsRoot: string): KSweepTables {
+  refuseResultsRootScan("buildKSweepTables");
+}
+
+/** Aggregate M4 Jev k-sweep rows from directories listed in a `_k-sweep` manifest only. */
+export function buildKSweepTablesFromManifest(manifestPath: string): KSweepTables {
+  const scoped = loadCompletedCellsFromManifest(manifestPath);
+  return buildKSweepTablesFromLoads(scoped.directories.filter(isKSweepDirectory));
 }
 
 export function buildKSweepTablesFromLoads(directories: readonly ResultDirectoryLoad[]): KSweepTables {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+  <rect width="100%" height="100%" fill="#fbfaf7"/>
+  <text x="24" y="28" font-size="16" font-weight="600" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">Recall / ESR / selection accuracy vs k at N=100 (M4)</text>
+  <text x="360.0" y="408" text-anchor="middle" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">k</text>
+  <text transform="translate(18 210.0) rotate(-90)" text-anchor="middle" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">Rate</text>
+  <path d="M64 48 V364 H560" fill="none" stroke="#222" stroke-width="1.25" /><path d="M64.0,101.6 L174.2,78.5 L284.4,78.5 L560.0,74.6" fill="none" stroke="#1b1b1b" stroke-width="2" /><circle cx="64.0" cy="101.6" r="3.5" fill="#1b1b1b" /><circle cx="174.2" cy="78.5" r="3.5" fill="#1b1b1b" /><circle cx="284.4" cy="78.5" r="3.5" fill="#1b1b1b" /><circle cx="560.0" cy="74.6" r="3.5" fill="#1b1b1b" /><path d="M64.0,151.8 L174.2,144.1 L284.4,136.4 L560.0,132.5" fill="none" stroke="#c45c26" stroke-width="2" /><circle cx="64.0" cy="151.8" r="3.5" fill="#c45c26" /><circle cx="174.2" cy="144.1" r="3.5" fill="#c45c26" /><circle cx="284.4" cy="136.4" r="3.5" fill="#c45c26" /><circle cx="560.0" cy="132.5" r="3.5" fill="#c45c26" /><path d="M64.0,63.0 L174.2,95.6 L284.4,103.7 L560.0,107.2" fill="none" stroke="#2f6f4e" stroke-width="2" /><circle cx="64.0" cy="63.0" r="3.5" fill="#2f6f4e" /><circle cx="174.2" cy="95.6" r="3.5" fill="#2f6f4e" /><circle cx="284.4" cy="103.7" r="3.5" fill="#2f6f4e" /><circle cx="560.0" cy="107.2" r="3.5" fill="#2f6f4e" /><rect x="572" y="48" width="12" height="3" fill="#1b1b1b" />
+        <text x="590" y="53" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">strict Recall@k</text><rect x="572" y="66" width="12" height="3" fill="#c45c26" />
+        <text x="590" y="71" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">ESR</text><rect x="572" y="84" width="12" height="3" fill="#2f6f4e" />
+        <text x="590" y="89" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">selection accuracy</text>
+</svg>

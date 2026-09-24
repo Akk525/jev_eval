@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "kind": "m4_marginal_routing_utility",
+  "note": "Paired adjacent-k transitions at fixed N. Distinguishes additional routing coverage from coverage that produces downstream execution utility. Does not select an optimal k.",
+  "toolspace_size": 100,
+  "transitions": [
+    {
+      "from_k": 1,
+      "to_k": 3,
+      "paired_tasks": 78,
+      "additional_routing_coverage": 6,
+      "additional_coverage_that_succeed": 2,
+      "previously_successful_become_failures": 2,
+      "r1_reduction": 5,
+      "r2_change": 5,
+      "selection_accuracy_change": -0.10810810810810811,
+      "agent_tokens_change": 61.19230769230768,
+      "cost_change": 0.00024251282051282116,
+      "total_latency_change": -326.178747346155,
+      "additional_coverage_task_ids": [
+        "task_0022",
+        "task_0024",
+        "task_0038",
+        "task_0043",
+        "task_0050",
+        "task_0077"
+      ],
+      "additional_coverage_success_task_ids": [
+        "task_0022",
+        "task_0050"
+      ],
+      "regression_task_ids": [
+        "task_0037",
+        "task_0040"
+      ]
+    },
+    {
+      "from_k": 3,
+      "to_k": 5,
+      "paired_tasks": 78,
+      "additional_routing_coverage": 0,
+      "additional_coverage_that_succeed": 0,
+      "previously_successful_become_failures": 1,
+      "r1_reduction": 0,
+      "r2_change": -1,
+      "selection_accuracy_change": -0.027027027027026973,
+      "agent_tokens_change": 59.62820512820511,
+      "cost_change": 0.0002356410256410253,
+      "total_latency_change": 95.54483655128229,
+      "additional_coverage_task_ids": [],
+      "additional_coverage_success_task_ids": [],
+      "regression_task_ids": [
+        "task_0034"
+      ]
+    },
+    {
+      "from_k": 5,
+      "to_k": 10,
+      "paired_tasks": 78,
+      "additional_routing_coverage": 1,
+      "additional_coverage_that_succeed": 0,
+      "previously_successful_become_failures": 1,
+      "r1_reduction": 2,
+      "r2_change": 1,
+      "selection_accuracy_change": -0.011531531531531525,
+      "agent_tokens_change": 154.1538461538462,
+      "cost_change": 0.0006164102564102567,
+      "total_latency_change": -41.66417843589352,
+      "additional_coverage_task_ids": [
+        "task_0040"
+      ],
+      "additional_coverage_success_task_ids": [],
+      "regression_task_ids": [
+        "task_0022"
+      ]
+    }
+  ],
+  "decision_rule": null
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+  <rect width="100%" height="100%" fill="#fbfaf7"/>
+  <text x="24" y="28" font-size="16" font-weight="600" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">R1 / R2 failure counts vs k (M4, N=100)</text>
+  <text x="360.0" y="408" text-anchor="middle" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">k</text>
+  <text transform="translate(18 210.0) rotate(-90)" text-anchor="middle" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">Count</text>
+  <path d="M64 48 V364 H580" fill="none" stroke="#222" stroke-width="1.25" /><rect x="83.3" y="48.0" width="45.1" height="316.0" fill="#1b1b1b" />
+            <text x="105.9" y="392" text-anchor="middle" font-size="11" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">1</text><rect x="128.5" y="364.0" width="45.1" height="0.0" fill="#c45c26" />
+            <text x="151.1" y="392" text-anchor="middle" font-size="11" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">1</text><rect x="212.3" y="223.6" width="45.1" height="140.4" fill="#1b1b1b" />
+            <text x="234.9" y="392" text-anchor="middle" font-size="11" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">3</text><rect x="257.5" y="188.4" width="45.1" height="175.6" fill="#c45c26" />
+            <text x="280.1" y="392" text-anchor="middle" font-size="11" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">3</text><rect x="341.4" y="223.6" width="45.1" height="140.4" fill="#1b1b1b" />
+            <text x="363.9" y="392" text-anchor="middle" font-size="11" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">5</text><rect x="386.5" y="223.6" width="45.1" height="140.4" fill="#c45c26" />
+            <text x="409.1" y="392" text-anchor="middle" font-size="11" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">5</text><rect x="470.4" y="293.8" width="45.1" height="70.2" fill="#1b1b1b" />
+            <text x="492.9" y="392" text-anchor="middle" font-size="11" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">10</text><rect x="515.5" y="188.4" width="45.1" height="175.6" fill="#c45c26" />
+            <text x="538.1" y="392" text-anchor="middle" font-size="11" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">10</text><rect x="592" y="48" width="12" height="12" fill="#1b1b1b" />
+        <text x="610" y="59" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">R1</text><rect x="592" y="66" width="12" height="12" fill="#c45c26" />
+        <text x="610" y="77" font-size="12" font-family="IBM Plex Sans, Helvetica, Arial, sans-serif">R2</text>
+</svg>

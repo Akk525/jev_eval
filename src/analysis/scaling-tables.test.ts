@@ -3,8 +3,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  buildScalingTables,
   buildScalingTablesFromLoads,
+  discoverResultDirectories,
+  loadResultDirectory,
   scalingTablesToCsv,
   type ResultDirectoryLoad,
   type ScalingRun,
@@ -151,38 +152,37 @@ describe("buildScalingTables", () => {
     expect(jev!.failure_taxonomy.none).toBe(2);
   });
 
-  it("refuses to mix router-only and full-agent epochs in one architecture × N cell", () => {
-    expect(() =>
-      buildScalingTablesFromLoads([
-        {
-          directory: "/tmp/full",
-          config: { ...config("jev", 5, 5), routerOnly: false },
-          runs: [run()],
-        },
-        {
-          directory: "/tmp/router-only",
-          config: { ...config("jev", 5, 5), routerOnly: true },
-          runs: [run({ executionExcluded: true, selectionAccuracy: null })],
-        },
-      ]),
-    ).toThrow(/routerOnly mismatch/);
+  it("keeps router-only and full-agent epochs as separate rows", () => {
+    const tables = buildScalingTablesFromLoads([
+      {
+        directory: "/tmp/full",
+        config: { ...config("jev", 5, 5), routerOnly: false },
+        runs: [run()],
+      },
+      {
+        directory: "/tmp/router-only",
+        config: { ...config("jev", 5, 5), routerOnly: true },
+        runs: [run({ executionExcluded: true, selectionAccuracy: null })],
+      },
+    ]);
+    expect(tables.rows).toHaveLength(2);
+    expect(tables.rows.map((r) => r.router_only).sort()).toEqual([false, true]);
   });
 
-  it("refuses topK mismatches inside the same architecture × N cell", () => {
-    expect(() =>
-      buildScalingTablesFromLoads([
-        {
-          directory: "/tmp/k5",
-          config: config("jev", 25, 5),
-          runs: [run()],
-        },
-        {
-          directory: "/tmp/k3",
-          config: config("jev", 25, 3),
-          runs: [run()],
-        },
-      ]),
-    ).toThrow(/topK mismatch/);
+  it("keeps distinct topK values as separate architecture × N × k rows", () => {
+    const tables = buildScalingTablesFromLoads([
+      {
+        directory: "/tmp/k5",
+        config: config("jev", 25, 5),
+        runs: [run()],
+      },
+      {
+        directory: "/tmp/k3",
+        config: config("jev", 25, 3),
+        runs: [run({ recallAtK: 0 })],
+      },
+    ]);
+    expect(tables.rows.map((r) => r.top_k)).toEqual([3, 5]);
   });
 
   it("loads multi-dir fixtures from disk and emits csv cells", () => {
@@ -197,7 +197,9 @@ describe("buildScalingTables", () => {
     ]);
     mkdirSync(join(root, "_matrix"), { recursive: true });
 
-    const tables = buildScalingTables(root);
+    const tables = buildScalingTablesFromLoads(
+      discoverResultDirectories(root).map(loadResultDirectory),
+    );
     expect(tables.rows.map((row) => `${row.architecture}:${row.toolspace_size}`)).toEqual([
       "baseline:5",
       "jev:5",

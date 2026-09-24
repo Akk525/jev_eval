@@ -1,0 +1,1155 @@
+{
+  "version": 1,
+  "kind": "m4_live_results",
+  "status": "completed",
+  "commit_sha": "5f9e7c3f105d215f6b9322313d88bd15e50ea7d8",
+  "execution_timestamp": "2026-09-24T140621Z",
+  "manifest": "results/_k-sweep/2026-09-24T140621Z.json",
+  "wall_time_ms": 511971,
+  "wall_time_s": 511.971,
+  "decision_rule": null,
+  "expected_attempts": 312,
+  "observed_attempts": 312,
+  "total_priced_api_cost_usd": 0.4820414880000001,
+  "cells": {
+    "1": {
+      "label": "m4_k1",
+      "directory": "results/2026-09-24T140621Z_jev_n100_k1_5f9e7c3f105d",
+      "config": {
+        "architecture": "jev",
+        "toolspaceSize": 100,
+        "topK": 1,
+        "agent": {
+          "provider": "openai",
+          "model": "gpt-5.6-sol",
+          "temperature": 0
+        },
+        "router": {
+          "provider": "typesafe",
+          "model": "jev-1.13.0"
+        },
+        "pricingVersion": "v1",
+        "concurrency": 1,
+        "seed": 0,
+        "tracing": "noop"
+      },
+      "attempts": 78,
+      "r0_attempts": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "selection_scored": 68,
+      "strict_recall_at_k": 0.8717948717948718,
+      "lenient_recall_at_k": 0.8974358974358975,
+      "execution_success_rate": 0.7051282051282052,
+      "selection_accuracy": 1,
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 9,
+        "R2": 0,
+        "R3": 8,
+        "R4": 6,
+        "R5": 0,
+        "R6": 0,
+        "none": 55,
+        "ok": 55
+      },
+      "tokens": {
+        "router_input": 169366,
+        "router_output": 67410,
+        "agent_input": 11595,
+        "agent_output": 1581,
+        "total": 249952,
+        "router_mean": 3035.5897435897436,
+        "agent_mean": 168.92307692307693,
+        "total_mean": 3204.5128205128203
+      },
+      "cost": {
+        "total_usd": 0.08511337199999999,
+        "per_attempt_usd": 0.0010911970769230768
+      },
+      "latency_ms_non_r0": {
+        "router": {
+          "mean": 146.84672544871833,
+          "n": 78
+        },
+        "agent": {
+          "mean": 1691.4110331282043,
+          "n": 78
+        },
+        "total": {
+          "mean": 1838.6207505384612,
+          "n": 78
+        }
+      },
+      "r0_rows": [],
+      "malformed_or_r0": []
+    },
+    "3": {
+      "label": "m4_k3",
+      "directory": "results/2026-09-24T140621Z_jev_n100_k3_5f9e7c3f105d",
+      "config": {
+        "architecture": "jev",
+        "toolspaceSize": 100,
+        "topK": 3,
+        "agent": {
+          "provider": "openai",
+          "model": "gpt-5.6-sol",
+          "temperature": 0
+        },
+        "router": {
+          "provider": "typesafe",
+          "model": "jev-1.13.0"
+        },
+        "pricingVersion": "v1",
+        "concurrency": 1,
+        "seed": 0,
+        "tracing": "noop"
+      },
+      "attempts": 78,
+      "r0_attempts": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "selection_scored": 74,
+      "strict_recall_at_k": 0.9487179487179487,
+      "lenient_recall_at_k": 0.9615384615384616,
+      "execution_success_rate": 0.7307692307692307,
+      "selection_accuracy": 0.8918918918918919,
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 4,
+        "R2": 5,
+        "R3": 8,
+        "R4": 4,
+        "R5": 0,
+        "R6": 0,
+        "none": 57,
+        "ok": 57
+      },
+      "tokens": {
+        "router_input": 169366,
+        "router_output": 67410,
+        "agent_input": 16379,
+        "agent_output": 1570,
+        "total": 254725,
+        "router_mean": 3035.5897435897436,
+        "agent_mean": 230.1153846153846,
+        "total_mean": 3265.7051282051284
+      },
+      "cost": {
+        "total_usd": 0.10402937200000004,
+        "per_attempt_usd": 0.001333709897435898
+      },
+      "latency_ms_non_r0": {
+        "router": {
+          "mean": 169.6436421153843,
+          "n": 78
+        },
+        "agent": {
+          "mean": 1342.612619102563,
+          "n": 78
+        },
+        "total": {
+          "mean": 1512.4420031923062,
+          "n": 78
+        }
+      },
+      "r0_rows": [],
+      "malformed_or_r0": []
+    },
+    "5": {
+      "label": "m4_k5",
+      "directory": "results/2026-09-24T140621Z_jev_n100_k5_5f9e7c3f105d",
+      "config": {
+        "architecture": "jev",
+        "toolspaceSize": 100,
+        "topK": 5,
+        "agent": {
+          "provider": "openai",
+          "model": "gpt-5.6-sol",
+          "temperature": 0
+        },
+        "router": {
+          "provider": "typesafe",
+          "model": "jev-1.13.0"
+        },
+        "pricingVersion": "v1",
+        "concurrency": 1,
+        "seed": 0,
+        "tracing": "noop"
+      },
+      "attempts": 78,
+      "r0_attempts": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "selection_scored": 74,
+      "strict_recall_at_k": 0.9487179487179487,
+      "lenient_recall_at_k": 0.9743589743589743,
+      "execution_success_rate": 0.7564102564102564,
+      "selection_accuracy": 0.8648648648648649,
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 4,
+        "R2": 4,
+        "R3": 8,
+        "R4": 3,
+        "R5": 0,
+        "R6": 0,
+        "none": 59,
+        "ok": 59
+      },
+      "tokens": {
+        "router_input": 169366,
+        "router_output": 67410,
+        "agent_input": 21044,
+        "agent_output": 1556,
+        "total": 259376,
+        "router_mean": 3035.5897435897436,
+        "agent_mean": 289.7435897435897,
+        "total_mean": 3325.3333333333335
+      },
+      "cost": {
+        "total_usd": 0.12240937200000002,
+        "per_attempt_usd": 0.0015693509230769232
+      },
+      "latency_ms_non_r0": {
+        "router": {
+          "mean": 150.75753798717648,
+          "n": 78
+        },
+        "agent": {
+          "mean": 1457.0407131538482,
+          "n": 78
+        },
+        "total": {
+          "mean": 1607.9868397435885,
+          "n": 78
+        }
+      },
+      "r0_rows": [],
+      "malformed_or_r0": []
+    },
+    "10": {
+      "label": "m4_k10",
+      "directory": "results/2026-09-24T140621Z_jev_n100_k10_5f9e7c3f105d",
+      "config": {
+        "architecture": "jev",
+        "toolspaceSize": 100,
+        "topK": 10,
+        "agent": {
+          "provider": "openai",
+          "model": "gpt-5.6-sol",
+          "temperature": 0
+        },
+        "router": {
+          "provider": "typesafe",
+          "model": "jev-1.13.0"
+        },
+        "pricingVersion": "v1",
+        "concurrency": 1,
+        "seed": 0,
+        "tracing": "noop"
+      },
+      "attempts": 78,
+      "r0_attempts": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "selection_scored": 75,
+      "strict_recall_at_k": 0.9615384615384616,
+      "lenient_recall_at_k": 0.9871794871794872,
+      "execution_success_rate": 0.7692307692307693,
+      "selection_accuracy": 0.8533333333333334,
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 2,
+        "R2": 5,
+        "R3": 8,
+        "R4": 3,
+        "R5": 0,
+        "R6": 0,
+        "none": 60,
+        "ok": 60
+      },
+      "tokens": {
+        "router_input": 169366,
+        "router_output": 67410,
+        "agent_input": 33069,
+        "agent_output": 1555,
+        "total": 271400,
+        "router_mean": 3035.5897435897436,
+        "agent_mean": 443.8974358974359,
+        "total_mean": 3479.4871794871797
+      },
+      "cost": {
+        "total_usd": 0.17048937200000003,
+        "per_attempt_usd": 0.00218576117948718
+      },
+      "latency_ms_non_r0": {
+        "router": {
+          "mean": 145.5665753974321,
+          "n": 78
+        },
+        "agent": {
+          "mean": 1420.4971175256405,
+          "n": 78
+        },
+        "total": {
+          "mean": 1566.322661307695,
+          "n": 78
+        }
+      },
+      "r0_rows": [],
+      "malformed_or_r0": []
+    }
+  },
+  "k_sweep_table_rows": [
+    {
+      "top_k": 1,
+      "attempts": 78,
+      "r0_attempts": 0,
+      "recall_at_k": 0.8717948717948718,
+      "lenient_recall_at_k": 0.8974358974358975,
+      "selection_accuracy": 1,
+      "execution_success_rate": 0.7051282051282052,
+      "priced_cost_usd": 0.08511337199999999,
+      "total_tokens": 249952,
+      "router_latency_ms_mean": 146.84672544871833,
+      "agent_latency_ms_mean": 1691.4110331282038,
+      "total_latency_ms_mean": 1838.6207505384616,
+      "source_directories": [
+        "results/2026-09-24T140621Z_jev_n100_k1_5f9e7c3f105d"
+      ]
+    },
+    {
+      "top_k": 3,
+      "attempts": 78,
+      "r0_attempts": 0,
+      "recall_at_k": 0.9487179487179487,
+      "lenient_recall_at_k": 0.9615384615384616,
+      "selection_accuracy": 0.8918918918918919,
+      "execution_success_rate": 0.7307692307692307,
+      "priced_cost_usd": 0.10402937200000004,
+      "total_tokens": 254725,
+      "router_latency_ms_mean": 169.6436421153843,
+      "agent_latency_ms_mean": 1342.612619102563,
+      "total_latency_ms_mean": 1512.4420031923062,
+      "source_directories": [
+        "results/2026-09-24T140621Z_jev_n100_k3_5f9e7c3f105d"
+      ]
+    },
+    {
+      "top_k": 5,
+      "attempts": 78,
+      "r0_attempts": 0,
+      "recall_at_k": 0.9487179487179487,
+      "lenient_recall_at_k": 0.9743589743589743,
+      "selection_accuracy": 0.8648648648648649,
+      "execution_success_rate": 0.7564102564102564,
+      "priced_cost_usd": 0.12240937200000002,
+      "total_tokens": 259376,
+      "router_latency_ms_mean": 150.75753798717648,
+      "agent_latency_ms_mean": 1457.0407131538482,
+      "total_latency_ms_mean": 1607.9868397435885,
+      "source_directories": [
+        "results/2026-09-24T140621Z_jev_n100_k5_5f9e7c3f105d"
+      ]
+    },
+    {
+      "top_k": 10,
+      "attempts": 78,
+      "r0_attempts": 0,
+      "recall_at_k": 0.9615384615384616,
+      "lenient_recall_at_k": 0.9871794871794872,
+      "selection_accuracy": 0.8533333333333334,
+      "execution_success_rate": 0.7692307692307693,
+      "priced_cost_usd": 0.17048937200000003,
+      "total_tokens": 271400,
+      "router_latency_ms_mean": 145.5665753974321,
+      "agent_latency_ms_mean": 1420.4971175256405,
+      "total_latency_ms_mean": 1566.322661307695,
+      "source_directories": [
+        "results/2026-09-24T140621Z_jev_n100_k10_5f9e7c3f105d"
+      ]
+    }
+  ],
+  "marginal_routing_utility": {
+    "version": 1,
+    "kind": "m4_marginal_routing_utility",
+    "note": "Paired adjacent-k transitions at fixed N. Distinguishes additional routing coverage from coverage that produces downstream execution utility. Does not select an optimal k.",
+    "toolspace_size": 100,
+    "transitions": [
+      {
+        "from_k": 1,
+        "to_k": 3,
+        "paired_tasks": 78,
+        "additional_routing_coverage": 6,
+        "additional_coverage_that_succeed": 2,
+        "previously_successful_become_failures": 2,
+        "r1_reduction": 5,
+        "r2_change": 5,
+        "selection_accuracy_change": -0.10810810810810811,
+        "agent_tokens_change": 61.19230769230768,
+        "cost_change": 0.00024251282051282116,
+        "total_latency_change": -326.178747346155,
+        "additional_coverage_task_ids": [
+          "task_0022",
+          "task_0024",
+          "task_0038",
+          "task_0043",
+          "task_0050",
+          "task_0077"
+        ],
+        "additional_coverage_success_task_ids": [
+          "task_0022",
+          "task_0050"
+        ],
+        "regression_task_ids": [
+          "task_0037",
+          "task_0040"
+        ]
+      },
+      {
+        "from_k": 3,
+        "to_k": 5,
+        "paired_tasks": 78,
+        "additional_routing_coverage": 0,
+        "additional_coverage_that_succeed": 0,
+        "previously_successful_become_failures": 1,
+        "r1_reduction": 0,
+        "r2_change": -1,
+        "selection_accuracy_change": -0.027027027027026973,
+        "agent_tokens_change": 59.62820512820511,
+        "cost_change": 0.0002356410256410253,
+        "total_latency_change": 95.54483655128229,
+        "additional_coverage_task_ids": [],
+        "additional_coverage_success_task_ids": [],
+        "regression_task_ids": [
+          "task_0034"
+        ]
+      },
+      {
+        "from_k": 5,
+        "to_k": 10,
+        "paired_tasks": 78,
+        "additional_routing_coverage": 1,
+        "additional_coverage_that_succeed": 0,
+        "previously_successful_become_failures": 1,
+        "r1_reduction": 2,
+        "r2_change": 1,
+        "selection_accuracy_change": -0.011531531531531525,
+        "agent_tokens_change": 154.1538461538462,
+        "cost_change": 0.0006164102564102567,
+        "total_latency_change": -41.66417843589352,
+        "additional_coverage_task_ids": [
+          "task_0040"
+        ],
+        "additional_coverage_success_task_ids": [],
+        "regression_task_ids": [
+          "task_0022"
+        ]
+      }
+    ],
+    "decision_rule": null
+  },
+  "adjacent_k_outcome_transitions": [
+    {
+      "from": "m4_k1",
+      "to": "m4_k3",
+      "paired_tasks": 78,
+      "contingency": {
+        "both_ok": 53,
+        "both_fail": 19,
+        "from_ok_to_fail": 2,
+        "from_fail_to_ok": 4
+      },
+      "agreement_rate": 0.9230769230769231,
+      "disagreements": [
+        {
+          "taskId": "task_0022",
+          "from": {
+            "success": false,
+            "failureCode": "R1",
+            "recallAtK": 0,
+            "selectionAccuracy": null
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          }
+        },
+        {
+          "taskId": "task_0037",
+          "from": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          },
+          "to": {
+            "success": false,
+            "failureCode": "R2",
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          }
+        },
+        {
+          "taskId": "task_0040",
+          "from": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 0,
+            "selectionAccuracy": null
+          },
+          "to": {
+            "success": false,
+            "failureCode": "R1",
+            "recallAtK": 0,
+            "selectionAccuracy": null
+          }
+        },
+        {
+          "taskId": "task_0044",
+          "from": {
+            "success": false,
+            "failureCode": "R4",
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          }
+        },
+        {
+          "taskId": "task_0050",
+          "from": {
+            "success": false,
+            "failureCode": "R1",
+            "recallAtK": 0,
+            "selectionAccuracy": null
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          }
+        },
+        {
+          "taskId": "task_0074",
+          "from": {
+            "success": false,
+            "failureCode": "R4",
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          }
+        }
+      ]
+    },
+    {
+      "from": "m4_k3",
+      "to": "m4_k5",
+      "paired_tasks": 78,
+      "contingency": {
+        "both_ok": 56,
+        "both_fail": 18,
+        "from_ok_to_fail": 1,
+        "from_fail_to_ok": 3
+      },
+      "agreement_rate": 0.9487179487179487,
+      "disagreements": [
+        {
+          "taskId": "task_0034",
+          "from": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          },
+          "to": {
+            "success": false,
+            "failureCode": "R2",
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          }
+        },
+        {
+          "taskId": "task_0037",
+          "from": {
+            "success": false,
+            "failureCode": "R2",
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          }
+        },
+        {
+          "taskId": "task_0046",
+          "from": {
+            "success": false,
+            "failureCode": "R2",
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          }
+        },
+        {
+          "taskId": "task_0048",
+          "from": {
+            "success": false,
+            "failureCode": "R4",
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          }
+        }
+      ]
+    },
+    {
+      "from": "m4_k5",
+      "to": "m4_k10",
+      "paired_tasks": 78,
+      "contingency": {
+        "both_ok": 58,
+        "both_fail": 17,
+        "from_ok_to_fail": 1,
+        "from_fail_to_ok": 2
+      },
+      "agreement_rate": 0.9615384615384616,
+      "disagreements": [
+        {
+          "taskId": "task_0022",
+          "from": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          },
+          "to": {
+            "success": false,
+            "failureCode": "R2",
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          }
+        },
+        {
+          "taskId": "task_0034",
+          "from": {
+            "success": false,
+            "failureCode": "R2",
+            "recallAtK": 1,
+            "selectionAccuracy": 0
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 1,
+            "selectionAccuracy": 1
+          }
+        },
+        {
+          "taskId": "task_0041",
+          "from": {
+            "success": false,
+            "failureCode": "R1",
+            "recallAtK": 0,
+            "selectionAccuracy": null
+          },
+          "to": {
+            "success": true,
+            "failureCode": null,
+            "recallAtK": 0,
+            "selectionAccuracy": null
+          }
+        }
+      ]
+    }
+  ],
+  "m3_vs_m4_reproducibility": {
+    "note": "Descriptive only. M3 and M4 observations are not merged, averaged, or replaced.",
+    "m3_source": {
+      "timestamp": "2026-09-24T055854Z",
+      "commit": "fc9fb2a"
+    },
+    "m4_source": {
+      "timestamp": "2026-09-24T140621Z",
+      "commit": "5f9e7c3"
+    },
+    "comparisons": [
+      {
+        "k": 1,
+        "m3": {
+          "label": "m3_k1",
+          "directory": "results/2026-09-24T055854Z_jev_n100_k1_fc9fb2a4a24c",
+          "config": {
+            "architecture": "jev",
+            "toolspaceSize": 100,
+            "topK": 1,
+            "agent": {
+              "provider": "openai",
+              "model": "gpt-5.6-sol",
+              "temperature": 0
+            },
+            "router": {
+              "provider": "typesafe",
+              "model": "jev-1.13.0"
+            },
+            "pricingVersion": "v1",
+            "concurrency": 1,
+            "seed": 0,
+            "tracing": "noop"
+          },
+          "attempts": 78,
+          "r0_attempts": 0,
+          "routing_scored": 78,
+          "execution_scored": 78,
+          "selection_scored": 68,
+          "strict_recall_at_k": 0.8717948717948718,
+          "lenient_recall_at_k": 0.8974358974358975,
+          "execution_success_rate": 0.6923076923076923,
+          "selection_accuracy": 1,
+          "failure_taxonomy": {
+            "R0": 0,
+            "R1": 9,
+            "R2": 0,
+            "R3": 8,
+            "R4": 7,
+            "R5": 0,
+            "R6": 0,
+            "none": 54,
+            "ok": 54
+          },
+          "tokens": {
+            "router_input": 169366,
+            "router_output": 67410,
+            "agent_input": 11596,
+            "agent_output": 1607,
+            "total": 249979,
+            "router_mean": 3035.5897435897436,
+            "agent_mean": 169.26923076923077,
+            "total_mean": 3204.858974358974
+          },
+          "cost": {
+            "total_usd": 0.085637372,
+            "per_attempt_usd": 0.0010979150256410256
+          },
+          "latency_ms_non_r0": {
+            "router": {
+              "mean": 234.83888784614808,
+              "n": 78
+            },
+            "agent": {
+              "mean": 1358.2671725769194,
+              "n": 78
+            },
+            "total": {
+              "mean": 1593.214145820528,
+              "n": 78
+            }
+          },
+          "r0_rows": [],
+          "malformed_or_r0": []
+        },
+        "m4": {
+          "label": "m4_k1",
+          "directory": "results/2026-09-24T140621Z_jev_n100_k1_5f9e7c3f105d",
+          "config": {
+            "architecture": "jev",
+            "toolspaceSize": 100,
+            "topK": 1,
+            "agent": {
+              "provider": "openai",
+              "model": "gpt-5.6-sol",
+              "temperature": 0
+            },
+            "router": {
+              "provider": "typesafe",
+              "model": "jev-1.13.0"
+            },
+            "pricingVersion": "v1",
+            "concurrency": 1,
+            "seed": 0,
+            "tracing": "noop"
+          },
+          "attempts": 78,
+          "r0_attempts": 0,
+          "routing_scored": 78,
+          "execution_scored": 78,
+          "selection_scored": 68,
+          "strict_recall_at_k": 0.8717948717948718,
+          "lenient_recall_at_k": 0.8974358974358975,
+          "execution_success_rate": 0.7051282051282052,
+          "selection_accuracy": 1,
+          "failure_taxonomy": {
+            "R0": 0,
+            "R1": 9,
+            "R2": 0,
+            "R3": 8,
+            "R4": 6,
+            "R5": 0,
+            "R6": 0,
+            "none": 55,
+            "ok": 55
+          },
+          "tokens": {
+            "router_input": 169366,
+            "router_output": 67410,
+            "agent_input": 11595,
+            "agent_output": 1581,
+            "total": 249952,
+            "router_mean": 3035.5897435897436,
+            "agent_mean": 168.92307692307693,
+            "total_mean": 3204.5128205128203
+          },
+          "cost": {
+            "total_usd": 0.08511337199999999,
+            "per_attempt_usd": 0.0010911970769230768
+          },
+          "latency_ms_non_r0": {
+            "router": {
+              "mean": 146.84672544871833,
+              "n": 78
+            },
+            "agent": {
+              "mean": 1691.4110331282043,
+              "n": 78
+            },
+            "total": {
+              "mean": 1838.6207505384612,
+              "n": 78
+            }
+          },
+          "r0_rows": [],
+          "malformed_or_r0": []
+        },
+        "metric_deltas_m4_minus_m3": {
+          "strict_recall_at_k": 0,
+          "lenient_recall_at_k": 0,
+          "execution_success_rate": 0.012820512820512886,
+          "selection_accuracy": 0,
+          "cost_per_attempt_usd": -0.00000671794871794887,
+          "cost_total_usd": -0.0005240000000000106,
+          "router_tokens_mean": 0,
+          "agent_tokens_mean": -0.3461538461538396,
+          "total_latency_ms_mean": 245.40660471793308,
+          "failure_taxonomy_delta": {
+            "R0": 0,
+            "R1": 0,
+            "R2": 0,
+            "R3": 0,
+            "R4": -1,
+            "R5": 0,
+            "R6": 0,
+            "ok": 1
+          }
+        },
+        "task_outcome_agreement": {
+          "from": "m3_k1",
+          "to": "m4_k1",
+          "paired_tasks": 78,
+          "contingency": {
+            "both_ok": 54,
+            "both_fail": 23,
+            "from_ok_to_fail": 0,
+            "from_fail_to_ok": 1
+          },
+          "agreement_rate": 0.9871794871794872,
+          "disagreements": [
+            {
+              "taskId": "task_0067",
+              "from": {
+                "success": false,
+                "failureCode": "R1",
+                "recallAtK": 0,
+                "selectionAccuracy": null
+              },
+              "to": {
+                "success": true,
+                "failureCode": null,
+                "recallAtK": 1,
+                "selectionAccuracy": 1
+              }
+            }
+          ]
+        },
+        "failure_code_or_success_diffs": [
+          {
+            "taskId": "task_0024",
+            "m3": {
+              "failureCode": "R4",
+              "executionSuccess": false,
+              "recallAtK": 1,
+              "selectionAccuracy": 1
+            },
+            "m4": {
+              "failureCode": "R1",
+              "executionSuccess": false,
+              "recallAtK": 0,
+              "selectionAccuracy": null
+            }
+          },
+          {
+            "taskId": "task_0067",
+            "m3": {
+              "failureCode": "R1",
+              "executionSuccess": false,
+              "recallAtK": 0,
+              "selectionAccuracy": null
+            },
+            "m4": {
+              "failureCode": null,
+              "executionSuccess": true,
+              "recallAtK": 1,
+              "selectionAccuracy": 1
+            }
+          }
+        ],
+        "routing_score_diffs": [
+          {
+            "taskId": "task_0024",
+            "m3": {
+              "recallAtK": 1,
+              "lenientRecallAtK": 1
+            },
+            "m4": {
+              "recallAtK": 0,
+              "lenientRecallAtK": 0
+            }
+          },
+          {
+            "taskId": "task_0067",
+            "m3": {
+              "recallAtK": 0,
+              "lenientRecallAtK": 0
+            },
+            "m4": {
+              "recallAtK": 1,
+              "lenientRecallAtK": 1
+            }
+          }
+        ]
+      },
+      {
+        "k": 5,
+        "m3": {
+          "label": "m3_k5",
+          "directory": "results/2026-09-24T055854Z_jev_n100_k5_fc9fb2a4a24c",
+          "config": {
+            "architecture": "jev",
+            "toolspaceSize": 100,
+            "topK": 5,
+            "agent": {
+              "provider": "openai",
+              "model": "gpt-5.6-sol",
+              "temperature": 0
+            },
+            "router": {
+              "provider": "typesafe",
+              "model": "jev-1.13.0"
+            },
+            "pricingVersion": "v1",
+            "concurrency": 1,
+            "seed": 0,
+            "tracing": "noop"
+          },
+          "attempts": 78,
+          "r0_attempts": 0,
+          "routing_scored": 78,
+          "execution_scored": 78,
+          "selection_scored": 74,
+          "strict_recall_at_k": 0.9487179487179487,
+          "lenient_recall_at_k": 0.9615384615384616,
+          "execution_success_rate": 0.7564102564102564,
+          "selection_accuracy": 0.8648648648648649,
+          "failure_taxonomy": {
+            "R0": 0,
+            "R1": 4,
+            "R2": 4,
+            "R3": 8,
+            "R4": 3,
+            "R5": 0,
+            "R6": 0,
+            "none": 59,
+            "ok": 59
+          },
+          "tokens": {
+            "router_input": 169366,
+            "router_output": 67409,
+            "agent_input": 21043,
+            "agent_output": 1556,
+            "total": 259374,
+            "router_mean": 3035.576923076923,
+            "agent_mean": 289.7307692307692,
+            "total_mean": 3325.3076923076924
+          },
+          "cost": {
+            "total_usd": 0.12240537200000004,
+            "per_attempt_usd": 0.0015692996410256416
+          },
+          "latency_ms_non_r0": {
+            "router": {
+              "mean": 236.7056650769097,
+              "n": 78
+            },
+            "agent": {
+              "mean": 1504.1854315384692,
+              "n": 78
+            },
+            "total": {
+              "mean": 1741.3508647948725,
+              "n": 78
+            }
+          },
+          "r0_rows": [],
+          "malformed_or_r0": []
+        },
+        "m4": {
+          "label": "m4_k5",
+          "directory": "results/2026-09-24T140621Z_jev_n100_k5_5f9e7c3f105d",
+          "config": {
+            "architecture": "jev",
+            "toolspaceSize": 100,
+            "topK": 5,
+            "agent": {
+              "provider": "openai",
+              "model": "gpt-5.6-sol",
+              "temperature": 0
+            },
+            "router": {
+              "provider": "typesafe",
+              "model": "jev-1.13.0"
+            },
+            "pricingVersion": "v1",
+            "concurrency": 1,
+            "seed": 0,
+            "tracing": "noop"
+          },
+          "attempts": 78,
+          "r0_attempts": 0,
+          "routing_scored": 78,
+          "execution_scored": 78,
+          "selection_scored": 74,
+          "strict_recall_at_k": 0.9487179487179487,
+          "lenient_recall_at_k": 0.9743589743589743,
+          "execution_success_rate": 0.7564102564102564,
+          "selection_accuracy": 0.8648648648648649,
+          "failure_taxonomy": {
+            "R0": 0,
+            "R1": 4,
+            "R2": 4,
+            "R3": 8,
+            "R4": 3,
+            "R5": 0,
+            "R6": 0,
+            "none": 59,
+            "ok": 59
+          },
+          "tokens": {
+            "router_input": 169366,
+            "router_output": 67410,
+            "agent_input": 21044,
+            "agent_output": 1556,
+            "total": 259376,
+            "router_mean": 3035.5897435897436,
+            "agent_mean": 289.7435897435897,
+            "total_mean": 3325.3333333333335
+          },
+          "cost": {
+            "total_usd": 0.12240937200000002,
+            "per_attempt_usd": 0.0015693509230769232
+          },
+          "latency_ms_non_r0": {
+            "router": {
+              "mean": 150.75753798717648,
+              "n": 78
+            },
+            "agent": {
+              "mean": 1457.0407131538482,
+              "n": 78
+            },
+            "total": {
+              "mean": 1607.9868397435885,
+              "n": 78
+            }
+          },
+          "r0_rows": [],
+          "malformed_or_r0": []
+        },
+        "metric_deltas_m4_minus_m3": {
+          "strict_recall_at_k": 0,
+          "lenient_recall_at_k": 0.012820512820512775,
+          "execution_success_rate": 0,
+          "selection_accuracy": 0,
+          "cost_per_attempt_usd": 5.128205128168001e-8,
+          "cost_total_usd": 0.000003999999999976245,
+          "router_tokens_mean": 0.012820512820781005,
+          "agent_tokens_mean": 0.012820512820496788,
+          "total_latency_ms_mean": -133.364025051284,
+          "failure_taxonomy_delta": {
+            "R0": 0,
+            "R1": 0,
+            "R2": 0,
+            "R3": 0,
+            "R4": 0,
+            "R5": 0,
+            "R6": 0,
+            "ok": 0
+          }
+        },
+        "task_outcome_agreement": {
+          "from": "m3_k5",
+          "to": "m4_k5",
+          "paired_tasks": 78,
+          "contingency": {
+            "both_ok": 59,
+            "both_fail": 19,
+            "from_ok_to_fail": 0,
+            "from_fail_to_ok": 0
+          },
+          "agreement_rate": 1,
+          "disagreements": []
+        },
+        "failure_code_or_success_diffs": [],
+        "routing_score_diffs": [
+          {
+            "taskId": "task_0039",
+            "m3": {
+              "recallAtK": 0,
+              "lenientRecallAtK": 0
+            },
+            "m4": {
+              "recallAtK": 0,
+              "lenientRecallAtK": 1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "malformed_provider_runtime": [],
+  "analysis_note": "Summarize/tradeoff/marginal-utility regenerated from M4-only dirs (2026-09-24T140621Z_*). Initial summarize against results/ mixed immutable M3 k=1/k=5 dirs; corrected."
+}

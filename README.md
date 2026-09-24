@@ -98,11 +98,11 @@ npm run eval -- --config configs/final/llm-top5-20.yaml --mock
 
 Set `concurrency` (1..8) in a config to bound in-flight provider attempts inside one experiment. Default remains 1. Toolspaces stay deterministic; append order may be completion-ordered.
 
-Rebuild architecture × N tables from result directories (no plots, no claims):
+Rebuild architecture × N tables from a frozen epoch manifest (no plots, no claims):
 
 ```bash
-npm run summarize -- --results /tmp/jev-matrix --format json
-npm run summarize -- --results /tmp/jev-matrix --format csv --out analysis/scaling.csv
+npm run summarize -- --manifest results/_matrix/2026-09-24T055854Z.json
+npm run summarize -- --manifest results/_matrix/2026-09-24T055854Z.json --format csv --out analysis/scaling.csv
 ```
 
 M4 Jev top-k sweep (fixed N = 100, k ∈ {1, 3, 5, 10}; only `topK` varies — D14):
@@ -112,13 +112,19 @@ npm run generate:k-sweep
 npm run generate:m4-freeze
 npm run eval -- --validate --config configs/k-sweep/jev-top1-n100.yaml
 npm run k-sweep -- --dry-run
-npm run k-sweep -- --mock --results /tmp/jev-ksweep
-npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out analysis/k-sweep.csv
-npm run k-sweep -- --tradeoff --results /tmp/jev-ksweep --out analysis/k-tradeoff.json
-npm run k-sweep -- --marginal-utility --results /tmp/jev-ksweep --out analysis/m4-freeze/marginal-utility.json
+npm run k-sweep -- --summarize --manifest results/_k-sweep/2026-09-24T140621Z.json
+npm run k-sweep -- --tradeoff --manifest results/_k-sweep/2026-09-24T140621Z.json --out analysis/m4-freeze/k-tradeoff.json
+npm run k-sweep -- --marginal-utility --manifest results/_k-sweep/2026-09-24T140621Z.json
 ```
 
-See [docs/m4-freeze.md](docs/m4-freeze.md). Do not launch live M4 until freeze review is approved.
+Publication synthesis (M3 + M4 + adaptive → JSON SoT + SVG):
+
+```bash
+npm run analysis:synthesis
+```
+
+See [docs/m4-freeze.md](docs/m4-freeze.md) and [analysis/synthesis/synthesis.md](analysis/synthesis/synthesis.md).
+Analysis refuses bare `--results results` scans (D15).
 
 Adaptive policy (M5 / #42–#44) — thresholds locked; compare adaptive vs fixed-k on the holdout split:
 
@@ -135,8 +141,9 @@ No invented benchmark numbers. Conclusions come from result directories only.
 
 ## Results
 
-Quantitative results are **pending regenerable result directories**. The harness and
-figure pipeline are in place; this README does not publish invented scores.
+Quantitative results are regenerated from frozen manifests via
+`npm run analysis:synthesis` → [`analysis/synthesis/`](analysis/synthesis/).
+This README does not invent scores.
 
 See the full narrative (six research questions, null/negative findings, citation
 table):

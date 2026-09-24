@@ -1,0 +1,1492 @@
+{
+  "version": 1,
+  "kind": "publication_synthesis",
+  "generated_at": "2026-09-24T14:33:25.433Z",
+  "sources": {
+    "m3_manifest": "/Users/aditya/Projects/jev_eval/results/_matrix/2026-09-24T055854Z.json",
+    "m4_manifest": "/Users/aditya/Projects/jev_eval/results/_k-sweep/2026-09-24T140621Z.json",
+    "adaptive_manifest": "/Users/aditya/Projects/jev_eval/results/_adaptive-eval/2026-09-24T045743Z.json"
+  },
+  "methodology": {
+    "paired_bootstrap": "Paired bootstrap resamples the shared task IDs with replacement. Intervals estimate uncertainty over this benchmark task sample, not provider/run-to-run variance.",
+    "mcnemar": "Exact two-sided McNemar on discordant success/failure pairs only. Reported subordinate to the observed Δ and discordance table; not used to claim equivalence.",
+    "cost_uncertainty": "Paired bootstrap across the 78 benchmark tasks estimates uncertainty over this task sample, not provider/run-to-run variance. Much of cost variation is mechanically task-dependent token usage.",
+    "latency": "Latency omitted from headline synthesis figures; M3↔M4 showed material epoch variation.",
+    "decision_rule": null
+  },
+  "panels": {
+    "esr_vs_n": {
+      "series": [
+        {
+          "architecture": "baseline",
+          "points": [
+            {
+              "n": 5,
+              "esr": 0.8076923076923077,
+              "attempts": 78
+            },
+            {
+              "n": 10,
+              "esr": 0.782051282051282,
+              "attempts": 78
+            },
+            {
+              "n": 25,
+              "esr": 0.7435897435897436,
+              "attempts": 78
+            },
+            {
+              "n": 50,
+              "esr": 0.7692307692307693,
+              "attempts": 78
+            },
+            {
+              "n": 100,
+              "esr": 0.7692307692307693,
+              "attempts": 78
+            }
+          ]
+        },
+        {
+          "architecture": "jev_top1",
+          "points": [
+            {
+              "n": 5,
+              "esr": 0.7692307692307693,
+              "attempts": 78
+            },
+            {
+              "n": 10,
+              "esr": 0.7532467532467533,
+              "attempts": 78
+            },
+            {
+              "n": 25,
+              "esr": 0.7051282051282052,
+              "attempts": 78
+            },
+            {
+              "n": 50,
+              "esr": 0.7051282051282052,
+              "attempts": 78
+            },
+            {
+              "n": 100,
+              "esr": 0.6923076923076923,
+              "attempts": 78
+            }
+          ]
+        },
+        {
+          "architecture": "jev_top5",
+          "points": [
+            {
+              "n": 5,
+              "esr": 0.8205128205128205,
+              "attempts": 78
+            },
+            {
+              "n": 10,
+              "esr": 0.782051282051282,
+              "attempts": 78
+            },
+            {
+              "n": 25,
+              "esr": 0.7692307692307693,
+              "attempts": 78
+            },
+            {
+              "n": 50,
+              "esr": 0.7564102564102564,
+              "attempts": 78
+            },
+            {
+              "n": 100,
+              "esr": 0.7564102564102564,
+              "attempts": 78
+            }
+          ]
+        }
+      ]
+    },
+    "cost_vs_n": {
+      "note": "Cost CI (when shown) is paired-task-sample uncertainty, not run-to-run variance.",
+      "series": [
+        {
+          "architecture": "baseline",
+          "points": [
+            {
+              "n": 5,
+              "cost_per_attempt": 0.0014459999999999998
+            },
+            {
+              "n": 10,
+              "cost_per_attempt": 0.0019567692307692307
+            },
+            {
+              "n": 25,
+              "cost_per_attempt": 0.00361676923076923
+            },
+            {
+              "n": 50,
+              "cost_per_attempt": 0.006439589743589742
+            },
+            {
+              "n": 100,
+              "cost_per_attempt": 0.012235846153846156
+            }
+          ]
+        },
+        {
+          "architecture": "jev_top1",
+          "points": [
+            {
+              "n": 5,
+              "cost_per_attempt": 0.0010116834615384615
+            },
+            {
+              "n": 10,
+              "cost_per_attempt": 0.001001682435897436
+            },
+            {
+              "n": 25,
+              "cost_per_attempt": 0.0010355821538461537
+            },
+            {
+              "n": 50,
+              "cost_per_attempt": 0.0010565787435897432
+            },
+            {
+              "n": 100,
+              "cost_per_attempt": 0.0010979150256410256
+            }
+          ]
+        },
+        {
+          "architecture": "jev_top5",
+          "points": [
+            {
+              "n": 5,
+              "cost_per_attempt": 0.0014627091025641028
+            },
+            {
+              "n": 10,
+              "cost_per_attempt": 0.0014226663846153844
+            },
+            {
+              "n": 25,
+              "cost_per_attempt": 0.0014765052307692307
+            },
+            {
+              "n": 50,
+              "cost_per_attempt": 0.0015059120769230772
+            },
+            {
+              "n": 100,
+              "cost_per_attempt": 0.0015692996410256416
+            }
+          ]
+        }
+      ]
+    },
+    "agent_tokens_vs_n": {
+      "series": [
+        {
+          "architecture": "baseline",
+          "points": [
+            {
+              "n": 5,
+              "agent_tokens_mean": 281.9102564102564
+            },
+            {
+              "n": 10,
+              "agent_tokens_mean": 411.0897435897436
+            },
+            {
+              "n": 25,
+              "agent_tokens_mean": 826.1410256410256
+            },
+            {
+              "n": 50,
+              "agent_tokens_mean": 1532.6153846153845
+            },
+            {
+              "n": 100,
+              "agent_tokens_mean": 2981.576923076923
+            }
+          ]
+        },
+        {
+          "architecture": "jev_top1",
+          "points": [
+            {
+              "n": 5,
+              "agent_tokens_mean": 168.85897435897436
+            },
+            {
+              "n": 10,
+              "agent_tokens_mean": 166.52564102564102
+            },
+            {
+              "n": 25,
+              "agent_tokens_mean": 169.07692307692307
+            },
+            {
+              "n": 50,
+              "agent_tokens_mean": 169.17948717948718
+            },
+            {
+              "n": 100,
+              "agent_tokens_mean": 169.26923076923077
+            }
+          ]
+        },
+        {
+          "architecture": "jev_top5",
+          "points": [
+            {
+              "n": 5,
+              "agent_tokens_mean": 281.9230769230769
+            },
+            {
+              "n": 10,
+              "agent_tokens_mean": 271.7564102564103
+            },
+            {
+              "n": 25,
+              "agent_tokens_mean": 282.2307692307692
+            },
+            {
+              "n": 50,
+              "agent_tokens_mean": 284.2307692307692
+            },
+            {
+              "n": 100,
+              "agent_tokens_mean": 289.7307692307692
+            }
+          ]
+        }
+      ]
+    },
+    "n100_baseline_vs_top5": {
+      "comparison": "M3 N=100 baseline vs Jev top-5",
+      "observed_delta_esr": -0.01282051282051282,
+      "paired_bootstrap_ci95": {
+        "low": -0.10256410256410256,
+        "high": 0.0641025641025641
+      },
+      "mcnemar": {
+        "n_pairs": 78,
+        "both_success": 54,
+        "both_failure": 13,
+        "a_only": 6,
+        "b_only": 5,
+        "discordant": 11,
+        "exact_two_sided_p": 1,
+        "note": "Exact two-sided McNemar on discordant success/failure pairs only. Reported subordinate to the observed Δ and discordance table; not used to claim equivalence."
+      },
+      "framing": "Observed ΔESR is small; discordances are nearly balanced; uncertainty is too large for an equivalence claim.",
+      "cost_paired_bootstrap": {
+        "observed_mean_diff": -0.01066654651282051,
+        "ci95": {
+          "low": -0.010678090897435898,
+          "high": -0.010653880384615387
+        },
+        "note": "Paired bootstrap resamples the shared task IDs with replacement. Intervals estimate uncertainty over this benchmark task sample, not provider/run-to-run variance."
+      }
+    },
+    "k_ablation": {
+      "toolspace_size": 100,
+      "rows": [
+        {
+          "top_k": 1,
+          "strict_recall_at_k": 0.8717948717948718,
+          "lenient_recall_at_k": 0.8974358974358975,
+          "execution_success_rate": 0.7051282051282052,
+          "selection_accuracy": 1,
+          "priced_cost_usd_per_attempt": 0.0010911970769230768,
+          "agent_tokens_mean": 168.92307692307693
+        },
+        {
+          "top_k": 3,
+          "strict_recall_at_k": 0.9487179487179487,
+          "lenient_recall_at_k": 0.9615384615384616,
+          "execution_success_rate": 0.7307692307692307,
+          "selection_accuracy": 0.8918918918918919,
+          "priced_cost_usd_per_attempt": 0.001333709897435898,
+          "agent_tokens_mean": 230.1153846153846
+        },
+        {
+          "top_k": 5,
+          "strict_recall_at_k": 0.9487179487179487,
+          "lenient_recall_at_k": 0.9743589743589743,
+          "execution_success_rate": 0.7564102564102564,
+          "selection_accuracy": 0.8648648648648649,
+          "priced_cost_usd_per_attempt": 0.0015693509230769232,
+          "agent_tokens_mean": 289.7435897435897
+        },
+        {
+          "top_k": 10,
+          "strict_recall_at_k": 0.9615384615384616,
+          "lenient_recall_at_k": 0.9871794871794872,
+          "execution_success_rate": 0.7692307692307693,
+          "selection_accuracy": 0.8533333333333334,
+          "priced_cost_usd_per_attempt": 0.00218576117948718,
+          "agent_tokens_mean": 443.8974358974359
+        }
+      ],
+      "marginal_routing_utility": {
+        "version": 1,
+        "kind": "m4_marginal_routing_utility",
+        "note": "Paired adjacent-k transitions at fixed N. Distinguishes additional routing coverage from coverage that produces downstream execution utility. Does not select an optimal k.",
+        "toolspace_size": 100,
+        "transitions": [
+          {
+            "from_k": 1,
+            "to_k": 3,
+            "paired_tasks": 78,
+            "additional_routing_coverage": 6,
+            "additional_coverage_that_succeed": 2,
+            "previously_successful_become_failures": 2,
+            "r1_reduction": 5,
+            "r2_change": 5,
+            "selection_accuracy_change": -0.10810810810810811,
+            "agent_tokens_change": 61.19230769230768,
+            "cost_change": 0.00024251282051282116,
+            "total_latency_change": -326.178747346155,
+            "additional_coverage_task_ids": [
+              "task_0022",
+              "task_0024",
+              "task_0038",
+              "task_0043",
+              "task_0050",
+              "task_0077"
+            ],
+            "additional_coverage_success_task_ids": [
+              "task_0022",
+              "task_0050"
+            ],
+            "regression_task_ids": [
+              "task_0037",
+              "task_0040"
+            ]
+          },
+          {
+            "from_k": 3,
+            "to_k": 5,
+            "paired_tasks": 78,
+            "additional_routing_coverage": 0,
+            "additional_coverage_that_succeed": 0,
+            "previously_successful_become_failures": 1,
+            "r1_reduction": 0,
+            "r2_change": -1,
+            "selection_accuracy_change": -0.027027027027026973,
+            "agent_tokens_change": 59.62820512820511,
+            "cost_change": 0.0002356410256410253,
+            "total_latency_change": 95.54483655128229,
+            "additional_coverage_task_ids": [],
+            "additional_coverage_success_task_ids": [],
+            "regression_task_ids": [
+              "task_0034"
+            ]
+          },
+          {
+            "from_k": 5,
+            "to_k": 10,
+            "paired_tasks": 78,
+            "additional_routing_coverage": 1,
+            "additional_coverage_that_succeed": 0,
+            "previously_successful_become_failures": 1,
+            "r1_reduction": 2,
+            "r2_change": 1,
+            "selection_accuracy_change": -0.011531531531531525,
+            "agent_tokens_change": 154.1538461538462,
+            "cost_change": 0.0006164102564102567,
+            "total_latency_change": -41.66417843589352,
+            "additional_coverage_task_ids": [
+              "task_0040"
+            ],
+            "additional_coverage_success_task_ids": [],
+            "regression_task_ids": [
+              "task_0022"
+            ]
+          }
+        ],
+        "decision_rule": null
+      },
+      "decision_rule": null
+    },
+    "failure_decomposition": {
+      "rows": [
+        {
+          "top_k": 1,
+          "R1": 9,
+          "R2": 0,
+          "R3": 8,
+          "R4": 6,
+          "R5": 0,
+          "R6": 0,
+          "ok": 55,
+          "attempts": 78
+        },
+        {
+          "top_k": 3,
+          "R1": 4,
+          "R2": 5,
+          "R3": 8,
+          "R4": 4,
+          "R5": 0,
+          "R6": 0,
+          "ok": 57,
+          "attempts": 78
+        },
+        {
+          "top_k": 5,
+          "R1": 4,
+          "R2": 4,
+          "R3": 8,
+          "R4": 3,
+          "R5": 0,
+          "R6": 0,
+          "ok": 59,
+          "attempts": 78
+        },
+        {
+          "top_k": 10,
+          "R1": 2,
+          "R2": 5,
+          "R3": 8,
+          "R4": 3,
+          "R5": 0,
+          "R6": 0,
+          "ok": 60,
+          "attempts": 78
+        }
+      ]
+    },
+    "cost_esr_frontier": {
+      "points": [
+        {
+          "label": "baseline_n100",
+          "source": "m3",
+          "esr": 0.7692307692307693,
+          "cost_per_attempt": 0.012235846153846156
+        },
+        {
+          "label": "jev_k1_n100",
+          "source": "m3",
+          "esr": 0.6923076923076923,
+          "cost_per_attempt": 0.0010979150256410256
+        },
+        {
+          "label": "jev_k5_n100",
+          "source": "m3",
+          "esr": 0.7564102564102564,
+          "cost_per_attempt": 0.0015692996410256416
+        },
+        {
+          "label": "m4_jev_k1_n100",
+          "source": "m4",
+          "esr": 0.7051282051282052,
+          "cost_per_attempt": 0.0010911970769230768
+        },
+        {
+          "label": "m4_jev_k3_n100",
+          "source": "m4",
+          "esr": 0.7307692307692307,
+          "cost_per_attempt": 0.001333709897435898
+        },
+        {
+          "label": "m4_jev_k5_n100",
+          "source": "m4",
+          "esr": 0.7564102564102564,
+          "cost_per_attempt": 0.0015693509230769232
+        },
+        {
+          "label": "m4_jev_k10_n100",
+          "source": "m4",
+          "esr": 0.7692307692307693,
+          "cost_per_attempt": 0.00218576117948718
+        }
+      ]
+    },
+    "reproducibility": [
+      {
+        "k": 1,
+        "esr_m3": 0.6923076923076923,
+        "esr_m4": 0.7051282051282052,
+        "delta_esr": 0.012820512820512886,
+        "contingency": {
+          "both_ok": 54,
+          "both_fail": 23,
+          "m3_only": 0,
+          "m4_only": 1
+        },
+        "agreement_rate": 0.9871794871794872,
+        "diffs": [
+          {
+            "taskId": "task_0024",
+            "m3": {
+              "success": false,
+              "failureCode": "R4",
+              "recallAtK": 1
+            },
+            "m4": {
+              "success": false,
+              "failureCode": "R1",
+              "recallAtK": 0
+            }
+          },
+          {
+            "taskId": "task_0067",
+            "m3": {
+              "success": false,
+              "failureCode": "R1",
+              "recallAtK": 0
+            },
+            "m4": {
+              "success": true,
+              "failureCode": null,
+              "recallAtK": 1
+            }
+          }
+        ]
+      },
+      {
+        "k": 5,
+        "esr_m3": 0.7564102564102564,
+        "esr_m4": 0.7564102564102564,
+        "delta_esr": 0,
+        "contingency": {
+          "both_ok": 59,
+          "both_fail": 19,
+          "m3_only": 0,
+          "m4_only": 0
+        },
+        "agreement_rate": 1,
+        "diffs": []
+      }
+    ],
+    "adaptive_calibration": {
+      "manifest": "/Users/aditya/Projects/jev_eval/results/_adaptive-eval/2026-09-24T045743Z.json",
+      "cells": [
+        {
+          "label": "baseline_n20",
+          "attempts": 24,
+          "esr": 0.75
+        },
+        {
+          "label": "jev_k1_n20",
+          "attempts": 24,
+          "esr": 0.6666666666666666
+        },
+        {
+          "label": "jev_k5_n20",
+          "attempts": 24,
+          "esr": 0.782608695652174
+        },
+        {
+          "label": "adaptive_n20",
+          "attempts": 24,
+          "esr": 0.6842105263157895
+        }
+      ],
+      "frozen_summary": {
+        "question": "How do adaptive confidence branches trade accuracy, cost, and latency against fixed-k Jev and baseline?",
+        "note": "These tables report the adaptive vs fixed-k comparison and branch usage only. They do not claim adaptive routing is superior.",
+        "decision_rule": null,
+        "policy_path": "policies/adaptive/v1.json",
+        "source_manifest": "/Users/aditya/Projects/jev_eval/results/_adaptive-eval/2026-09-24T045743Z.json",
+        "held_out_split": {
+          "rule": "odd FNV-1a taskId hash",
+          "complement_of": "even FNV-1a taskId hash (policies/adaptive/v1.json threshold_source)",
+          "threshold_source_dir": "results/2026-09-24T040823Z_jev_n20_k5_2e9e789ecba3"
+        },
+        "comparison": [
+          {
+            "cell_id": "baseline",
+            "architecture": "baseline",
+            "top_k": null,
+            "attempts": 24,
+            "execution_success_rate": 0.75,
+            "recall_at_k": 1,
+            "selection_accuracy": 0.6666666666666666,
+            "priced_cost_usd_per_attempt": 0.0030033333333333335,
+            "router_input_tokens_per_attempt": 0,
+            "agent_input_tokens_per_attempt": 658.125,
+            "router_latency_ms_mean": 0,
+            "agent_latency_ms_mean": 1362.3522256666668,
+            "escalation_frequency": null,
+            "mean_selected_k": null,
+            "delta_vs_jev_top5": {
+              "execution_success_rate": -0.03260869565217395,
+              "recall_at_k": 0.04166666666666663,
+              "priced_cost_usd_per_attempt": 0.0016541740833333335,
+              "agent_input_tokens_per_attempt": 416.41666666666663,
+              "mean_selected_k": null
+            }
+          },
+          {
+            "cell_id": "jev_top1",
+            "architecture": "jev",
+            "top_k": 1,
+            "attempts": 24,
+            "execution_success_rate": 0.6666666666666666,
+            "recall_at_k": 0.75,
+            "selection_accuracy": 1,
+            "priced_cost_usd_per_attempt": 0.0010144925833333333,
+            "router_input_tokens_per_attempt": 670.4583333333334,
+            "agent_input_tokens_per_attempt": 146.16666666666666,
+            "router_latency_ms_mean": 253.73576216666757,
+            "agent_latency_ms_mean": 1278.6925556249992,
+            "escalation_frequency": null,
+            "mean_selected_k": null,
+            "delta_vs_jev_top5": {
+              "execution_success_rate": -0.11594202898550732,
+              "recall_at_k": -0.20833333333333337,
+              "priced_cost_usd_per_attempt": -0.0003346666666666667,
+              "agent_input_tokens_per_attempt": -95.54166666666669,
+              "mean_selected_k": null
+            }
+          },
+          {
+            "cell_id": "jev_top5",
+            "architecture": "jev",
+            "top_k": 5,
+            "attempts": 24,
+            "execution_success_rate": 0.782608695652174,
+            "recall_at_k": 0.9583333333333334,
+            "selection_accuracy": 0.7272727272727273,
+            "priced_cost_usd_per_attempt": 0.00134915925,
+            "router_input_tokens_per_attempt": 670.4583333333334,
+            "agent_input_tokens_per_attempt": 241.70833333333334,
+            "router_latency_ms_mean": 277.7777587083304,
+            "agent_latency_ms_mean": 1237.0711974347835,
+            "escalation_frequency": null,
+            "mean_selected_k": null,
+            "delta_vs_jev_top5": null
+          },
+          {
+            "cell_id": "adaptive",
+            "architecture": "adaptive",
+            "top_k": 5,
+            "attempts": 24,
+            "execution_success_rate": 0.6842105263157895,
+            "recall_at_k": 0.8947368421052632,
+            "selection_accuracy": 0.9411764705882353,
+            "priced_cost_usd_per_attempt": 0.0008064511666666666,
+            "router_input_tokens_per_attempt": 530.5833333333334,
+            "agent_input_tokens_per_attempt": 120.41666666666667,
+            "router_latency_ms_mean": 281.8380197894738,
+            "agent_latency_ms_mean": 1300.8022434210595,
+            "escalation_frequency": 0,
+            "mean_selected_k": 1.2105263157894737,
+            "delta_vs_jev_top5": {
+              "execution_success_rate": -0.09839816933638446,
+              "recall_at_k": -0.0635964912280702,
+              "priced_cost_usd_per_attempt": -0.0005427080833333334,
+              "agent_input_tokens_per_attempt": -121.29166666666667,
+              "mean_selected_k": -3.7894736842105265
+            }
+          }
+        ],
+        "branch_usage": [
+          {
+            "branch": "high",
+            "count": 18,
+            "frequency": 0.9473684210526315,
+            "action": "jev_topk k=1"
+          },
+          {
+            "branch": "medium",
+            "count": 1,
+            "frequency": 0.05263157894736842,
+            "action": "jev_topk k=5"
+          },
+          {
+            "branch": "low",
+            "count": 0,
+            "frequency": 0,
+            "action": "escalate llm_topk k=5"
+          }
+        ]
+      },
+      "holdout_note": "Confidence→k adaptive routing was a negative result on the first live holdout; no further threshold fitting (D13)."
+    },
+    "m4_k_sweep_tables": {
+      "rows": [
+        {
+          "architecture": "jev",
+          "toolspace_size": 100,
+          "top_k": 1,
+          "source_directories": [
+            "/Users/aditya/Projects/jev_eval/results/2026-09-24T140621Z_jev_n100_k1_5f9e7c3f105d"
+          ],
+          "attempts": 78,
+          "r0_attempts": 0,
+          "infrastructure_failure_rate": 0,
+          "routing_scored": 78,
+          "recall_at_k": 0.8717948717948718,
+          "recall_at_k_stats": {
+            "mean": 0.8717948717948718,
+            "stddev": 0.3364819656684638,
+            "ci95Low": 0.7971206745773464,
+            "ci95High": 0.9464690690123972
+          },
+          "lenient_recall_at_k": 0.8974358974358975,
+          "lenient_recall_at_k_stats": {
+            "mean": 0.8974358974358975,
+            "stddev": 0.30535240827622945,
+            "ci95Low": 0.8296701676703614,
+            "ci95High": 0.9652016272014335
+          },
+          "selection_scored": 68,
+          "selection_accuracy": 1,
+          "selection_accuracy_stats": {
+            "mean": 1,
+            "stddev": 0,
+            "ci95Low": 1,
+            "ci95High": 1
+          },
+          "execution_scored": 78,
+          "execution_success_rate": 0.7051282051282052,
+          "execution_success_rate_stats": {
+            "mean": 0.7051282051282052,
+            "stddev": 0.4589364995538168,
+            "ci95Low": 0.6032781264474075,
+            "ci95High": 0.8069782838090028
+          },
+          "mean_candidate_count": 1,
+          "candidate_count_stats": {
+            "mean": 1,
+            "stddev": 0,
+            "ci95Low": 1,
+            "ci95High": 1
+          },
+          "router_input_tokens": 169366,
+          "router_output_tokens": 67410,
+          "agent_input_tokens": 11595,
+          "agent_output_tokens": 1581,
+          "total_tokens": 249952,
+          "priced_cost_usd": 0.08511337199999999,
+          "router_latency_ms": {
+            "mean": 146.84672544871833,
+            "median": 138.34220899999855,
+            "p50": 138.34220899999855,
+            "p95": 206.47387499999604
+          },
+          "agent_latency_ms": {
+            "mean": 1691.4110331282038,
+            "median": 1491.6235420000012,
+            "p50": 1491.6235420000012,
+            "p95": 2769.483583000001
+          },
+          "total_latency_ms": {
+            "mean": 1838.6207505384616,
+            "median": 1648.1517500000045,
+            "p50": 1648.1517500000045,
+            "p95": 2966.451416
+          },
+          "total_latency_ms_r0": {
+            "mean": null,
+            "median": null,
+            "p50": null,
+            "p95": null
+          }
+        },
+        {
+          "architecture": "jev",
+          "toolspace_size": 100,
+          "top_k": 3,
+          "source_directories": [
+            "/Users/aditya/Projects/jev_eval/results/2026-09-24T140621Z_jev_n100_k3_5f9e7c3f105d"
+          ],
+          "attempts": 78,
+          "r0_attempts": 0,
+          "infrastructure_failure_rate": 0,
+          "routing_scored": 78,
+          "recall_at_k": 0.9487179487179487,
+          "recall_at_k_stats": {
+            "mean": 0.9487179487179487,
+            "stddev": 0.22200011100008343,
+            "ci95Low": 0.8994502857744113,
+            "ci95High": 0.997985611661486
+          },
+          "lenient_recall_at_k": 0.9615384615384616,
+          "lenient_recall_at_k_stats": {
+            "mean": 0.9615384615384616,
+            "stddev": 0.19355241528469103,
+            "ci95Low": 0.9185840904113672,
+            "ci95High": 1.0044928326655558
+          },
+          "selection_scored": 74,
+          "selection_accuracy": 0.8918918918918919,
+          "selection_accuracy_stats": {
+            "mean": 0.8918918918918919,
+            "stddev": 0.3126364937009623,
+            "ci95Low": 0.8206591137032396,
+            "ci95High": 0.9631246700805441
+          },
+          "execution_scored": 78,
+          "execution_success_rate": 0.7307692307692307,
+          "execution_success_rate_stats": {
+            "mean": 0.7307692307692307,
+            "stddev": 0.44643106892408274,
+            "ci95Low": 0.6316944360216438,
+            "ci95High": 0.8298440255168177
+          },
+          "mean_candidate_count": 3,
+          "candidate_count_stats": {
+            "mean": 3,
+            "stddev": 0,
+            "ci95Low": 3,
+            "ci95High": 3
+          },
+          "router_input_tokens": 169366,
+          "router_output_tokens": 67410,
+          "agent_input_tokens": 16379,
+          "agent_output_tokens": 1570,
+          "total_tokens": 254725,
+          "priced_cost_usd": 0.10402937200000004,
+          "router_latency_ms": {
+            "mean": 169.6436421153843,
+            "median": 150.4391670000041,
+            "p50": 150.4391670000041,
+            "p95": 286.28637499999604
+          },
+          "agent_latency_ms": {
+            "mean": 1342.612619102563,
+            "median": 1273.6837079999968,
+            "p50": 1273.6837079999968,
+            "p95": 2207.042916000006
+          },
+          "total_latency_ms": {
+            "mean": 1512.4420031923062,
+            "median": 1458.9654580000206,
+            "p50": 1458.9654580000206,
+            "p95": 2372.384040999983
+          },
+          "total_latency_ms_r0": {
+            "mean": null,
+            "median": null,
+            "p50": null,
+            "p95": null
+          }
+        },
+        {
+          "architecture": "jev",
+          "toolspace_size": 100,
+          "top_k": 5,
+          "source_directories": [
+            "/Users/aditya/Projects/jev_eval/results/2026-09-24T140621Z_jev_n100_k5_5f9e7c3f105d"
+          ],
+          "attempts": 78,
+          "r0_attempts": 0,
+          "infrastructure_failure_rate": 0,
+          "routing_scored": 78,
+          "recall_at_k": 0.9487179487179487,
+          "recall_at_k_stats": {
+            "mean": 0.9487179487179487,
+            "stddev": 0.22200011100008343,
+            "ci95Low": 0.8994502857744113,
+            "ci95High": 0.997985611661486
+          },
+          "lenient_recall_at_k": 0.9743589743589743,
+          "lenient_recall_at_k_stats": {
+            "mean": 0.9743589743589743,
+            "stddev": 0.15908496254525528,
+            "ci95Low": 0.9390538374436962,
+            "ci95High": 1.0096641112742526
+          },
+          "selection_scored": 74,
+          "selection_accuracy": 0.8648648648648649,
+          "selection_accuracy_stats": {
+            "mean": 0.8648648648648649,
+            "stddev": 0.3442014512209152,
+            "ci95Low": 0.7864401571898755,
+            "ci95High": 0.9432895725398543
+          },
+          "execution_scored": 78,
+          "execution_success_rate": 0.7564102564102564,
+          "execution_success_rate_stats": {
+            "mean": 0.7564102564102564,
+            "stddev": 0.43202625689497903,
+            "ci95Low": 0.6605322682796473,
+            "ci95High": 0.8522882445408655
+          },
+          "mean_candidate_count": 5,
+          "candidate_count_stats": {
+            "mean": 5,
+            "stddev": 0,
+            "ci95Low": 5,
+            "ci95High": 5
+          },
+          "router_input_tokens": 169366,
+          "router_output_tokens": 67410,
+          "agent_input_tokens": 21044,
+          "agent_output_tokens": 1556,
+          "total_tokens": 259376,
+          "priced_cost_usd": 0.12240937200000002,
+          "router_latency_ms": {
+            "mean": 150.75753798717648,
+            "median": 146.73774999997113,
+            "p50": 146.73774999997113,
+            "p95": 191.18174999998882
+          },
+          "agent_latency_ms": {
+            "mean": 1457.0407131538482,
+            "median": 1362.1305839999695,
+            "p50": 1362.1305839999695,
+            "p95": 2378.0302089999896
+          },
+          "total_latency_ms": {
+            "mean": 1607.9868397435885,
+            "median": 1486.5526669999817,
+            "p50": 1486.5526669999817,
+            "p95": 2563.145833000017
+          },
+          "total_latency_ms_r0": {
+            "mean": null,
+            "median": null,
+            "p50": null,
+            "p95": null
+          }
+        },
+        {
+          "architecture": "jev",
+          "toolspace_size": 100,
+          "top_k": 10,
+          "source_directories": [
+            "/Users/aditya/Projects/jev_eval/results/2026-09-24T140621Z_jev_n100_k10_5f9e7c3f105d"
+          ],
+          "attempts": 78,
+          "r0_attempts": 0,
+          "infrastructure_failure_rate": 0,
+          "routing_scored": 78,
+          "recall_at_k": 0.9615384615384616,
+          "recall_at_k_stats": {
+            "mean": 0.9615384615384616,
+            "stddev": 0.19355241528469103,
+            "ci95Low": 0.9185840904113672,
+            "ci95High": 1.0044928326655558
+          },
+          "lenient_recall_at_k": 0.9871794871794872,
+          "lenient_recall_at_k_stats": {
+            "mean": 0.9871794871794872,
+            "stddev": 0.11322770341445955,
+            "ci95Low": 0.9620512820512821,
+            "ci95High": 1.0123076923076924
+          },
+          "selection_scored": 75,
+          "selection_accuracy": 0.8533333333333334,
+          "selection_accuracy_stats": {
+            "mean": 0.8533333333333334,
+            "stddev": 0.35615564974719516,
+            "ci95Low": 0.7727277217133933,
+            "ci95High": 0.9339389449532735
+          },
+          "execution_scored": 78,
+          "execution_success_rate": 0.7692307692307693,
+          "execution_success_rate_stats": {
+            "mean": 0.7692307692307693,
+            "stddev": 0.4240520956441319,
+            "ci95Low": 0.6751224571917366,
+            "ci95High": 0.863339081269802
+          },
+          "mean_candidate_count": 10,
+          "candidate_count_stats": {
+            "mean": 10,
+            "stddev": 0,
+            "ci95Low": 10,
+            "ci95High": 10
+          },
+          "router_input_tokens": 169366,
+          "router_output_tokens": 67410,
+          "agent_input_tokens": 33069,
+          "agent_output_tokens": 1555,
+          "total_tokens": 271400,
+          "priced_cost_usd": 0.17048937200000003,
+          "router_latency_ms": {
+            "mean": 145.5665753974321,
+            "median": 139.42108399997232,
+            "p50": 139.42108399997232,
+            "p95": 181.57291599997552
+          },
+          "agent_latency_ms": {
+            "mean": 1420.4971175256405,
+            "median": 1266.6103330000187,
+            "p50": 1266.6103330000187,
+            "p95": 2340.8245829999796
+          },
+          "total_latency_ms": {
+            "mean": 1566.322661307695,
+            "median": 1435.9424579999759,
+            "p50": 1435.9424579999759,
+            "p95": 2461.993208000029
+          },
+          "total_latency_ms_r0": {
+            "mean": null,
+            "median": null,
+            "p50": null,
+            "p95": null
+          }
+        }
+      ]
+    }
+  },
+  "figures": {
+    "esr-vs-n": {
+      "id": "esr-vs-n",
+      "title": "Execution Success Rate vs toolspace size N",
+      "kind": "line",
+      "x_label": "N",
+      "y_label": "ESR",
+      "series": [
+        {
+          "name": "baseline",
+          "points": [
+            {
+              "x": 5,
+              "y": 0.8076923076923077
+            },
+            {
+              "x": 10,
+              "y": 0.782051282051282
+            },
+            {
+              "x": 25,
+              "y": 0.7435897435897436
+            },
+            {
+              "x": 50,
+              "y": 0.7692307692307693
+            },
+            {
+              "x": 100,
+              "y": 0.7692307692307693
+            }
+          ]
+        },
+        {
+          "name": "jev_top1",
+          "points": [
+            {
+              "x": 5,
+              "y": 0.7692307692307693
+            },
+            {
+              "x": 10,
+              "y": 0.7532467532467533
+            },
+            {
+              "x": 25,
+              "y": 0.7051282051282052
+            },
+            {
+              "x": 50,
+              "y": 0.7051282051282052
+            },
+            {
+              "x": 100,
+              "y": 0.6923076923076923
+            }
+          ]
+        },
+        {
+          "name": "jev_top5",
+          "points": [
+            {
+              "x": 5,
+              "y": 0.8205128205128205
+            },
+            {
+              "x": 10,
+              "y": 0.782051282051282
+            },
+            {
+              "x": 25,
+              "y": 0.7692307692307693
+            },
+            {
+              "x": 50,
+              "y": 0.7564102564102564
+            },
+            {
+              "x": 100,
+              "y": 0.7564102564102564
+            }
+          ]
+        }
+      ]
+    },
+    "cost-vs-n": {
+      "id": "cost-vs-n",
+      "title": "Priced cost per attempt vs N",
+      "kind": "line",
+      "x_label": "N",
+      "y_label": "USD / attempt",
+      "series": [
+        {
+          "name": "baseline",
+          "points": [
+            {
+              "x": 5,
+              "y": 0.0014459999999999998
+            },
+            {
+              "x": 10,
+              "y": 0.0019567692307692307
+            },
+            {
+              "x": 25,
+              "y": 0.00361676923076923
+            },
+            {
+              "x": 50,
+              "y": 0.006439589743589742
+            },
+            {
+              "x": 100,
+              "y": 0.012235846153846156
+            }
+          ]
+        },
+        {
+          "name": "jev_top1",
+          "points": [
+            {
+              "x": 5,
+              "y": 0.0010116834615384615
+            },
+            {
+              "x": 10,
+              "y": 0.001001682435897436
+            },
+            {
+              "x": 25,
+              "y": 0.0010355821538461537
+            },
+            {
+              "x": 50,
+              "y": 0.0010565787435897432
+            },
+            {
+              "x": 100,
+              "y": 0.0010979150256410256
+            }
+          ]
+        },
+        {
+          "name": "jev_top5",
+          "points": [
+            {
+              "x": 5,
+              "y": 0.0014627091025641028
+            },
+            {
+              "x": 10,
+              "y": 0.0014226663846153844
+            },
+            {
+              "x": 25,
+              "y": 0.0014765052307692307
+            },
+            {
+              "x": 50,
+              "y": 0.0015059120769230772
+            },
+            {
+              "x": 100,
+              "y": 0.0015692996410256416
+            }
+          ]
+        }
+      ]
+    },
+    "agent-tokens-vs-n": {
+      "id": "agent-tokens-vs-n",
+      "title": "Mean agent tokens vs N",
+      "kind": "line",
+      "x_label": "N",
+      "y_label": "Agent tokens / attempt",
+      "series": [
+        {
+          "name": "baseline",
+          "points": [
+            {
+              "x": 5,
+              "y": 281.9102564102564
+            },
+            {
+              "x": 10,
+              "y": 411.0897435897436
+            },
+            {
+              "x": 25,
+              "y": 826.1410256410256
+            },
+            {
+              "x": 50,
+              "y": 1532.6153846153845
+            },
+            {
+              "x": 100,
+              "y": 2981.576923076923
+            }
+          ]
+        },
+        {
+          "name": "jev_top1",
+          "points": [
+            {
+              "x": 5,
+              "y": 168.85897435897436
+            },
+            {
+              "x": 10,
+              "y": 166.52564102564102
+            },
+            {
+              "x": 25,
+              "y": 169.07692307692307
+            },
+            {
+              "x": 50,
+              "y": 169.17948717948718
+            },
+            {
+              "x": 100,
+              "y": 169.26923076923077
+            }
+          ]
+        },
+        {
+          "name": "jev_top5",
+          "points": [
+            {
+              "x": 5,
+              "y": 281.9230769230769
+            },
+            {
+              "x": 10,
+              "y": 271.7564102564103
+            },
+            {
+              "x": 25,
+              "y": 282.2307692307692
+            },
+            {
+              "x": 50,
+              "y": 284.2307692307692
+            },
+            {
+              "x": 100,
+              "y": 289.7307692307692
+            }
+          ]
+        }
+      ]
+    },
+    "k-ablation": {
+      "id": "k-ablation",
+      "title": "Recall / ESR / selection accuracy vs k at N=100 (M4)",
+      "kind": "line",
+      "x_label": "k",
+      "y_label": "Rate",
+      "series": [
+        {
+          "name": "strict Recall@k",
+          "points": [
+            {
+              "x": 1,
+              "y": 0.8717948717948718
+            },
+            {
+              "x": 3,
+              "y": 0.9487179487179487
+            },
+            {
+              "x": 5,
+              "y": 0.9487179487179487
+            },
+            {
+              "x": 10,
+              "y": 0.9615384615384616
+            }
+          ]
+        },
+        {
+          "name": "ESR",
+          "points": [
+            {
+              "x": 1,
+              "y": 0.7051282051282052
+            },
+            {
+              "x": 3,
+              "y": 0.7307692307692307
+            },
+            {
+              "x": 5,
+              "y": 0.7564102564102564
+            },
+            {
+              "x": 10,
+              "y": 0.7692307692307693
+            }
+          ]
+        },
+        {
+          "name": "selection accuracy",
+          "points": [
+            {
+              "x": 1,
+              "y": 1
+            },
+            {
+              "x": 3,
+              "y": 0.8918918918918919
+            },
+            {
+              "x": 5,
+              "y": 0.8648648648648649
+            },
+            {
+              "x": 10,
+              "y": 0.8533333333333334
+            }
+          ]
+        }
+      ]
+    },
+    "failure-decomposition": {
+      "id": "failure-decomposition",
+      "title": "R1 / R2 failure counts vs k (M4, N=100)",
+      "kind": "grouped_bar",
+      "x_label": "k",
+      "y_label": "Count",
+      "categories": [
+        "1",
+        "3",
+        "5",
+        "10"
+      ],
+      "groups": [
+        {
+          "name": "R1",
+          "values": [
+            9,
+            4,
+            4,
+            2
+          ]
+        },
+        {
+          "name": "R2",
+          "values": [
+            0,
+            5,
+            4,
+            5
+          ]
+        }
+      ]
+    },
+    "cost-esr-frontier": {
+      "id": "cost-esr-frontier",
+      "title": "Cost vs ESR frontier (N=100)",
+      "kind": "scatter",
+      "x_label": "USD / attempt",
+      "y_label": "ESR",
+      "points": [
+        {
+          "x": 0.012235846153846156,
+          "y": 0.7692307692307693,
+          "label": "baseline_n100"
+        },
+        {
+          "x": 0.0010979150256410256,
+          "y": 0.6923076923076923,
+          "label": "jev_k1_n100"
+        },
+        {
+          "x": 0.0015692996410256416,
+          "y": 0.7564102564102564,
+          "label": "jev_k5_n100"
+        },
+        {
+          "x": 0.0010911970769230768,
+          "y": 0.7051282051282052,
+          "label": "m4_jev_k1_n100"
+        },
+        {
+          "x": 0.001333709897435898,
+          "y": 0.7307692307692307,
+          "label": "m4_jev_k3_n100"
+        },
+        {
+          "x": 0.0015693509230769232,
+          "y": 0.7564102564102564,
+          "label": "m4_jev_k5_n100"
+        },
+        {
+          "x": 0.00218576117948718,
+          "y": 0.7692307692307693,
+          "label": "m4_jev_k10_n100"
+        }
+      ]
+    },
+    "reproducibility": {
+      "id": "reproducibility",
+      "title": "M3↔M4 reproducibility (k=1, k=5 at N=100)",
+      "kind": "table",
+      "columns": [
+        "k",
+        "ESR_M3",
+        "ESR_M4",
+        "ΔESR",
+        "agreement"
+      ],
+      "rows": [
+        [
+          "1",
+          "0.692",
+          "0.705",
+          "0.013",
+          "0.987"
+        ],
+        [
+          "5",
+          "0.756",
+          "0.756",
+          "0.000",
+          "1.000"
+        ]
+      ]
+    },
+    "adaptive-calibration": {
+      "id": "adaptive-calibration",
+      "title": "Adaptive holdout cells (negative confidence→k result)",
+      "kind": "grouped_bar",
+      "x_label": "Cell",
+      "y_label": "ESR",
+      "categories": [
+        "baseline_n20",
+        "jev_k1_n20",
+        "jev_k5_n20",
+        "adaptive_n20"
+      ],
+      "groups": [
+        {
+          "name": "ESR",
+          "values": [
+            0.75,
+            0.6666666666666666,
+            0.782608695652174,
+            0.6842105263157895
+          ]
+        }
+      ]
+    }
+  }
+}

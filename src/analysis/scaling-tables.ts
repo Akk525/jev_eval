@@ -4,6 +4,7 @@ import { aggregateRuns, type AggregateRun } from "../metrics/aggregate.js";
 import { summarizeSamples, type LatencySummary, type SampleSummary } from "../metrics/metrics.js";
 import type { ExperimentConfig } from "../types/config.js";
 import type { FailureCode } from "../types/trace.js";
+import { loadCompletedCellsFromManifest, refuseResultsRootScan } from "./manifest-scope.js";
 
 const FAILURE_CODES = ["R0", "R1", "R2", "R3", "R4", "R5", "R6"] as const;
 
@@ -93,13 +94,16 @@ export function loadResultDirectory(directory: string): ResultDirectoryLoad {
 }
 
 /**
- * Build architecture × N comparison rows from result directories.
- * Recomputes aggregates from `runs.jsonl` only (ignores stored summary.json).
- * Keeps R0 in the failure taxonomy and infrastructure rate; quality rates exclude R0.
+ * @deprecated Prefer buildScalingTablesFromManifest. Bare results-root scans are forbidden.
  */
-export function buildScalingTables(resultsRoot: string): ScalingTables {
-  const directories = discoverResultDirectories(resultsRoot).map(loadResultDirectory);
-  return buildScalingTablesFromLoads(directories);
+export function buildScalingTables(_resultsRoot: string): ScalingTables {
+  refuseResultsRootScan("buildScalingTables");
+}
+
+/** Aggregate architecture × N rows from directories listed in an epoch manifest only. */
+export function buildScalingTablesFromManifest(manifestPath: string): ScalingTables {
+  const scoped = loadCompletedCellsFromManifest(manifestPath);
+  return buildScalingTablesFromLoads(scoped.directories);
 }
 
 export function buildScalingTablesFromLoads(directories: readonly ResultDirectoryLoad[]): ScalingTables {
@@ -320,7 +324,7 @@ function assertCompatibleGroup(group: readonly ResultDirectoryLoad[]): void {
 }
 
 function groupKey(config: ExperimentConfig): string {
-  return `${config.architecture}::${config.toolspaceSize}`;
+  return `${config.architecture}::${config.toolspaceSize}::${config.topK}::${config.routerOnly === true}`;
 }
 
 function readRunsJsonl(path: string): ScalingRun[] {

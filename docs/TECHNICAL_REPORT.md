@@ -1,41 +1,40 @@
 # Technical report — Jev tool-routing evaluation
 
-Status: **pipeline complete; quantitative results pending live (or archived) result directories.**  
+Status: **live evidence frozen; publication synthesis regenerable.**  
 This document is the publication-facing narrative for M6. It must not be read as
 evidence that Jev is better than an LLM. Negative and null findings are first-class.
 
 Provenance gate: [reproducibility-audit.md](reproducibility-audit.md)  
-Methodology: [methodology.md](methodology.md) · Decisions: [DECISIONS.md](DECISIONS.md)
+Methodology: [methodology.md](methodology.md) · Decisions: [DECISIONS.md](DECISIONS.md)  
+Synthesis SoT: [`analysis/synthesis/`](../analysis/synthesis/) (`synthesis.json` canonical; SVG derived)
 
 ## How to attach numbers (required before any claim)
 
 ```bash
-npm run analysis:dataset -- --results <result-root> --out analysis/dataset
-npm run analysis:audit -- --dataset analysis/dataset/analysis-dataset.json
-npm run analysis:figure1 -- --dataset analysis/dataset/analysis-dataset.json
-npm run analysis:figure2 -- --dataset analysis/dataset/analysis-dataset.json
-npm run analysis:figure3 -- --dataset analysis/dataset/analysis-dataset.json
-npm run analysis:figure4 -- --dataset analysis/dataset/analysis-dataset.json
-npm run analysis:figure5 -- --dataset analysis/dataset/analysis-dataset.json
-npm run analysis:figure6 -- --dataset analysis/dataset/analysis-dataset.json
-npm run summarize -- --results <result-root>
-npm run k-sweep -- --tradeoff --results <k-sweep-root>
+npm run analysis:synthesis
+npm run summarize -- --manifest results/_matrix/2026-09-24T055854Z.json
+npm run k-sweep -- --tradeoff --manifest results/_k-sweep/2026-09-24T140621Z.json
 ```
+
+Legacy figure CLIs remain available when an analysis dataset is built; prefer synthesis
+citations for M3/M4 claims (D15 — manifest-scoped only; never bare `--results results`).
 
 Every quantitative sentence below that is not marked **null** must cite one of:
 
 | Claim class | Artifact to cite |
 |---|---|
-| ESR vs N | `analysis/figures/figure1/figure1-esr.json` (and/or `npm run summarize` rows) |
-| Cost / tokens vs N | `analysis/figures/figure2/figure2-cost.json`, `figure2-tokens.json` |
-| Latency vs N | `analysis/figures/figure3/figure3-latency.json` |
-| Recall@k vs k | `analysis/figures/figure4/figure4-recall.json` |
-| Jev calibration | `analysis/figures/figure5/figure5-calibration.json` |
-| Failure mix | `analysis/figures/figure6/figure6-failures.json` |
-| k tradeoff | `analysis/k-tradeoff.json` from `npm run k-sweep -- --tradeoff` |
-| Adaptive routing | `analysis/adaptive/adaptive-summary.json` via `npm run analysis:adaptive` ([adaptive-summary-tables.md](adaptive-summary-tables.md)) |
+| ESR vs N | `analysis/synthesis/figures/esr-vs-n.json` (and/or `figure1-esr.json`) |
+| Cost / tokens vs N | `analysis/synthesis/figures/cost-vs-n.json`, `agent-tokens-vs-n.json` (and/or `figure2-cost.json`, `figure2-tokens.json`) |
+| Latency vs N | `figure3-latency.json` — **not** a headline synthesis panel |
+| Recall@k / ESR / sel vs k | `analysis/synthesis/figures/k-ablation.json` (and/or `figure4-recall.json`) |
+| Jev calibration / adaptive | `analysis/synthesis/figures/adaptive-calibration.json`, `figure5-calibration.json` |
+| Failure mix | `analysis/synthesis/figures/failure-decomposition.json` (and/or `figure6-failures.json`) |
+| Cost–ESR frontier | `analysis/synthesis/figures/cost-esr-frontier.json` |
+| M3↔M4 reproducibility | `analysis/synthesis/figures/reproducibility.json` |
+| k tradeoff | `analysis/m4-freeze/k-tradeoff.json` (`decision_rule: null`) |
+| Adaptive routing | `analysis/adaptive/adaptive-summary.json` |
 
-If the citation path does not exist or `analysis:audit` fails, the claim is invalid.
+If the citation path does not exist, the claim is invalid.
 
 ---
 
@@ -43,139 +42,92 @@ If the citation path does not exist or `analysis:audit` fails, the claim is inva
 
 ### 1. How does agent tool selection behave as toolspace grows?
 
-**Finding: null (no cited scaling result set on `main`).**
+**Finding: ESR does not collapse with N on this benchmark (M3).**
 
-Expected evidence: Figure 1 Execution Success Rate vs N for baseline / Jev / LLM
-([figure1-esr.md](figure1-esr.md)), plus `npm run summarize` architecture × N
-tables. Denominator excludes R0 (D6).
+Cite: `analysis/synthesis/figures/esr-vs-n.json` / `synthesis.md`.  
+Baseline ESR at N=100 remains ~0.77; Jev top-5 tracks baseline within a few points;
+top-1 lags as Recall@1 falls. R0 = 0 on the frozen matrix. Denominator excludes R0 (D6).
 
-Until regenerable `figure1-esr.json` exists from real dirs, we do **not** claim
-that ESR falls, rises, or stays flat with N.
+LLM router comparison: **Finding: null** (LLM top-5 archived out of M3; D11).
 
 ### 2. When does pre-routing become useful, if at all?
 
-**Finding: null.**
+**Finding: cost/context separation is large at N=100; ESR Δ vs baseline is small and uncertain.**
 
-“Useful” here means a favorable joint movement in ESR, cost, tokens, and/or
-latency relative to baseline — not a single scalar win. Cite Figure 1 together
-with Figure 2 and Figure 3 for the same compatibility key
-(`analysis/dataset/compatibility.json`).
+Cite: `cost-vs-n.json`, `agent-tokens-vs-n.json`, `cost-esr-frontier.json`, and the
+paired N=100 baseline vs top-5 block in `synthesis.json`:
 
-No crossover N is declared. Declaring one without those artifacts would violate
-the audit.
+| Quantity | Value |
+|---|---|
+| Observed ΔESR (top-5 − baseline) | −0.0128 |
+| Paired bootstrap 95% CI | [−0.1026, 0.0641] |
+| Discordant: baseline-only / top5-only | 6 / 5 |
+| McNemar exact two-sided p | 1.000 |
+
+Framing (not an equivalence claim): observed difference small; discordance nearly
+balanced; uncertainty too large for equivalence. Cost CI is **task-sample**
+uncertainty (paired bootstrap over 78 tasks), not run-to-run variance.
+
+No crossover N is declared as a product threshold.
 
 ### 3. What does Jev change in accuracy, cost, tokens, and latency?
 
-**Finding: null for all four axes.**
-
-| Axis | Metric | Artifact |
+| Axis | Finding | Artifact |
 |---|---|---|
-| Accuracy (MVP) | Execution Success Rate | Figure 1 |
-| Cost | Priced cost/task (not provider-reported as substitute) | Figure 2a |
-| Tokens | Router vs agent tokens/task | Figure 2b |
-| Latency | Total p50 / p95 (router + agent); tool latency unavailable | Figure 3 |
+| Accuracy (MVP) | Small ΔESR vs baseline at N=100; CI wide | `synthesis.json` paired block; `esr-vs-n.json` |
+| Cost | Baseline ~8× from N=5→100; top-5 flat | `cost-vs-n.json` |
+| Tokens | Top-5 keeps agent context flat; router absorbs N | `agent-tokens-vs-n.json` |
+| Latency | **Finding: null for headline claims** — epoch variation too large | omit from synthesis panels; see `figure3-latency.json` if needed |
 
-Jev is one of three architectures. Comparisons must include baseline and LLM
-router when those dirs exist. Framing the section as “Jev improvements” without
-baselines is out of scope.
+### 4. Where do failures move when pre-routing / k changes?
 
-### 4. Where do failures move when pre-routing is introduced?
+**Finding: R1 falls with larger k; R2 appears as selection pressure; R3≈stable task set.**
 
-**Finding: null.**
-
-Expected evidence: Figure 6 failure decomposition
-([figure6-failures.md](figure6-failures.md)). R0 stays separate from R1–R6 (D6).
-A shift from R2/R4 toward R1 (or the reverse) is only reportable with cited
-counts from `figure6-failures.json`.
-
-We explicitly do **not** treat infrastructure (R0) as evidence for or against
-pre-routing quality.
+Cite: `failure-decomposition.json` (M4 R1/R2 vs k) and M3 paired analysis
+(`docs/m3-paired-scaling-analysis.md`). Persistent R3/R4 tasks remain in the
+benchmark (not removed from M3).
 
 ### 5. What does k trade off?
 
-**Finding: null for a winning k; method ready.**
+**Finding: tradeoff curve only — no winning k (`decision_rule: null`).**
 
-M4 holds N = 100 and varies Jev `topK ∈ {1,3,5,10}` (D14). Cite:
+M4 holds N = 100 and varies Jev `topK ∈ {1,3,5,10}` (D14), fresh four-cell run
+`2026-09-24T140621Z` @ `5f9e7c3`. Cite:
 
-* `npm run k-sweep -- --summarize` → per-k aggregates
-* `npm run k-sweep -- --tradeoff` → tradeoff table with `decision_rule: null`
-* `npm run k-sweep -- --marginal-utility` → adjacent-k coverage vs utility
-* Figure 4 strict vs lenient Recall@k vs k ([figure4-recall.md](figure4-recall.md))
+* `analysis/synthesis/figures/k-ablation.json`
+* `npm run k-sweep -- --tradeoff --manifest results/_k-sweep/2026-09-24T140621Z.json`
+* `npm run k-sweep -- --marginal-utility --manifest …` (coverage vs utility)
+* `figure4-recall.json` when regenerated from a compatible dataset
 
 **Negative finding (by design):** the harness does **not** select an optimal k.
-Any future decision rule must be versioned separately and kept out of labeling
-(D7).
 
 ### 6. Does Jev confidence provide enough signal for adaptive routing?
 
 **Finding: negative on the first live holdout — stop confidence→k retuning.**
 
-Evidence: adaptive-eval `2026-09-24T045743Z` (n=24/cell) via
-`npm run analysis:adaptive`, plus paired top-1/top-5 decomposition
-([holdout-top5-decomposition.md](holdout-top5-decomposition.md),
-`npm run analysis:holdout-top5`). Figure 5 remains the calibration SoT
-([figure5-calibration.md](figure5-calibration.md), D4).
+Evidence: adaptive-eval `2026-09-24T045743Z` via `npm run analysis:adaptive`, plus
+`analysis/synthesis/figures/adaptive-calibration.json` and holdout decomposition
+([holdout-top5-decomposition.md](holdout-top5-decomposition.md)). Figure 5 remains
+the calibration SoT (`figure5-calibration.json`, D4).
 
-| Cell | ESR | $/attempt |
-|---|---:|---:|
-| baseline | 0.750 | 0.0030 |
-| jev top-1 | 0.667 | 0.0010 |
-| jev top-5 | 0.783 | 0.0013 |
-| adaptive | 0.684 | 0.0008 |
-
-Adaptive escalation frequency was **0**; nearly all scored routes were
-high→k=1. On the paired top-1 cell, confidence median was 1.00 for routing
-hits vs 0.45 for misses, but **high-confidence misses remain** (0.66–0.98),
-so v1 thresholds cannot separate them. Frozen holdout conclusion:
+Frozen holdout conclusion:
 
 > The holdout supports fixed top-k routing as the next hypothesis to test.
-> Increasing k from 1 to 5 primarily improves routing coverage, while residual
-> failures shift downstream toward agent selection. Jev confidence is not
-> sufficiently reliable at the high-confidence tail to support the current
-> adaptive-k policy.
-
-n=24 does **not** support claiming top-5 accuracy above baseline. Do not retune
-thresholds on this sample. Next information: scaling matrix with **Jev top-5
-(treatment)**, **baseline (primary comparison)**, **Jev top-1 (control)** at
-N ∈ {5, 10, 25, 50, 100}. Top-1 must not be substituted for confidence (D4).
 
 ---
 
-## Negative and null summary
+## Refused framing
 
-| Topic | Status |
-|---|---|
-| Published ESR / cost / latency / recall curves | **Null** — regenerate after result dirs |
-| “Pre-routing helps at N ≥ …” | **Null** — no crossover claim |
-| “Optimal k = …” | **Negative / refused** — tradeoff only |
-| “Jev is best on accuracy” | **Refused framing** |
-| Adaptive routing from confidence | **Negative (n=24 holdout)** — insufficient separation for v1; no further threshold fitting |
-| Tool-executor latency in Figure 3 | **Unavailable** (not stored; not invented) |
-| M5 adaptive summary tables | **Ready** — `npm run analysis:adaptive` when adaptive-eval dirs exist |
-| Top-1 vs top-5 holdout decomposition | **Ready** — `npm run analysis:holdout-top5` |
+* Superiority slogans without baselines and cited artifacts.
+* Equivalence of top-5 and baseline from a non-significant McNemar or overlapping CI.
+* Optimal k from the M4 curve without a predeclared decision rule.
+* Independent two-proportion tests on paired shared-task cells.
+* Mixing M3 and M4 directories in one aggregate (D15).
 
-## What this harness *does* establish (non-numeric)
+## Checklist
 
-These are implementation facts, not benchmark scores:
-
-* Fair comparison controls: shared agent, dataset, registry, pricing, evaluation (D1–D2, D10–D11).
-* MVP metric is Execution Success Rate, not E2E Task Success (D3).
-* Measurement SoT is `runs.jsonl`; figures rebuild from a normalized analysis dataset (#46–#53).
-* Neutrality constraints are enforced in artifacts (no optimal-k field; separate confidence vs top-1).
-
-## Editorial checklist (against the audit)
-
-- [x] Every quantitative claim site identifies an artifact path (or is marked null).
-- [x] Negative/null findings are listed explicitly.
-- [x] Narrative does not claim Jev superiority.
-- [x] Links to audit + figure docs.
-- [x] M5 thresholds locked from calibration-bearing dirs (D13); first live holdout recorded as negative on confidence→k.
-- [ ] *Operator:* after larger live runs, fill remaining numeric subsections by citing regenerated JSON only.
-
-## Related paths
-
-* Analysis dataset: [analysis-dataset.md](analysis-dataset.md)  
-* Figures 1–6: `docs/figure{1..6}-*.md`  
-* Holdout top-1 vs top-5: [holdout-top5-decomposition.md](holdout-top5-decomposition.md)  
-* Audit: [reproducibility-audit.md](reproducibility-audit.md)  
-* Project state: [PROJECT_STATE.md](PROJECT_STATE.md)
+- [x] M3 live matrix frozen and analyzed.
+- [x] M4 live k-ablation frozen; synthesis regenerable.
+- [x] Adaptive confidence→k stopped (negative holdout).
+- [x] Manifest-scoped analysis (D15).
+- [ ] External paper draft using `analysis/synthesis/rendered/*.svg`.

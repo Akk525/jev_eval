@@ -3,12 +3,16 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  buildKSweepTables,
   buildKSweepTablesFromLoads,
   kSweepTablesToCsv,
   type KSweepTableRow,
 } from "./k-sweep-tables.js";
-import type { ResultDirectoryLoad, ScalingRun } from "./scaling-tables.js";
+import {
+  discoverResultDirectories,
+  loadResultDirectory,
+  type ResultDirectoryLoad,
+  type ScalingRun,
+} from "./scaling-tables.js";
 import { K_SWEEP_TOOLSPACE_SIZE } from "../config/k-sweep.js";
 
 function run(overrides: Partial<ScalingRun> = {}): ScalingRun {
@@ -141,7 +145,9 @@ describe("buildKSweepTables", () => {
     }
     mkdirSync(join(root, "_k-sweep"), { recursive: true });
 
-    const tables = buildKSweepTables(root);
+    const tables = buildKSweepTablesFromLoads(
+      discoverResultDirectories(root).map(loadResultDirectory),
+    );
     expect(tables.rows.map((row) => row.top_k)).toEqual([1, 3]);
     expect(tables.rows[0]!.mean_candidate_count).toBe(1);
     expect(tables.rows[1]!.mean_candidate_count).toBe(3);

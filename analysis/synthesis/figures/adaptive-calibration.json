@@ -1,0 +1,24 @@
+{
+  "id": "adaptive-calibration",
+  "title": "Adaptive holdout cells (negative confidence→k result)",
+  "kind": "grouped_bar",
+  "x_label": "Cell",
+  "y_label": "ESR",
+  "categories": [
+    "baseline_n20",
+    "jev_k1_n20",
+    "jev_k5_n20",
+    "adaptive_n20"
+  ],
+  "groups": [
+    {
+      "name": "ESR",
+      "values": [
+        0.75,
+        0.6666666666666666,
+        0.782608695652174,
+        0.6842105263157895
+      ]
+    }
+  ]
+}

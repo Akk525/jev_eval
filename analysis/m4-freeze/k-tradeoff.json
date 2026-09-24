@@ -1,0 +1,82 @@
+{
+  "question": "How much candidate context is required before more routing recall stops helping downstream success?",
+  "note": "This table reports the k tradeoff only. It does not select a winning k.",
+  "decision_rule": null,
+  "toolspace_size": 100,
+  "rows": [
+    {
+      "top_k": 1,
+      "toolspace_size": 100,
+      "recall_at_k": 0.8717948717948718,
+      "mean_candidate_count": 1,
+      "agent_input_tokens_per_attempt": 148.65384615384616,
+      "router_input_tokens_per_attempt": 2171.358974358974,
+      "execution_success_rate": 0.7051282051282052,
+      "selection_accuracy": 1,
+      "priced_cost_usd_per_attempt": 0.0010911970769230768,
+      "router_latency_ms_mean": 146.84672544871833,
+      "agent_latency_ms_mean": 1691.4110331282038,
+      "delta_vs_previous_k": null
+    },
+    {
+      "top_k": 3,
+      "toolspace_size": 100,
+      "recall_at_k": 0.9487179487179487,
+      "mean_candidate_count": 3,
+      "agent_input_tokens_per_attempt": 209.98717948717947,
+      "router_input_tokens_per_attempt": 2171.358974358974,
+      "execution_success_rate": 0.7307692307692307,
+      "selection_accuracy": 0.8918918918918919,
+      "priced_cost_usd_per_attempt": 0.001333709897435898,
+      "router_latency_ms_mean": 169.6436421153843,
+      "agent_latency_ms_mean": 1342.612619102563,
+      "delta_vs_previous_k": {
+        "recall_at_k": 0.07692307692307687,
+        "mean_candidate_count": 2,
+        "agent_input_tokens_per_attempt": 61.333333333333314,
+        "execution_success_rate": 0.02564102564102555,
+        "priced_cost_usd_per_attempt": 0.00024251282051282116
+      }
+    },
+    {
+      "top_k": 5,
+      "toolspace_size": 100,
+      "recall_at_k": 0.9487179487179487,
+      "mean_candidate_count": 5,
+      "agent_input_tokens_per_attempt": 269.79487179487177,
+      "router_input_tokens_per_attempt": 2171.358974358974,
+      "execution_success_rate": 0.7564102564102564,
+      "selection_accuracy": 0.8648648648648649,
+      "priced_cost_usd_per_attempt": 0.0015693509230769232,
+      "router_latency_ms_mean": 150.75753798717648,
+      "agent_latency_ms_mean": 1457.0407131538482,
+      "delta_vs_previous_k": {
+        "recall_at_k": 0,
+        "mean_candidate_count": 2,
+        "agent_input_tokens_per_attempt": 59.80769230769229,
+        "execution_success_rate": 0.02564102564102566,
+        "priced_cost_usd_per_attempt": 0.0002356410256410253
+      }
+    },
+    {
+      "top_k": 10,
+      "toolspace_size": 100,
+      "recall_at_k": 0.9615384615384616,
+      "mean_candidate_count": 10,
+      "agent_input_tokens_per_attempt": 423.96153846153845,
+      "router_input_tokens_per_attempt": 2171.358974358974,
+      "execution_success_rate": 0.7692307692307693,
+      "selection_accuracy": 0.8533333333333334,
+      "priced_cost_usd_per_attempt": 0.00218576117948718,
+      "router_latency_ms_mean": 145.5665753974321,
+      "agent_latency_ms_mean": 1420.4971175256405,
+      "delta_vs_previous_k": {
+        "recall_at_k": 0.012820512820512886,
+        "mean_candidate_count": 5,
+        "agent_input_tokens_per_attempt": 154.16666666666669,
+        "execution_success_rate": 0.012820512820512886,
+        "priced_cost_usd_per_attempt": 0.0006164102564102567
+      }
+    }
+  ]
+}

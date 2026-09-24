@@ -31,7 +31,8 @@
     "generate:k-sweep": "tsx scripts/generate-k-sweep.ts",
     "generate:dress-rehearsal": "tsx scripts/generate-dress-rehearsal.ts",
     "generate:m3-freeze": "tsx scripts/generate-m3-freeze-manifest.ts",
-    "generate:m4-freeze": "tsx scripts/generate-m4-freeze-manifest.ts"
+    "generate:m4-freeze": "tsx scripts/generate-m4-freeze-manifest.ts",
+    "analysis:synthesis": "tsx src/cli/analysis-synthesis.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

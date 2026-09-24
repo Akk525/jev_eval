@@ -1,0 +1,33 @@
+{
+  "id": "failure-decomposition",
+  "title": "R1 / R2 failure counts vs k (M4, N=100)",
+  "kind": "grouped_bar",
+  "x_label": "k",
+  "y_label": "Count",
+  "categories": [
+    "1",
+    "3",
+    "5",
+    "10"
+  ],
+  "groups": [
+    {
+      "name": "R1",
+      "values": [
+        9,
+        4,
+        4,
+        2
+      ]
+    },
+    {
+      "name": "R2",
+      "values": [
+        0,
+        5,
+        4,
+        5
+      ]
+    }
+  ]
+}

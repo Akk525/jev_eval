@@ -1,0 +1,949 @@
+{
+  "rows": [
+    {
+      "architecture": "baseline",
+      "toolspace_size": 5,
+      "top_k": null,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n5_kall_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.8076923076923077,
+      "execution_success_rate_stats": {
+        "mean": 0.8076923076923077,
+        "stddev": 0.3966644140109587,
+        "ci95Low": 0.7196620424678893,
+        "ci95High": 0.8957225729167261
+      },
+      "selection_scored": 78,
+      "selection_accuracy": 0.8974358974358975,
+      "selection_accuracy_stats": {
+        "mean": 0.8974358974358975,
+        "stddev": 0.3053524082762295,
+        "ci95Low": 0.8296701676703614,
+        "ci95High": 0.9652016272014335
+      },
+      "recall_at_k": 1,
+      "recall_at_k_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "router_input_tokens": 0,
+      "router_output_tokens": 0,
+      "agent_input_tokens": 20437,
+      "agent_output_tokens": 1552,
+      "priced_cost_usd": 0.11278799999999999,
+      "router_latency_ms": {
+        "mean": 0,
+        "median": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "agent_latency_ms": {
+        "mean": 1277.6322339230771,
+        "median": 1241.3400830000028,
+        "p50": 1241.3400830000028,
+        "p95": 1769.9037499999977
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 3,
+        "R3": 8,
+        "R4": 4,
+        "R5": 0,
+        "R6": 0,
+        "none": 63
+      }
+    },
+    {
+      "architecture": "baseline",
+      "toolspace_size": 10,
+      "top_k": null,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n10_kall_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.782051282051282,
+      "execution_success_rate_stats": {
+        "mean": 0.782051282051282,
+        "stddev": 0.41552457527885506,
+        "ci95Low": 0.6898354510439388,
+        "ci95High": 0.8742671130586253
+      },
+      "selection_scored": 78,
+      "selection_accuracy": 0.782051282051282,
+      "selection_accuracy_stats": {
+        "mean": 0.782051282051282,
+        "stddev": 0.41552457527885506,
+        "ci95Low": 0.6898354510439388,
+        "ci95High": 0.8742671130586253
+      },
+      "recall_at_k": 1,
+      "recall_at_k_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "router_input_tokens": 0,
+      "router_output_tokens": 0,
+      "agent_input_tokens": 30542,
+      "agent_output_tokens": 1523,
+      "priced_cost_usd": 0.15262799999999999,
+      "router_latency_ms": {
+        "mean": 0,
+        "median": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "agent_latency_ms": {
+        "mean": 1701.184792717949,
+        "median": 1411.3477499999863,
+        "p50": 1411.3477499999863,
+        "p95": 3243.603999999992
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 8,
+        "R3": 7,
+        "R4": 2,
+        "R5": 0,
+        "R6": 0,
+        "none": 61
+      }
+    },
+    {
+      "architecture": "baseline",
+      "toolspace_size": 25,
+      "top_k": null,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n25_kall_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7435897435897436,
+      "execution_success_rate_stats": {
+        "mean": 0.7435897435897436,
+        "stddev": 0.4394771815921655,
+        "ci95Low": 0.6460581993192527,
+        "ci95High": 0.8411212878602345
+      },
+      "selection_scored": 78,
+      "selection_accuracy": 0.7435897435897436,
+      "selection_accuracy_stats": {
+        "mean": 0.7435897435897436,
+        "stddev": 0.4394771815921655,
+        "ci95Low": 0.6460581993192527,
+        "ci95High": 0.8411212878602345
+      },
+      "recall_at_k": 1,
+      "recall_at_k_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "router_input_tokens": 0,
+      "router_output_tokens": 0,
+      "agent_input_tokens": 62917,
+      "agent_output_tokens": 1522,
+      "priced_cost_usd": 0.2821079999999999,
+      "router_latency_ms": {
+        "mean": 0,
+        "median": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "agent_latency_ms": {
+        "mean": 1463.5901442179481,
+        "median": 1345.5768749999697,
+        "p50": 1345.5768749999697,
+        "p95": 2340.3389580000076
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 12,
+        "R3": 7,
+        "R4": 1,
+        "R5": 0,
+        "R6": 0,
+        "none": 58
+      }
+    },
+    {
+      "architecture": "baseline",
+      "toolspace_size": 50,
+      "top_k": null,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n50_kall_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7692307692307693,
+      "execution_success_rate_stats": {
+        "mean": 0.7692307692307693,
+        "stddev": 0.4240520956441319,
+        "ci95Low": 0.6751224571917366,
+        "ci95High": 0.863339081269802
+      },
+      "selection_scored": 78,
+      "selection_accuracy": 0.7564102564102564,
+      "selection_accuracy_stats": {
+        "mean": 0.7564102564102564,
+        "stddev": 0.432026256894979,
+        "ci95Low": 0.6605322682796474,
+        "ci95High": 0.8522882445408654
+      },
+      "recall_at_k": 1,
+      "recall_at_k_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "router_input_tokens": 0,
+      "router_output_tokens": 0,
+      "agent_input_tokens": 118037,
+      "agent_output_tokens": 1507,
+      "priced_cost_usd": 0.5022879999999998,
+      "router_latency_ms": {
+        "mean": 0,
+        "median": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "agent_latency_ms": {
+        "mean": 1475.1866213205137,
+        "median": 1312.8902499999967,
+        "p50": 1312.8902499999967,
+        "p95": 2482.8756669999566
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 11,
+        "R3": 7,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "none": 60
+      }
+    },
+    {
+      "architecture": "baseline",
+      "toolspace_size": 100,
+      "top_k": null,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_baseline_n100_kall_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7692307692307693,
+      "execution_success_rate_stats": {
+        "mean": 0.7692307692307693,
+        "stddev": 0.42405209564413177,
+        "ci95Low": 0.6751224571917367,
+        "ci95High": 0.8633390812698019
+      },
+      "selection_scored": 78,
+      "selection_accuracy": 0.7307692307692307,
+      "selection_accuracy_stats": {
+        "mean": 0.7307692307692307,
+        "stddev": 0.44643106892408274,
+        "ci95Low": 0.6316944360216438,
+        "ci95High": 0.8298440255168177
+      },
+      "recall_at_k": 1,
+      "recall_at_k_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "router_input_tokens": 0,
+      "router_output_tokens": 0,
+      "agent_input_tokens": 231054,
+      "agent_output_tokens": 1509,
+      "priced_cost_usd": 0.9543960000000001,
+      "router_latency_ms": {
+        "mean": 0,
+        "median": 0,
+        "p50": 0,
+        "p95": 0
+      },
+      "agent_latency_ms": {
+        "mean": 1953.4764187564112,
+        "median": 1742.5534580000094,
+        "p50": 1742.5534580000094,
+        "p95": 3426.981291000033
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 11,
+        "R3": 7,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "none": 60
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 5,
+      "top_k": 1,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n5_k1_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7692307692307693,
+      "execution_success_rate_stats": {
+        "mean": 0.7692307692307693,
+        "stddev": 0.4240520956441319,
+        "ci95Low": 0.6751224571917366,
+        "ci95High": 0.863339081269802
+      },
+      "selection_scored": 72,
+      "selection_accuracy": 1,
+      "selection_accuracy_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "recall_at_k": 0.9230769230769231,
+      "recall_at_k_stats": {
+        "mean": 0.9230769230769231,
+        "stddev": 0.2681940937606047,
+        "ci95Low": 0.8635576005174855,
+        "ci95High": 0.9825962456363607
+      },
+      "router_input_tokens": 30555,
+      "router_output_tokens": 4645,
+      "agent_input_tokens": 11612,
+      "agent_output_tokens": 1559,
+      "priced_cost_usd": 0.07891131,
+      "router_latency_ms": {
+        "mean": 350.0413766923026,
+        "median": 285.96658300003037,
+        "p50": 285.96658300003037,
+        "p95": 620.6891670000041
+      },
+      "agent_latency_ms": {
+        "mean": 1505.2934598717898,
+        "median": 1245.0395000000717,
+        "p50": 1245.0395000000717,
+        "p95": 2782.064458000008
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 3,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R5": 0,
+        "R6": 0,
+        "none": 60
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 5,
+      "top_k": 5,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n5_k5_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.8205128205128205,
+      "execution_success_rate_stats": {
+        "mean": 0.8205128205128205,
+        "stddev": 0.386243639668214,
+        "ci95Low": 0.7347951991677956,
+        "ci95High": 0.9062304418578454
+      },
+      "selection_scored": 78,
+      "selection_accuracy": 0.9102564102564102,
+      "selection_accuracy_stats": {
+        "mean": 0.9102564102564102,
+        "stddev": 0.28766401017607823,
+        "ci95Low": 0.8464162012110373,
+        "ci95High": 0.9740966193017832
+      },
+      "recall_at_k": 1,
+      "recall_at_k_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "router_input_tokens": 30555,
+      "router_output_tokens": 4645,
+      "agent_input_tokens": 20437,
+      "agent_output_tokens": 1553,
+      "priced_cost_usd": 0.11409131000000002,
+      "router_latency_ms": {
+        "mean": 172.45489207694294,
+        "median": 161.47979200002737,
+        "p50": 161.47979200002737,
+        "p95": 277.1529590000864
+      },
+      "agent_latency_ms": {
+        "mean": 1451.6097013974436,
+        "median": 1149.469750000164,
+        "p50": 1149.469750000164,
+        "p95": 2248.8850419998635
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 2,
+        "R3": 8,
+        "R4": 4,
+        "R5": 0,
+        "R6": 0,
+        "none": 64
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 10,
+      "top_k": 1,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n10_k1_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 1,
+      "infrastructure_failure_rate": 0.01282051282051282,
+      "routing_scored": 77,
+      "execution_scored": 77,
+      "execution_success_rate": 0.7532467532467533,
+      "execution_success_rate_stats": {
+        "mean": 0.7532467532467533,
+        "stddev": 0.4339489466650292,
+        "ci95Low": 0.6563187318993944,
+        "ci95High": 0.8501747745941122
+      },
+      "selection_scored": 70,
+      "selection_accuracy": 1,
+      "selection_accuracy_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "recall_at_k": 0.9090909090909091,
+      "recall_at_k_stats": {
+        "mean": 0.9090909090909091,
+        "stddev": 0.2893649208460967,
+        "ci95Low": 0.8444575704447445,
+        "ci95High": 0.9737242477370737
+      },
+      "router_input_tokens": 37315,
+      "router_output_tokens": 7683,
+      "agent_input_tokens": 11451,
+      "agent_output_tokens": 1538,
+      "priced_cost_usd": 0.07813123000000001,
+      "router_latency_ms": {
+        "mean": 321.914504246759,
+        "median": 284.7292080000043,
+        "p50": 284.7292080000043,
+        "p95": 634.9339160000673
+      },
+      "agent_latency_ms": {
+        "mean": 1689.666813870133,
+        "median": 1166.1885000000475,
+        "p50": 1166.1885000000475,
+        "p95": 3384.4825420000125
+      },
+      "failure_taxonomy": {
+        "R0": 1,
+        "R1": 4,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R5": 0,
+        "R6": 0,
+        "none": 58
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 10,
+      "top_k": 5,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n10_k5_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.782051282051282,
+      "execution_success_rate_stats": {
+        "mean": 0.782051282051282,
+        "stddev": 0.41552457527885506,
+        "ci95Low": 0.6898354510439388,
+        "ci95High": 0.8742671130586253
+      },
+      "selection_scored": 78,
+      "selection_accuracy": 0.8205128205128205,
+      "selection_accuracy_stats": {
+        "mean": 0.8205128205128205,
+        "stddev": 0.3862436396682137,
+        "ci95Low": 0.7347951991677957,
+        "ci95High": 0.9062304418578453
+      },
+      "recall_at_k": 1,
+      "recall_at_k_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "router_input_tokens": 37809,
+      "router_output_tokens": 7784,
+      "agent_input_tokens": 19660,
+      "agent_output_tokens": 1537,
+      "priced_cost_usd": 0.11096797799999998,
+      "router_latency_ms": {
+        "mean": 181.81349773077258,
+        "median": 157.6687910000328,
+        "p50": 157.6687910000328,
+        "p95": 392.4566249998752
+      },
+      "agent_latency_ms": {
+        "mean": 1610.0555015384573,
+        "median": 1219.0134159999434,
+        "p50": 1219.0134159999434,
+        "p95": 3405.543374999892
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 0,
+        "R2": 6,
+        "R3": 7,
+        "R4": 4,
+        "R5": 0,
+        "R6": 0,
+        "none": 61
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 25,
+      "top_k": 1,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n25_k1_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7051282051282052,
+      "execution_success_rate_stats": {
+        "mean": 0.7051282051282052,
+        "stddev": 0.4589364995538168,
+        "ci95Low": 0.6032781264474075,
+        "ci95High": 0.8069782838090028
+      },
+      "selection_scored": 68,
+      "selection_accuracy": 1,
+      "selection_accuracy_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "recall_at_k": 0.8717948717948718,
+      "recall_at_k_stats": {
+        "mean": 0.8717948717948718,
+        "stddev": 0.3364819656684633,
+        "ci95Low": 0.7971206745773465,
+        "ci95High": 0.9464690690123971
+      },
+      "router_input_tokens": 59224,
+      "router_output_tokens": 17143,
+      "agent_input_tokens": 11592,
+      "agent_output_tokens": 1596,
+      "priced_cost_usd": 0.08077540799999998,
+      "router_latency_ms": {
+        "mean": 263.81180614101675,
+        "median": 180.60379199997988,
+        "p50": 180.60379199997988,
+        "p95": 692.8694169999799
+      },
+      "agent_latency_ms": {
+        "mean": 1451.7994059743628,
+        "median": 1193.7252919999883,
+        "p50": 1193.7252919999883,
+        "p95": 2656.177875000052
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 9,
+        "R2": 0,
+        "R3": 8,
+        "R4": 6,
+        "R5": 0,
+        "R6": 0,
+        "none": 55
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 25,
+      "top_k": 5,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n25_k5_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7692307692307693,
+      "execution_success_rate_stats": {
+        "mean": 0.7692307692307693,
+        "stddev": 0.4240520956441319,
+        "ci95Low": 0.6751224571917366,
+        "ci95High": 0.863339081269802
+      },
+      "selection_scored": 74,
+      "selection_accuracy": 0.8378378378378378,
+      "selection_accuracy_stats": {
+        "mean": 0.8378378378378378,
+        "stddev": 0.37111557211164575,
+        "ci95Low": 0.7532808722781186,
+        "ci95High": 0.9223948033975571
+      },
+      "recall_at_k": 0.9487179487179487,
+      "recall_at_k_stats": {
+        "mean": 0.9487179487179487,
+        "stddev": 0.22200011100008343,
+        "ci95Low": 0.8994502857744113,
+        "ci95High": 0.997985611661486
+      },
+      "router_input_tokens": 59224,
+      "router_output_tokens": 17143,
+      "agent_input_tokens": 20475,
+      "agent_output_tokens": 1539,
+      "priced_cost_usd": 0.115167408,
+      "router_latency_ms": {
+        "mean": 394.98968215385236,
+        "median": 169.7840829999186,
+        "p50": 169.7840829999186,
+        "p95": 539.9005000002217
+      },
+      "agent_latency_ms": {
+        "mean": 1656.8302338846172,
+        "median": 1207.5536249999423,
+        "p50": 1207.5536249999423,
+        "p95": 4129.01270800014
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 3,
+        "R2": 5,
+        "R3": 8,
+        "R4": 2,
+        "R5": 0,
+        "R6": 0,
+        "none": 60
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 50,
+      "top_k": 1,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n50_k1_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7051282051282052,
+      "execution_success_rate_stats": {
+        "mean": 0.7051282051282052,
+        "stddev": 0.4589364995538168,
+        "ci95Low": 0.6032781264474075,
+        "ci95High": 0.8069782838090028
+      },
+      "selection_scored": 67,
+      "selection_accuracy": 1,
+      "selection_accuracy_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "recall_at_k": 0.8589743589743589,
+      "recall_at_k_stats": {
+        "mean": 0.8589743589743589,
+        "stddev": 0.3503007603626099,
+        "ci95Low": 0.7812334077979723,
+        "ci95High": 0.9367153101507455
+      },
+      "router_input_tokens": 95551,
+      "router_output_tokens": 33441,
+      "agent_input_tokens": 11595,
+      "agent_output_tokens": 1601,
+      "priced_cost_usd": 0.08241314199999997,
+      "router_latency_ms": {
+        "mean": 197.92237921794637,
+        "median": 171.31320800003596,
+        "p50": 171.31320800003596,
+        "p95": 383.2764999999199
+      },
+      "agent_latency_ms": {
+        "mean": 1325.18352402564,
+        "median": 1238.5474159999285,
+        "p50": 1238.5474159999285,
+        "p95": 2299.0209580000956
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 10,
+        "R2": 0,
+        "R3": 8,
+        "R4": 5,
+        "R5": 0,
+        "R6": 0,
+        "none": 55
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 50,
+      "top_k": 5,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n50_k5_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7564102564102564,
+      "execution_success_rate_stats": {
+        "mean": 0.7564102564102564,
+        "stddev": 0.43202625689497903,
+        "ci95Low": 0.6605322682796473,
+        "ci95High": 0.8522882445408655
+      },
+      "selection_scored": 74,
+      "selection_accuracy": 0.8513513513513513,
+      "selection_accuracy_stats": {
+        "mean": 0.8513513513513513,
+        "stddev": 0.3581700993475614,
+        "ci95Low": 0.7697439518484767,
+        "ci95High": 0.932958750854226
+      },
+      "recall_at_k": 0.9487179487179487,
+      "recall_at_k_stats": {
+        "mean": 0.9487179487179487,
+        "stddev": 0.22200011100008343,
+        "ci95Low": 0.8994502857744113,
+        "ci95High": 0.997985611661486
+      },
+      "router_input_tokens": 95551,
+      "router_output_tokens": 33441,
+      "agent_input_tokens": 20622,
+      "agent_output_tokens": 1548,
+      "priced_cost_usd": 0.11746114200000002,
+      "router_latency_ms": {
+        "mean": 228.3011228846034,
+        "median": 161.09954199986532,
+        "p50": 161.09954199986532,
+        "p95": 461.0775000001304
+      },
+      "agent_latency_ms": {
+        "mean": 1604.1401730127818,
+        "median": 1325.178541999776,
+        "p50": 1325.178541999776,
+        "p95": 3133.2216250000056
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 3,
+        "R2": 6,
+        "R3": 8,
+        "R4": 2,
+        "R5": 0,
+        "R6": 0,
+        "none": 59
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 100,
+      "top_k": 1,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n100_k1_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.6923076923076923,
+      "execution_success_rate_stats": {
+        "mean": 0.6923076923076923,
+        "stddev": 0.46452579668325816,
+        "ci95Low": 0.589217201602666,
+        "ci95High": 0.7953981830127186
+      },
+      "selection_scored": 68,
+      "selection_accuracy": 1,
+      "selection_accuracy_stats": {
+        "mean": 1,
+        "stddev": 0,
+        "ci95Low": 1,
+        "ci95High": 1
+      },
+      "recall_at_k": 0.8717948717948718,
+      "recall_at_k_stats": {
+        "mean": 0.8717948717948718,
+        "stddev": 0.3364819656684638,
+        "ci95Low": 0.7971206745773464,
+        "ci95High": 0.9464690690123972
+      },
+      "router_input_tokens": 169366,
+      "router_output_tokens": 67410,
+      "agent_input_tokens": 11596,
+      "agent_output_tokens": 1607,
+      "priced_cost_usd": 0.085637372,
+      "router_latency_ms": {
+        "mean": 234.83888784614808,
+        "median": 178.61525000003166,
+        "p50": 178.61525000003166,
+        "p95": 476.285208000103
+      },
+      "agent_latency_ms": {
+        "mean": 1358.2671725769194,
+        "median": 1247.3427089999896,
+        "p50": 1247.3427089999896,
+        "p95": 2243.5957090000156
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 9,
+        "R2": 0,
+        "R3": 8,
+        "R4": 7,
+        "R5": 0,
+        "R6": 0,
+        "none": 54
+      }
+    },
+    {
+      "architecture": "jev",
+      "toolspace_size": 100,
+      "top_k": 5,
+      "router_only": false,
+      "source_directories": [
+        "/Users/aditya/Projects/jev_eval/results/2026-09-24T055854Z_jev_n100_k5_fc9fb2a4a24c"
+      ],
+      "attempts": 78,
+      "r0_attempts": 0,
+      "infrastructure_failure_rate": 0,
+      "routing_scored": 78,
+      "execution_scored": 78,
+      "execution_success_rate": 0.7564102564102564,
+      "execution_success_rate_stats": {
+        "mean": 0.7564102564102564,
+        "stddev": 0.43202625689497903,
+        "ci95Low": 0.6605322682796473,
+        "ci95High": 0.8522882445408655
+      },
+      "selection_scored": 74,
+      "selection_accuracy": 0.8648648648648649,
+      "selection_accuracy_stats": {
+        "mean": 0.8648648648648649,
+        "stddev": 0.3442014512209152,
+        "ci95Low": 0.7864401571898755,
+        "ci95High": 0.9432895725398543
+      },
+      "recall_at_k": 0.9487179487179487,
+      "recall_at_k_stats": {
+        "mean": 0.9487179487179487,
+        "stddev": 0.22200011100008343,
+        "ci95Low": 0.8994502857744113,
+        "ci95High": 0.997985611661486
+      },
+      "router_input_tokens": 169366,
+      "router_output_tokens": 67409,
+      "agent_input_tokens": 21043,
+      "agent_output_tokens": 1556,
+      "priced_cost_usd": 0.12240537200000004,
+      "router_latency_ms": {
+        "mean": 236.7056650769097,
+        "median": 174.38608300010674,
+        "p50": 174.38608300010674,
+        "p95": 482.7593339998275
+      },
+      "agent_latency_ms": {
+        "mean": 1504.1854315384692,
+        "median": 1349.5326670000795,
+        "p50": 1349.5326670000795,
+        "p95": 2623.1008329999167
+      },
+      "failure_taxonomy": {
+        "R0": 0,
+        "R1": 4,
+        "R2": 4,
+        "R3": 8,
+        "R4": 3,
+        "R5": 0,
+        "R6": 0,
+        "none": 59
+      }
+    }
+  ]
+}
