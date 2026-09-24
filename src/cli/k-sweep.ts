@@ -13,8 +13,11 @@ import {
 } from "../analysis/k-tradeoff.js";
 import { enumerateKSweepCells } from "../config/k-sweep.js";
 import { loadExperimentConfig } from "../config/load.js";
+import { loadDotEnv } from "../env/load.js";
 import { MatrixOrchestratorError } from "../eval/runner/matrix.js";
 import { runKSweep } from "../eval/runner/k-sweep.js";
+
+loadDotEnv();
 
 const { values } = parseArgs({
   options: {

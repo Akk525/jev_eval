@@ -49,7 +49,8 @@ npm run eval -- --config configs/llm-top5-20.yaml --mock
 npm run eval -- --config configs/jev-router-only-20.yaml --mock
 ```
 
-Live slice (needs `AGENT_API_KEY`; Jev also needs `TYPESAFE_API_KEY`; LLM router reuses `AGENT_API_KEY`):
+Live slice (needs `AGENT_API_KEY`; Jev also needs `TYPESAFE_API_KEY`; LLM router reuses `AGENT_API_KEY`).
+Put them in a repo-root `.env` (see `.env.example`) or export them in the shell — existing shell env wins over `.env`:
 
 ```bash
 npm run eval -- --config configs/baseline-20.yaml

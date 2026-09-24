@@ -2,7 +2,10 @@ import { resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { enumerateMatrixCells } from "../config/matrix.js";
 import { loadExperimentConfig } from "../config/load.js";
+import { loadDotEnv } from "../env/load.js";
 import { MatrixOrchestratorError, runMatrix } from "../eval/runner/matrix.js";
+
+loadDotEnv();
 
 const { values } = parseArgs({
   options: {

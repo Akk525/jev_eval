@@ -1,9 +1,12 @@
 import { resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { loadExperimentConfig } from "../config/load.js";
+import { loadDotEnv } from "../env/load.js";
 import { runLiveSlice } from "../eval/runner/live.js";
 import { runMockedSlice } from "../eval/runner/slice.js";
 import { runSmokeCommand } from "../eval/runner/smoke.js";
+
+loadDotEnv();
 
 const { values } = parseArgs({
   options: {
@@ -25,6 +28,9 @@ if (values.help) {
 --validate       Load and check the config, then exit. Does not call a provider.
 --mock           Run baseline, Jev, or LLM offline with scripted router/agent. No live APIs.
 --router-only    Stop after routing. Score Recall@k. Do not call the agent.
+
+Credentials: set AGENT_API_KEY / TYPESAFE_API_KEY in the environment or a repo-root .env
+(see .env.example). Existing environment variables win over .env.
 
 Mocked vertical slice:
   npm run eval -- --config configs/jev-top5-20.yaml --mock
