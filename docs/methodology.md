@@ -24,10 +24,11 @@ These are held constant across architectures in a fair comparison:
 
 * Agent prompt (`buildAgentPrompt`), model, and parameters. M1 pins `openai` / `gpt-5.6-sol` at temperature 0 (D10).
 * Tool executors and fixture data in the catalog registry.
-* Dataset version (`datasets/v0.1/tasks.jsonl`).
+* Dataset path + version (scaling / matrix / k-sweep use `datasets/v0.2/tasks.jsonl`; some early slice example configs still reference `datasets/v0.1/`). Analysis merges fail loud if paths/versions disagree.
 * Registry hash (covers name, description, domain, parameters, `routingSummary`, `nearMisses`, and the global tail).
 * Pricing version (`pricing/v1.json`).
 * Jev Choice instructions (`JEV_ROUTER_INSTRUCTIONS_V1`) and the pinned model `typesafe` / `jev-1.13.0` on the official System One API.
+* Agent prompt text is frozen with the agent pin; there is no separate `promptVersion` field yet (registry hash + agent model stand in — see `docs/reproducibility-audit.md`).
 
 Do not tune prompts, `routingSummary` text, confidence thresholds, `nearMisses`, the global tool tail, or evaluation rules according to which setting makes Jev look better.
 
@@ -156,6 +157,10 @@ M4 holds every scientific control fixed and varies only Jev `topK ∈ {1, 3, 5, 
 ## Adaptive routing policy (M5)
 
 See [docs/adaptive-policy.md](adaptive-policy.md). Policy shape lives in `policies/adaptive/v0.pending.json` with **null thresholds** until real calibration-bearing Jev result directories exist. Threshold selection uses a pre-registered development/held-out rule; `top1Probability` is never treated as confidence (D4). Check readiness with `npm run check:calibration -- --results <dir>`.
+
+## M6 analysis figures
+
+Normalized attempts: `npm run analysis:dataset`. Figures 1–6: `npm run analysis:figure{1..6}`. Provenance audit: `npm run analysis:audit` and [docs/reproducibility-audit.md](reproducibility-audit.md).
 
 ## Versioning after the first result
 

@@ -59,3 +59,4 @@ confidence / top-1 probability kept distinct per D4).
 * Figure 4 (Recall@k vs k): `docs/figure4-recall.md` — `npm run analysis:figure4`
 * Figure 5 (Jev calibration): `docs/figure5-calibration.md` — `npm run analysis:figure5`
 * Figure 6 (failure decomposition): `docs/figure6-failures.md` — `npm run analysis:figure6`
+* Reproducibility audit: `docs/reproducibility-audit.md` — `npm run analysis:audit`
