@@ -37,7 +37,10 @@ export function createOpenAIChatProvider(options: OpenAIChatOptions): ChatProvid
           parallel_tool_calls: false,
         }),
       });
-      if (!response.ok) throw new Error(`openai chat request failed: ${response.status}`);
+      if (!response.ok) {
+        const detail = response.status === 429 ? " (rate limit or quota — wait or check OpenAI billing)" : "";
+        throw new Error(`openai chat request failed: ${response.status}${detail}`);
+      }
       return parseChat(await response.json(), options.apiKey);
     },
   };

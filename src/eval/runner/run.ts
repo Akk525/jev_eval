@@ -151,7 +151,32 @@ async function processAttempt(
 
   const candidateNames = new Set(decision.candidates.map((candidate) => candidate.name));
   const candidates = presented.filter((tool) => candidateNames.has(tool.name));
-  const turn = await run.agent.run({ taskPrompt: task.prompt, tools: candidates });
+  let turn;
+  try {
+    turn = await run.agent.run({ taskPrompt: task.prompt, tools: candidates });
+  } catch {
+    await finish(
+      run,
+      handle,
+      writeLock,
+      task,
+      repetition,
+      toolspace,
+      evaluateAttempt(
+        {
+          ...attemptBase,
+          router: { status: "valid", decision },
+          agent: { status: "failed", reason: "provider_error" },
+          tool: { status: "not_run" },
+        },
+        k,
+      ),
+      decision,
+      ZERO_USAGE,
+      null,
+    );
+    return;
+  }
   await run.tracer.event(handle, { type: "agent_completed", turn });
 
   const toolResult =

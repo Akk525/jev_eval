@@ -27,7 +27,10 @@ export function createOpenAIRankProvider(options: OpenAIRankOptions): RankProvid
           messages: [{ role: "user", content: request.prompt }],
         }),
       });
-      if (!response.ok) throw new Error(`openai rank request failed: ${response.status}`);
+      if (!response.ok) {
+        const detail = response.status === 429 ? " (rate limit or quota — wait or check OpenAI billing)" : "";
+        throw new Error(`openai rank request failed: ${response.status}${detail}`);
+      }
       return parseRank(await response.json(), options.apiKey);
     },
   };

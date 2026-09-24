@@ -132,6 +132,53 @@ it("runs mock Jev through the runner and stores the full distribution", async ()
   expect(seen[0]?.tools[0]?.parameters).toMatchObject({ type: "object" });
 });
 
+it("records agent provider failures as R0 and continues the experiment", async () => {
+  const root = mkdtempSync(join(tmpdir(), "jev-agent-r0-"));
+  const first = task("task_0001", "first");
+  const second = task("task_0002", "second");
+  const agent: Agent = {
+    async run(input) {
+      if (input.taskPrompt === "first") throw new Error("openai chat request failed: 429");
+      return {
+        selectedTool: "gold",
+        arguments: { query: "q" },
+        finalResponse: null,
+        usage: { inputTokens: 1, outputTokens: 1 },
+        latencyMs: 1,
+        raw: null,
+      };
+    },
+  };
+  const results = openResultDirectory({
+    root,
+    timestamp: "2026-09-23T160001Z",
+    config: config(10),
+    configHash: "hash",
+    datasetVersion: "1",
+    registryHash: "reg",
+    gitSha: "abc",
+  });
+
+  await runExperiment({
+    config: config(10),
+    tasks: [first, second],
+    registry: registry(),
+    router: createJevRouter(createMockDecisionProvider([decision, decision])),
+    agent,
+    tracer: new NoopTracer(),
+    results,
+    pricing: null,
+  });
+
+  const runs = results.readRuns();
+  expect(runs).toHaveLength(2);
+  expect(runs[0]?.failureCode).toBe("R0");
+  expect(runs[0]?.infrastructureReason).toBe("provider_error");
+  expect(runs[0]?.executionExcluded).toBe(true);
+  expect(runs[1]?.failureCode).toBeNull();
+  expect(runs[1]?.executionSuccess).toBe(true);
+});
+
 it("does not append a completed task again after the process stops", async () => {
   const root = mkdtempSync(join(tmpdir(), "jev-resume-"));
   const first = task("task_0001", "first");
@@ -149,27 +196,18 @@ it("does not append a completed task again after the process stops", async () =>
     registryHash: "reg",
     gitSha: "abc",
   });
-  let callsBeforeStop = 0;
-  const stopping: Agent = {
-    async run(input) {
-      callsBeforeStop += 1;
-      if (callsBeforeStop > 1) throw new Error("killed");
-      return createScriptedAgent(calls).run(input);
-    },
-  };
 
-  await expect(
-    runExperiment({
-      config: config(10),
-      tasks: [first, second],
-      registry: registry(),
-      router: createJevRouter(createMockDecisionProvider([decision, decision])),
-      agent: stopping,
-      tracer: new NoopTracer(),
-      results,
-      pricing: null,
-    }),
-  ).rejects.toThrow(/killed/);
+  // Simulate a stop after the first task by only scheduling that work item.
+  await runExperiment({
+    config: config(10),
+    tasks: [first],
+    registry: registry(),
+    router: createJevRouter(createMockDecisionProvider([decision])),
+    agent: createScriptedAgent(calls),
+    tracer: new NoopTracer(),
+    results,
+    pricing: null,
+  });
   expect(results.readRuns().map((run) => run.taskId)).toEqual(["task_0001"]);
 
   const resumed = openResultDirectory({
