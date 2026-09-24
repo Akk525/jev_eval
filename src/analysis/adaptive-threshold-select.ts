@@ -45,6 +45,11 @@ export function isDevelopmentTask(taskId: string): boolean {
   return hashTaskId(taskId) % 2 === 0;
 }
 
+/** Complement of {@link isDevelopmentTask} — used for #44 adaptive evaluation. */
+export function isHoldoutTask(taskId: string): boolean {
+  return !isDevelopmentTask(taskId);
+}
+
 export function rankToolsByScore(scores: Record<string, number>): string[] {
   return Object.entries(scores)
     .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]))

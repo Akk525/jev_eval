@@ -156,7 +156,7 @@ M4 holds every scientific control fixed and varies only Jev `topK ∈ {1, 3, 5, 
 
 ## Adaptive routing policy (M5)
 
-See [docs/adaptive-policy.md](adaptive-policy.md). Locked thresholds live in `policies/adaptive/v1.json` (D13: `T_low = 0.5`, `T_high = 0.6`). The stub `policies/adaptive/v0.pending.json` remains historical. Threshold selection uses a pre-registered development/held-out rule; `top1Probability` is never treated as confidence (D4). Check readiness with `npm run check:calibration -- --results <dir>`; re-run selection with `npm run select:adaptive-thresholds`.
+See [docs/adaptive-policy.md](adaptive-policy.md). Locked thresholds live in `policies/adaptive/v1.json` (D13: `T_low = 0.5`, `T_high = 0.6`). The stub `policies/adaptive/v0.pending.json` remains historical. Threshold selection uses a pre-registered development/held-out rule; `top1Probability` is never treated as confidence (D4). Check readiness with `npm run check:calibration -- --results <dir>`; re-run selection with `npm run select:adaptive-thresholds`. Compare adaptive vs fixed-k on the odd-hash holdout with `npm run adaptive-eval` ([adaptive-eval.md](adaptive-eval.md)).
 
 
 ## M6 analysis figures

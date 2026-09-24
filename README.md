@@ -105,12 +105,16 @@ npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out anal
 npm run k-sweep -- --tradeoff --results /tmp/jev-ksweep --out analysis/k-tradeoff.json
 ```
 
-Adaptive policy (M5 / #42) — thresholds locked in `policies/adaptive/v1.json` (D13):
+Adaptive policy (M5 / #42–#44) — thresholds locked; compare adaptive vs fixed-k on the holdout split:
 
 ```bash
 npm run check:calibration -- --results results
 npm run select:adaptive-thresholds -- --results <jev-result-dir> --write-policy policies/adaptive/v1.json
+npm run adaptive-eval -- --mock --results /tmp/jev-adaptive-eval
+npm run adaptive-eval -- --summarize --results /tmp/jev-adaptive-eval --out analysis/adaptive-eval.json
 ```
+
+See [docs/adaptive-eval.md](docs/adaptive-eval.md).
 
 No invented benchmark numbers. Conclusions come from result directories only.
 

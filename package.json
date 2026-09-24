@@ -13,6 +13,7 @@
     "matrix": "tsx src/cli/matrix.ts",
     "summarize": "tsx src/cli/summarize.ts",
     "k-sweep": "tsx src/cli/k-sweep.ts",
+    "adaptive-eval": "tsx src/cli/adaptive-eval.ts",
     "check:calibration": "tsx src/cli/check-calibration.ts",
     "select:adaptive-thresholds": "tsx src/cli/select-adaptive-thresholds.ts",
     "analysis:dataset": "tsx src/cli/analysis-dataset.ts",

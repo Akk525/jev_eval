@@ -67,7 +67,7 @@ Required:
 - [x] At least one result directory with Jev architecture and `calibration.scored > 0`
 - [x] Confidence values are not a single constant across scored attempts
 - [x] Cited development dirs are listed by the check and recorded in `threshold_source` when thresholds are locked
-- [ ] Final adaptive eval dirs are disjoint from the development set used for thresholds (enforced when #44 runs)
+- [x] Final adaptive eval dirs are disjoint from the development set used for thresholds (odd FNV-1a taskId hash holdout; see [adaptive-eval.md](adaptive-eval.md) / #44)
 
 ## Relationship to implementation (#43)
 

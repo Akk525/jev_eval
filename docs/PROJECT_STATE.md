@@ -4,22 +4,23 @@ Snapshot date: 2026-09-24
 
 ## Current milestone
 
-M5 — Adaptive Routing (router implemented; eval vs fixed-k next)
+M5 — Adaptive Routing (eval harness landed; live adaptive-vs-fixed-k optional)
 
 ## Completed issues
 
 - #1–#41 — M0–M4 path on `main`.
 - #42 — adaptive thresholds locked in `policies/adaptive/v1.json` (D13).
 - #43 — adaptive `Router` behind the existing interface; run records carry branch/k/escalation.
+- #44 — adaptive vs fixed-k eval configs, holdout split, aggregator, mock path.
 - #46–#54 — M6 analysis pipeline + publication report (null findings until more arches/figures regenerate from live dirs).
 
 ## Issue currently being worked on
 
-None (landing #43). Next: #44 evaluate adaptive vs fixed-k (disjoint from the #42 development dir).
+None (landing #44). Next: #45 adaptive routing summary tables.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D13). Adaptive branches use provider `confidence` only (D4). OpenAI Chat Completions tool calls send `reasoning_effort: "none"` for `gpt-5.6-sol`.
+Accepted in `docs/DECISIONS.md` (D1–D13). Adaptive branches use provider `confidence` only (D4). #44 holdout = odd FNV-1a `taskId` hash (complement of #42 development). OpenAI Chat Completions tool calls send `reasoning_effort: "none"` for `gpt-5.6-sol`.
 
 ## Known problems
 
@@ -30,11 +31,11 @@ Accepted in `docs/DECISIONS.md` (D1–D13). Adaptive branches use provider `conf
 
 ## Open questions
 
-- #44–#45 adaptive evaluation and summary tables.
-- Fill [docs/TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) numeric subsections only from regenerated figure JSON once baseline/LLM dirs exist.
+- #45 adaptive summary tables for publication.
+- Fill [docs/TECHNICAL_REPORT.md](TECHNICAL_REPORT.md) numeric subsections only from regenerated figure JSON once live adaptive-eval dirs exist.
 
 ## Next recommended action
 
-1. #44 — Evaluate adaptive routing against fixed-k baselines (new result dirs, not the #42 development source).
-2. Optionally run baseline + LLM live slices for three-way figures.
-3. #45 — Adaptive routing summary tables.
+1. #45 — Adaptive routing summary tables (consume `npm run adaptive-eval -- --summarize` output).
+2. Optionally run `npm run adaptive-eval -- --results results` live for headline numbers.
+3. Optionally run baseline + LLM live slices for three-way figures.

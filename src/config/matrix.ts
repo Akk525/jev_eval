@@ -15,8 +15,8 @@ export const MATRIX_ARCHITECTURES = ["baseline", "jev", "llm"] as const;
 export type MatrixArchitecture = (typeof MATRIX_ARCHITECTURES)[number];
 
 export interface MatrixCell {
-  architecture: MatrixArchitecture;
-  toolspaceSize: ScalingToolspaceSize;
+  architecture: MatrixArchitecture | "adaptive";
+  toolspaceSize: number;
   /** Repo-relative path under configs/matrix/. */
   relativePath: string;
   config: ExperimentConfig;
