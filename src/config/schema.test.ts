@@ -116,8 +116,13 @@ describe("parseExperimentConfig", () => {
     ).toThrow(/agent\.model/);
   });
 
-  it("rejects concurrency above 1", () => {
-    expect(() => parseExperimentConfig(baseline({ concurrency: 2 }))).toThrow(/concurrency/);
+  it("rejects concurrency above the documented bound", () => {
+    expect(() => parseExperimentConfig(baseline({ concurrency: 9 }))).toThrow(/concurrency/);
+  });
+
+  it("accepts concurrency within the bound", () => {
+    expect(parseExperimentConfig(baseline({ concurrency: 2 })).concurrency).toBe(2);
+    expect(parseExperimentConfig(baseline({ concurrency: 8 })).concurrency).toBe(8);
   });
 
   it("defaults routerOnly to false when omitted", () => {

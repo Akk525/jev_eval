@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { ExperimentConfig } from "../types/config.js";
+import { MAX_PROVIDER_CONCURRENCY } from "./concurrency.js";
 
 const UNPINNED_JEV_MODELS = new Set(["jev-latest", "~typesafe/jev-latest"]);
 
@@ -28,11 +29,11 @@ export const experimentConfigSchema = z
   })
   .strict()
   .superRefine((config, ctx) => {
-    if (config.concurrency !== 1) {
+    if (config.concurrency > MAX_PROVIDER_CONCURRENCY) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["concurrency"],
-        message: "must be 1 until bounded concurrency is implemented",
+        message: `must be <= ${MAX_PROVIDER_CONCURRENCY}`,
       });
     }
 

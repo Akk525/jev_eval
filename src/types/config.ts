@@ -19,6 +19,10 @@ export interface ExperimentConfig {
   topK: number | null;
   datasetPath: string;
   repetitions: number;
+  /**
+   * Max in-flight provider attempts (router + agent) for one experiment.
+   * Default configs use 1. Allowed range is 1..MAX_PROVIDER_CONCURRENCY (8).
+   */
   concurrency: number;
   seed: number;
   agent: AgentModelRef;

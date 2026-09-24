@@ -137,6 +137,10 @@ Set `repetitions` in the experiment config (positive integer). The runner record
 
 `npm run matrix` runs the checked-in `configs/matrix/` cells serially. A manifest under `<results>/_matrix/<timestamp>.json` records per-cell status. `--resume` skips completed and failed cells and continues pending/running ones (partial result dirs use the existing config-hash resume rules). Failed cells are not retried unless the operator starts a new matrix run. A single cell can still be executed with `npm run eval -- --config configs/matrix/...`.
 
+## Provider concurrency
+
+`concurrency` in the experiment config caps how many `(task_id, repetition)` attempts may call the router/agent at once (bound: 1..8, `MAX_PROVIDER_CONCURRENCY`). Default configs keep `concurrency: 1`. The value is stored on `config.json`. Toolspace construction and ranking inputs stay deterministic per task; `runs.jsonl` append order may follow completion order. Resume keys remain `(task_id, repetition)`. Provider failures still classify as `R0`. There is no unbounded `Promise.all` over the task list.
+
 ## Versioning after the first result
 
 After the first real result directory exists, any methodological change needs a new dataset version, registry hash, prompt version, or pricing version, plus a `docs/DECISIONS.md` entry. Old result directories are never rewritten.

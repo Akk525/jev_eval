@@ -449,3 +449,84 @@ it("writes three raw attempts per task and by_repetition stats when repetitions 
   expect(summary.by_repetition.repetitions).toBe(3);
   expect(summary.by_repetition.execution_success_rate.mean).toBe(1);
 });
+
+it("keeps toolspaces and candidates identical at concurrency 1 and 4", async () => {
+  async function capture(concurrency: number) {
+    const root = mkdtempSync(join(tmpdir(), "jev-conc-"));
+    const tasks = [task("task_0001", "a"), task("task_0002", "b"), task("task_0003", "c"), task("task_0004", "d")];
+    const cfg = config(10, { concurrency });
+    const results = openResultDirectory({
+      root,
+      timestamp: `2026-09-23T170${concurrency}00Z`,
+      config: cfg,
+      configHash: `hash-${concurrency}`,
+      datasetVersion: "1",
+      registryHash: "reg",
+      gitSha: "abc",
+    });
+    const prompts = new Map(
+      tasks.map((item) => [item.prompt, { tool: "gold", arguments: { query: "q" } }] as const),
+    );
+    const decisions = Array.from({ length: tasks.length }, () => decision);
+    await runExperiment({
+      config: cfg,
+      tasks,
+      registry: registry(),
+      router: createJevRouter(createMockDecisionProvider(decisions)),
+      agent: createScriptedAgent(prompts),
+      tracer: new NoopTracer(),
+      results,
+      pricing: null,
+    });
+    const stored = JSON.parse(readFileSync(join(results.directory, "config.json"), "utf8")) as {
+      concurrency: number;
+    };
+    expect(stored.concurrency).toBe(concurrency);
+    return results
+      .readRuns()
+      .map((run) => ({
+        taskId: run.taskId,
+        repetition: run.repetition,
+        toolspace: run.toolspace,
+        candidates: run.candidates,
+        failureCode: run.failureCode,
+      }))
+      .sort((left, right) => left.taskId.localeCompare(right.taskId));
+  }
+
+  expect(await capture(4)).toEqual(await capture(1));
+});
+
+it("still classifies provider router failures as R0 under concurrency > 1", async () => {
+  const root = mkdtempSync(join(tmpdir(), "jev-conc-r0-"));
+  const cfg = config(10, { concurrency: 3 });
+  const results = openResultDirectory({
+    root,
+    timestamp: "2026-09-23T171000Z",
+    config: cfg,
+    configHash: "hash",
+    datasetVersion: "1",
+    registryHash: "reg",
+    gitSha: "abc",
+  });
+  const failing: Router = {
+    id: "jev",
+    async route() {
+      throw new Error("provider down");
+    },
+  };
+  await runExperiment({
+    config: cfg,
+    tasks: [task("task_0001", "a"), task("task_0002", "b")],
+    registry: registry(),
+    router: failing,
+    agent: createScriptedAgent(new Map()),
+    tracer: new NoopTracer(),
+    results,
+    pricing: null,
+  });
+  const runs = results.readRuns();
+  expect(runs).toHaveLength(2);
+  expect(runs.every((run) => run.failureCode === "R0")).toBe(true);
+  expect(runs.every((run) => run.routingExcluded)).toBe(true);
+});

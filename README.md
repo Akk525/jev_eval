@@ -83,4 +83,6 @@ npm run eval -- --config configs/final/jev-top5-20.yaml --mock
 npm run eval -- --config configs/final/llm-top5-20.yaml --mock
 ```
 
+Set `concurrency` (1..8) in a config to bound in-flight provider attempts inside one experiment. Default remains 1. Toolspaces stay deterministic; append order may be completion-ordered.
+
 No invented benchmark numbers. Conclusions come from result directories only.
