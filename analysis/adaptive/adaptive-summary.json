@@ -1,0 +1,120 @@
+{
+  "question": "How do adaptive confidence branches trade accuracy, cost, and latency against fixed-k Jev and baseline?",
+  "note": "These tables report the adaptive vs fixed-k comparison and branch usage only. They do not claim adaptive routing is superior.",
+  "decision_rule": null,
+  "policy_path": "policies/adaptive/v1.json",
+  "source_manifest": "/Users/aditya/Projects/jev_eval/results/_adaptive-eval/2026-09-24T045743Z.json",
+  "held_out_split": {
+    "rule": "odd FNV-1a taskId hash",
+    "complement_of": "even FNV-1a taskId hash (policies/adaptive/v1.json threshold_source)",
+    "threshold_source_dir": "results/2026-09-24T040823Z_jev_n20_k5_2e9e789ecba3"
+  },
+  "comparison": [
+    {
+      "cell_id": "baseline",
+      "architecture": "baseline",
+      "top_k": null,
+      "attempts": 24,
+      "execution_success_rate": 0.75,
+      "recall_at_k": 1,
+      "selection_accuracy": 0.6666666666666666,
+      "priced_cost_usd_per_attempt": 0.0030033333333333335,
+      "router_input_tokens_per_attempt": 0,
+      "agent_input_tokens_per_attempt": 658.125,
+      "router_latency_ms_mean": 0,
+      "agent_latency_ms_mean": 1362.3522256666668,
+      "escalation_frequency": null,
+      "mean_selected_k": null,
+      "delta_vs_jev_top5": {
+        "execution_success_rate": -0.03260869565217395,
+        "recall_at_k": 0.04166666666666663,
+        "priced_cost_usd_per_attempt": 0.0016541740833333335,
+        "agent_input_tokens_per_attempt": 416.41666666666663,
+        "mean_selected_k": null
+      }
+    },
+    {
+      "cell_id": "jev_top1",
+      "architecture": "jev",
+      "top_k": 1,
+      "attempts": 24,
+      "execution_success_rate": 0.6666666666666666,
+      "recall_at_k": 0.75,
+      "selection_accuracy": 1,
+      "priced_cost_usd_per_attempt": 0.0010144925833333333,
+      "router_input_tokens_per_attempt": 670.4583333333334,
+      "agent_input_tokens_per_attempt": 146.16666666666666,
+      "router_latency_ms_mean": 253.73576216666757,
+      "agent_latency_ms_mean": 1278.6925556249992,
+      "escalation_frequency": null,
+      "mean_selected_k": null,
+      "delta_vs_jev_top5": {
+        "execution_success_rate": -0.11594202898550732,
+        "recall_at_k": -0.20833333333333337,
+        "priced_cost_usd_per_attempt": -0.0003346666666666667,
+        "agent_input_tokens_per_attempt": -95.54166666666669,
+        "mean_selected_k": null
+      }
+    },
+    {
+      "cell_id": "jev_top5",
+      "architecture": "jev",
+      "top_k": 5,
+      "attempts": 24,
+      "execution_success_rate": 0.782608695652174,
+      "recall_at_k": 0.9583333333333334,
+      "selection_accuracy": 0.7272727272727273,
+      "priced_cost_usd_per_attempt": 0.00134915925,
+      "router_input_tokens_per_attempt": 670.4583333333334,
+      "agent_input_tokens_per_attempt": 241.70833333333334,
+      "router_latency_ms_mean": 277.7777587083304,
+      "agent_latency_ms_mean": 1237.0711974347835,
+      "escalation_frequency": null,
+      "mean_selected_k": null,
+      "delta_vs_jev_top5": null
+    },
+    {
+      "cell_id": "adaptive",
+      "architecture": "adaptive",
+      "top_k": 5,
+      "attempts": 24,
+      "execution_success_rate": 0.6842105263157895,
+      "recall_at_k": 0.8947368421052632,
+      "selection_accuracy": 0.9411764705882353,
+      "priced_cost_usd_per_attempt": 0.0008064511666666666,
+      "router_input_tokens_per_attempt": 530.5833333333334,
+      "agent_input_tokens_per_attempt": 120.41666666666667,
+      "router_latency_ms_mean": 281.8380197894738,
+      "agent_latency_ms_mean": 1300.8022434210595,
+      "escalation_frequency": 0,
+      "mean_selected_k": 1.2105263157894737,
+      "delta_vs_jev_top5": {
+        "execution_success_rate": -0.09839816933638446,
+        "recall_at_k": -0.0635964912280702,
+        "priced_cost_usd_per_attempt": -0.0005427080833333334,
+        "agent_input_tokens_per_attempt": -121.29166666666667,
+        "mean_selected_k": -3.7894736842105265
+      }
+    }
+  ],
+  "branch_usage": [
+    {
+      "branch": "high",
+      "count": 18,
+      "frequency": 0.9473684210526315,
+      "action": "jev_topk k=1"
+    },
+    {
+      "branch": "medium",
+      "count": 1,
+      "frequency": 0.05263157894736842,
+      "action": "jev_topk k=5"
+    },
+    {
+      "branch": "low",
+      "count": 0,
+      "frequency": 0,
+      "action": "escalate llm_topk k=5"
+    }
+  ]
+}

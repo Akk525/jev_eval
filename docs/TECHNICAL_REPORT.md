@@ -107,16 +107,36 @@ Any future decision rule must be versioned separately and kept out of labeling
 
 ### 6. Does Jev confidence provide enough signal for adaptive routing?
 
-**Finding: thresholds locked; live adaptive ESR still null.**
+**Finding: negative on the first live holdout — stop confidence→k retuning.**
 
-Expected evidence: Figure 5 calibration of **confidence** and **top-1 probability
-as separate series** ([figure5-calibration.md](figure5-calibration.md), D4), plus
-calibration-bearing result dirs (`npm run check:calibration`).
+Evidence: adaptive-eval `2026-09-24T045743Z` (n=24/cell) via
+`npm run analysis:adaptive`, plus paired top-1/top-5 decomposition
+([holdout-top5-decomposition.md](holdout-top5-decomposition.md),
+`npm run analysis:holdout-top5`). Figure 5 remains the calibration SoT
+([figure5-calibration.md](figure5-calibration.md), D4).
 
-Adaptive thresholds are locked in `policies/adaptive/v1.json` (D13: `T_low = 0.5`,
-`T_high = 0.6`) from the development split of a live Jev result directory. Live
-adaptive evaluation vs fixed-k (#44) has not run yet, so whether the policy
-improves ESR remains unanswered. Top-1 must not be substituted for confidence (D4).
+| Cell | ESR | $/attempt |
+|---|---:|---:|
+| baseline | 0.750 | 0.0030 |
+| jev top-1 | 0.667 | 0.0010 |
+| jev top-5 | 0.783 | 0.0013 |
+| adaptive | 0.684 | 0.0008 |
+
+Adaptive escalation frequency was **0**; nearly all scored routes were
+high→k=1. On the paired top-1 cell, confidence median was 1.00 for routing
+hits vs 0.45 for misses, but **high-confidence misses remain** (0.66–0.98),
+so v1 thresholds cannot separate them. Frozen holdout conclusion:
+
+> The holdout supports fixed top-k routing as the next hypothesis to test.
+> Increasing k from 1 to 5 primarily improves routing coverage, while residual
+> failures shift downstream toward agent selection. Jev confidence is not
+> sufficiently reliable at the high-confidence tail to support the current
+> adaptive-k policy.
+
+n=24 does **not** support claiming top-5 accuracy above baseline. Do not retune
+thresholds on this sample. Next information: scaling matrix with **Jev top-5
+(treatment)**, **baseline (primary comparison)**, **Jev top-1 (control)** at
+N ∈ {5, 10, 25, 50, 100}. Top-1 must not be substituted for confidence (D4).
 
 ---
 
@@ -128,9 +148,10 @@ improves ESR remains unanswered. Top-1 must not be substituted for confidence (D
 | “Pre-routing helps at N ≥ …” | **Null** — no crossover claim |
 | “Optimal k = …” | **Negative / refused** — tradeoff only |
 | “Jev is best on accuracy” | **Refused framing** |
-| Adaptive routing from confidence | Thresholds locked (D13); summary tables ready (#45); live headline pending |
+| Adaptive routing from confidence | **Negative (n=24 holdout)** — insufficient separation for v1; no further threshold fitting |
 | Tool-executor latency in Figure 3 | **Unavailable** (not stored; not invented) |
 | M5 adaptive summary tables | **Ready** — `npm run analysis:adaptive` when adaptive-eval dirs exist |
+| Top-1 vs top-5 holdout decomposition | **Ready** — `npm run analysis:holdout-top5` |
 
 ## What this harness *does* establish (non-numeric)
 
@@ -147,12 +168,13 @@ These are implementation facts, not benchmark scores:
 - [x] Negative/null findings are listed explicitly.
 - [x] Narrative does not claim Jev superiority.
 - [x] Links to audit + figure docs.
-- [x] M5 thresholds locked from calibration-bearing dirs (D13); adaptive ESR claims still omitted until #44.
-- [ ] *Operator:* after live runs, fill numeric subsections by citing regenerated JSON only.
+- [x] M5 thresholds locked from calibration-bearing dirs (D13); first live holdout recorded as negative on confidence→k.
+- [ ] *Operator:* after larger live runs, fill remaining numeric subsections by citing regenerated JSON only.
 
 ## Related paths
 
 * Analysis dataset: [analysis-dataset.md](analysis-dataset.md)  
 * Figures 1–6: `docs/figure{1..6}-*.md`  
+* Holdout top-1 vs top-5: [holdout-top5-decomposition.md](holdout-top5-decomposition.md)  
 * Audit: [reproducibility-audit.md](reproducibility-audit.md)  
 * Project state: [PROJECT_STATE.md](PROJECT_STATE.md)
