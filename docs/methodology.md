@@ -145,6 +145,10 @@ Set `repetitions` in the experiment config (positive integer). The runner record
 
 `npm run summarize` rebuilds architecture × N comparison tables from result directories under a results root. It recomputes from `runs.jsonl` only (ignores stored `summary.json`). Rows include Execution Success Rate, selection accuracy, Recall@k, tokens, priced cost, latency, failure taxonomy (R0 kept separate), and infrastructure failure rate. Router-only and full-agent epochs are not merged into the same cell. Output is JSON or CSV — no plots and no interpretive claims.
 
+## M4 Jev top-k sweep
+
+M4 holds every scientific control fixed and varies only Jev `topK ∈ {1, 3, 5, 10}` at **N = 25** (D12). Configs live under `configs/k-sweep/` (`datasets/v0.2/`, D10 pins). Regenerate with `npm run generate:k-sweep`. Result directories record k in the directory name via the existing `k<k>` segment.
+
 ## Versioning after the first result
 
 After the first real result directory exists, any methodological change needs a new dataset version, registry hash, prompt version, or pricing version, plus a `docs/DECISIONS.md` entry. Old result directories are never rewritten.

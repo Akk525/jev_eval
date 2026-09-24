@@ -12,7 +12,8 @@
     "eval": "tsx src/cli/eval.ts",
     "matrix": "tsx src/cli/matrix.ts",
     "summarize": "tsx src/cli/summarize.ts",
-    "generate:matrix": "tsx scripts/generate-n-matrix.ts"
+    "generate:matrix": "tsx scripts/generate-n-matrix.ts",
+    "generate:k-sweep": "tsx scripts/generate-k-sweep.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

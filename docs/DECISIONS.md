@@ -301,3 +301,21 @@ Both example configs use dataset `datasets/v0.1/tasks.jsonl`, toolspace 20, seed
 **Consequences.** `pricing/v1.json` already prices `openai/gpt-5.6-sol`. Router and agent tokens both use that row. A different router model later needs a DECISIONS entry and, if new, a pricing row.
 
 **Date.** 2026-09-23
+
+---
+
+## D12. M4 Jev k-sweep fixed N
+
+**Decision.** The M4 Jev top-k ablation holds toolspace size at **N = 25** and varies only `topK ∈ {1, 3, 5, 10}`. Dataset is `datasets/v0.2/tasks.jsonl`. Agent, Jev model, prompts, `routingSummary` text, pricing version, seed, and other scientific controls match the M3 Jev matrix cells (D10).
+
+**Reason.** k = 10 requires N ≥ 10. Among the formal M3 sizes, N = 25 is the smallest mid-range value that fits every sweep k, stays nested with the scaling experiment, and costs less than N = 50 or 100 for a four-config ablation. Fixing N keeps the only intended variable on k.
+
+**Alternatives considered.**
+
+* N = 100. Rejected for the first k-sweep because it multiplies agent schema load without answering whether k matters at a moderate N.
+* N = 20 (vertical-slice size). Rejected because M4 should sit on the same nested toolspace construction and dataset version as M3.
+* Sweeping LLM top-k in the same configs. Rejected; this issue is Jev-only.
+
+**Consequences.** Checked-in files live under `configs/k-sweep/`. Changing N or any frozen control after the first k-sweep result directory requires a new version and a DECISIONS entry.
+
+**Date.** 2026-09-23

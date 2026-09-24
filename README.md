@@ -92,4 +92,12 @@ npm run summarize -- --results /tmp/jev-matrix --format json
 npm run summarize -- --results /tmp/jev-matrix --format csv --out analysis/scaling.csv
 ```
 
+M4 Jev top-k sweep (fixed N = 25, k ∈ {1, 3, 5, 10}; only `topK` varies — D12):
+
+```bash
+npm run generate:k-sweep
+npm run eval -- --validate --config configs/k-sweep/jev-top1-n25.yaml
+npm run eval -- --config configs/k-sweep/jev-top5-n25.yaml --mock
+```
+
 No invented benchmark numbers. Conclusions come from result directories only.

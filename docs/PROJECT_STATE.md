@@ -4,7 +4,7 @@ Snapshot date: 2026-09-23
 
 ## Current milestone
 
-M3 — Toolspace Scaling
+M4 — Top-k Ablations (configs landed; execution still open)
 
 ## Completed issues
 
@@ -17,6 +17,7 @@ M3 — Toolspace Scaling
 - #36 Add repetition and statistical aggregation — on `main`. `summary.json` gains `*_stats` + `by_repetition`; `configs/final/` uses `repetitions: 3`.
 - #37 Add bounded provider concurrency — on `main`. `concurrency` 1..8 via `mapPool`; default configs stay at 1.
 - #38 Add scaling experiment summary tables — on `main`. `npm run summarize` rebuilds architecture × N JSON/CSV from result dirs.
+- #39 Add Jev top-k sweep experiment configs — on `main`. `configs/k-sweep/` at N=25, k∈{1,3,5,10} (D12).
 
 ## Issue currently being worked on
 
@@ -24,22 +25,20 @@ None.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separately from the M1/M2 vertical-slice file. Labels are not model-tuned (D7). Matrix scientific fields live in versioned YAML, not runner hard-codes. Matrix cells still run serially across configs; within a cell, `concurrency` bounds in-flight attempts. Quality sample stats exclude R0 (D6). Summary tables recompute from `runs.jsonl` only.
+Accepted in `docs/DECISIONS.md` (D1–D12). M4 k-sweep fixes N=25 and varies only Jev `topK`. Summary tables recompute from `runs.jsonl` only.
 
 ## Known problems
 
 - Live runs cost money and are not part of CI.
-- Slice example configs still point at `datasets/v0.1/`; matrix configs use v0.2.
+- Slice example configs still point at `datasets/v0.1/`; matrix and k-sweep configs use v0.2.
 - M5 blocked on real calibration-bearing result directories.
-- Fixed N for M4 k-sweep not locked (#39).
 
 ## Open questions
 
-- Fixed N for the M4 k-sweep (#39).
 - Adaptive policy thresholds (#42) after real calibration results.
 
 ## Next recommended issue
 
-#39 Add Jev top-k sweep experiment configs
+#40 Execute and aggregate top-k ablation metrics
 
-https://github.com/Akk525/jev_eval/issues/39
+https://github.com/Akk525/jev_eval/issues/40
