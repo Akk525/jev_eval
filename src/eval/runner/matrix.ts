@@ -84,9 +84,14 @@ export interface MatrixOrchestratorOptions {
   runCell?: (args: MatrixCellRunArgs) => Promise<string>;
   /** Clock for new runs. */
   now?: () => Date;
+  /**
+   * Manifest subdirectory under resultsRoot. Default `_matrix`.
+   * K-sweep uses `_k-sweep` so M3 and M4 manifests do not collide.
+   */
+  manifestDir?: string;
 }
 
-const MANIFEST_DIR = "_matrix";
+const DEFAULT_MANIFEST_DIR = "_matrix";
 
 /**
  * Execute or plan the M3 N-matrix serially.
@@ -95,6 +100,7 @@ const MANIFEST_DIR = "_matrix";
 export async function runMatrix(options: MatrixOrchestratorOptions): Promise<MatrixRunReport> {
   const repoRoot = options.repoRoot ?? process.cwd();
   const resultsRoot = resolve(options.resultsRoot);
+  const manifestDir = options.manifestDir ?? DEFAULT_MANIFEST_DIR;
   const mock = options.mock === true;
   const dryRun = options.dryRun === true;
   const resume = options.resume === true;
@@ -109,7 +115,7 @@ export async function runMatrix(options: MatrixOrchestratorOptions): Promise<Mat
   let manifestPath: string | null = null;
 
   if (resume) {
-    const loaded = loadManifestForResume(resultsRoot, options.timestamp);
+    const loaded = loadManifestForResume(resultsRoot, manifestDir, options.timestamp);
     manifest = loaded.manifest;
     manifestPath = loaded.path;
     if (manifest.mock !== mock) {
@@ -120,7 +126,7 @@ export async function runMatrix(options: MatrixOrchestratorOptions): Promise<Mat
     ensureOnlySubsetOfManifest(manifest, options.only);
   } else {
     if (options.timestamp !== undefined) {
-      const existing = manifestFilePath(resultsRoot, options.timestamp);
+      const existing = manifestFilePath(resultsRoot, manifestDir, options.timestamp);
       if (existsSync(existing)) {
         throw new MatrixOrchestratorError(
           `matrix manifest already exists at ${existing}; pass --resume to continue`,
@@ -142,7 +148,7 @@ export async function runMatrix(options: MatrixOrchestratorOptions): Promise<Mat
       })),
     };
     if (!dryRun) {
-      manifestPath = writeManifest(resultsRoot, manifest);
+      manifestPath = writeManifest(resultsRoot, manifestDir, manifest);
     }
   }
 
@@ -181,7 +187,7 @@ export async function runMatrix(options: MatrixOrchestratorOptions): Promise<Mat
     const shouldResume = entry.status === "running" || entry.directory !== null;
     entry.status = "running";
     entry.error = null;
-    manifestPath = writeManifest(resultsRoot, manifest);
+    manifestPath = writeManifest(resultsRoot, manifestDir, manifest);
 
     try {
       const directory = await runCell({
@@ -202,7 +208,7 @@ export async function runMatrix(options: MatrixOrchestratorOptions): Promise<Mat
       entry.error = message;
       // Do not retry. Remaining cells still run so one failure does not hide others.
     }
-    manifestPath = writeManifest(resultsRoot, manifest);
+    manifestPath = writeManifest(resultsRoot, manifestDir, manifest);
   }
 
   const report: MatrixRunReport = {
@@ -239,8 +245,8 @@ export class MatrixOrchestratorError extends Error {
   }
 }
 
-export function listMatrixManifests(resultsRoot: string): string[] {
-  const root = join(resolve(resultsRoot), MANIFEST_DIR);
+export function listMatrixManifests(resultsRoot: string, manifestDir = DEFAULT_MANIFEST_DIR): string[] {
+  const root = join(resolve(resultsRoot), manifestDir);
   if (!existsSync(root)) return [];
   return readdirSync(root)
     .filter((name) => name.endsWith(".json"))
@@ -298,14 +304,15 @@ function resolveCell(relativePath: string, catalog: readonly MatrixCell[]): Matr
 
 function loadManifestForResume(
   resultsRoot: string,
+  manifestDir: string,
   timestamp: string | undefined,
 ): { manifest: MatrixManifest; path: string } {
   const id =
     timestamp ??
-    listMatrixManifests(resultsRoot)
+    listMatrixManifests(resultsRoot, manifestDir)
       .reverse()
       .find((name) => {
-        const manifest = readManifest(manifestFilePath(resultsRoot, name));
+        const manifest = readManifest(manifestFilePath(resultsRoot, manifestDir, name));
         return manifest.cells.some((cell) => cell.status === "pending" || cell.status === "running");
       });
 
@@ -315,20 +322,20 @@ function loadManifestForResume(
     );
   }
 
-  const path = manifestFilePath(resultsRoot, id);
+  const path = manifestFilePath(resultsRoot, manifestDir, id);
   if (!existsSync(path)) {
     throw new MatrixOrchestratorError(`matrix manifest not found: ${path}`);
   }
   return { manifest: readManifest(path), path };
 }
 
-function manifestFilePath(resultsRoot: string, timestamp: string): string {
-  return join(resolve(resultsRoot), MANIFEST_DIR, `${timestamp}.json`);
+function manifestFilePath(resultsRoot: string, manifestDir: string, timestamp: string): string {
+  return join(resolve(resultsRoot), manifestDir, `${timestamp}.json`);
 }
 
-function writeManifest(resultsRoot: string, manifest: MatrixManifest): string {
-  const path = manifestFilePath(resultsRoot, manifest.timestamp);
-  mkdirSync(join(resolve(resultsRoot), MANIFEST_DIR), { recursive: true });
+function writeManifest(resultsRoot: string, manifestDir: string, manifest: MatrixManifest): string {
+  const path = manifestFilePath(resultsRoot, manifestDir, manifest.timestamp);
+  mkdirSync(join(resolve(resultsRoot), manifestDir), { recursive: true });
   writeFileSync(path, `${JSON.stringify(manifest, null, 2)}\n`);
   return path;
 }

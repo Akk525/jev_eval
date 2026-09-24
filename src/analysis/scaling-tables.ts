@@ -11,6 +11,8 @@ export type FailureTaxonomy = Record<(typeof FAILURE_CODES)[number] | "none", nu
 
 export interface ScalingRun extends AggregateRun {
   selectionAccuracy: number | null;
+  /** Ordered candidate tool names after routing. Null when the router failed. */
+  candidates: readonly string[] | null;
 }
 
 export interface ResultDirectoryLoad {
@@ -67,7 +69,7 @@ export function discoverResultDirectories(resultsRoot: string): string[] {
     .map((name) => join(root, name))
     .filter((path) => {
       if (!statSync(path).isDirectory()) return false;
-      if (nameOf(path) === "_matrix") return false;
+      if (nameOf(path) === "_matrix" || nameOf(path).startsWith("_")) return false;
       return existsSync(join(path, "config.json")) && existsSync(join(path, "runs.jsonl"));
     })
     .sort();
@@ -323,10 +325,14 @@ function readRunsJsonl(path: string): ScalingRun[] {
     .split("\n")
     .filter((line) => line.trim() !== "")
     .map((line) => {
-      const raw = JSON.parse(line) as AggregateRun & { selectionAccuracy?: number | null };
+      const raw = JSON.parse(line) as AggregateRun & {
+        selectionAccuracy?: number | null;
+        candidates?: readonly string[] | null;
+      };
       return {
         ...raw,
         selectionAccuracy: raw.selectionAccuracy ?? null,
+        candidates: raw.candidates ?? null,
       };
     });
 }

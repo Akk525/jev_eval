@@ -12,6 +12,7 @@
     "eval": "tsx src/cli/eval.ts",
     "matrix": "tsx src/cli/matrix.ts",
     "summarize": "tsx src/cli/summarize.ts",
+    "k-sweep": "tsx src/cli/k-sweep.ts",
     "generate:matrix": "tsx scripts/generate-n-matrix.ts",
     "generate:k-sweep": "tsx scripts/generate-k-sweep.ts"
   },

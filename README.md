@@ -97,7 +97,9 @@ M4 Jev top-k sweep (fixed N = 25, k ∈ {1, 3, 5, 10}; only `topK` varies — D1
 ```bash
 npm run generate:k-sweep
 npm run eval -- --validate --config configs/k-sweep/jev-top1-n25.yaml
-npm run eval -- --config configs/k-sweep/jev-top5-n25.yaml --mock
+npm run k-sweep -- --dry-run
+npm run k-sweep -- --mock --results /tmp/jev-ksweep
+npm run k-sweep -- --summarize --results /tmp/jev-ksweep --format csv --out analysis/k-sweep.csv
 ```
 
 No invented benchmark numbers. Conclusions come from result directories only.
