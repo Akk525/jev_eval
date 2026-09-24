@@ -8,9 +8,9 @@ M3 — Toolspace Scaling
 
 ## Completed issues
 
-- #1–#24 — M0 and M1 closed on `main`.
-- #25–#30 — M2 closed on `main`, including live LLM path through the shared agent.
-- #31 Expand the deterministic tool catalog toward 100 tools — on `main`. Eight domains, 100 tools, fixtures, interleaved `CATALOG_TAIL`.
+- #1–#30 — M0–M2 closed on `main` (including live LLM path).
+- #31 Expand catalog to 100 tools — on `main`.
+- #32 Harden per-task nested toolspace construction for N=5..100 — on `main`. `SCALING_TOOLSPACE_SIZES`, invalid-N rejection, catalog nesting tests.
 
 ## Issue currently being worked on
 
@@ -18,7 +18,7 @@ None.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D11). Live paths share `createSingleStepAgent`. Catalog registry hash covers definitions, summaries, near-misses, and the global tail.
+Accepted in `docs/DECISIONS.md` (D1–D11). Formal scaling sizes are `{5, 10, 25, 50, 100}`; other positive integers (e.g. N=20) remain constructible. Non-positive / non-integer N throws `ToolspaceError`.
 
 ## Known problems
 
@@ -34,6 +34,6 @@ Accepted in `docs/DECISIONS.md` (D1–D11). Live paths share `createSingleStepAg
 
 ## Next recommended issue
 
-#32 Harden per-task nested toolspace construction for N=5..100
+#33 Validate and extend the dataset for the scaling experiment
 
-https://github.com/Akk525/jev_eval/issues/32
+https://github.com/Akk525/jev_eval/issues/33

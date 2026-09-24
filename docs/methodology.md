@@ -43,7 +43,9 @@ For each task and toolspace size N:
 toolspace(task, N) = required_tools ∪ prefix(distractor_sequence, N − |required|)
 ```
 
-Nesting holds: `toolspace(task, 5) ⊂ toolspace(task, 10) ⊂ … ⊂ toolspace(task, 100)`. Required tools are always present. If they cannot fit in N, the task is ineligible for that N and is not scored as a failure. Early distractors are frozen near-misses authored from tool descriptions, not from model scores. Every run line stores the exact ordered toolspace.
+The formal M3 scaling sizes are `N ∈ {5, 10, 25, 50, 100}`. Nesting holds across those sizes: `toolspace(task, 5) ⊂ toolspace(task, 10) ⊂ … ⊂ toolspace(task, 100)`. Other positive integer sizes (for example the M1 slice at N = 20) remain constructible the same way. Non-positive or non-integer N is rejected.
+
+Required tools are always present when the task is eligible. If they cannot fit in N, the task is ineligible for that N and is not scored as a failure. Early distractors are frozen near-misses authored from tool descriptions, not from model scores. Construction is deterministic: the same task and N always yield the same ordered list. Every run line stores the exact ordered toolspace.
 
 ## Execution Success Rate
 

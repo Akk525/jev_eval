@@ -1,8 +1,21 @@
 import type { ToolDefinition } from "../types/tool.js";
 
+/** Formal scaling sizes from D1 / M3. Other positive sizes (e.g. 20) remain valid for slices. */
+export const SCALING_TOOLSPACE_SIZES = [5, 10, 25, 50, 100] as const;
+
+export type ScalingToolspaceSize = (typeof SCALING_TOOLSPACE_SIZES)[number];
+
+export class ToolspaceError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ToolspaceError";
+  }
+}
+
 /**
- * required tools, then a frozen distractor prefix, truncated to N.
+ * Required tools, then a frozen distractor prefix, truncated to N.
  * Returns null when the required set cannot fit in N. That task is not run.
+ * Invalid N (non-positive or non-integer) is rejected.
  */
 export function toolspaceForTask(
   requiredTools: readonly string[],
@@ -10,13 +23,25 @@ export function toolspaceForTask(
   tail: readonly string[],
   n: number,
 ): readonly string[] | null {
+  assertValidToolspaceSize(n);
   if (requiredTools.length > n) return null;
   const known = new Set(tools.map((tool) => tool.name));
   for (const name of requiredTools) {
-    if (!known.has(name)) throw new Error(`required tool is not in the registry: ${name}`);
+    if (!known.has(name)) throw new ToolspaceError(`required tool is not in the registry: ${name}`);
   }
   const distractors = distractorSequence(requiredTools, tools, tail);
   return [...requiredTools, ...distractors.slice(0, n - requiredTools.length)];
+}
+
+/** True when N is one of the formal scaling sizes. */
+export function isScalingToolspaceSize(n: number): n is ScalingToolspaceSize {
+  return (SCALING_TOOLSPACE_SIZES as readonly number[]).includes(n);
+}
+
+export function assertValidToolspaceSize(n: number): void {
+  if (!Number.isInteger(n) || n <= 0) {
+    throw new ToolspaceError(`invalid toolspace size N=${String(n)}; must be a positive integer`);
+  }
 }
 
 function distractorSequence(
