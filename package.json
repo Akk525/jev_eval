@@ -9,7 +9,8 @@
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "eval": "tsx src/cli/eval.ts"
+    "eval": "tsx src/cli/eval.ts",
+    "generate:matrix": "tsx scripts/generate-n-matrix.ts"
   },
   "devDependencies": {
     "@types/node": "^22.20.4",

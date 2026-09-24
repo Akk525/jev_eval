@@ -1,0 +1,14 @@
+architecture: baseline
+toolspaceSize: 25
+topK: null
+datasetPath: datasets/v0.2/tasks.jsonl
+repetitions: 1
+concurrency: 1
+seed: 0
+agent:
+  provider: openai
+  model: gpt-5.6-sol
+  temperature: 0
+router: null
+pricingVersion: v1
+tracing: noop

@@ -12,6 +12,7 @@ M3 — Toolspace Scaling
 - #31 Expand catalog to 100 tools — on `main`.
 - #32 Harden nested toolspaces for N=5..100 — on `main`.
 - #33 Validate and extend the dataset for scaling — on `main`. `datasets/v0.2/tasks.jsonl` (78 tasks); v0.1 kept for slice configs.
+- #34 Add N-matrix experiment configurations — on `main`. `configs/matrix/` (15 cells); regenerate via `npm run generate:matrix`.
 
 ## Issue currently being worked on
 
@@ -19,12 +20,12 @@ None.
 
 ## Important implementation decisions
 
-Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separately from the M1/M2 vertical-slice file. Labels are not model-tuned (D7).
+Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separately from the M1/M2 vertical-slice file. Labels are not model-tuned (D7). Matrix scientific fields live in versioned YAML, not runner hard-codes.
 
 ## Known problems
 
 - Live runs cost money and are not part of CI.
-- Example configs still point at `datasets/v0.1/`; N-matrix configs (#34) should use v0.2.
+- Slice example configs still point at `datasets/v0.1/`; matrix configs use v0.2.
 - M5 blocked on real calibration-bearing result directories.
 - Fixed N for M4 k-sweep not locked (#39).
 
@@ -35,6 +36,6 @@ Accepted in `docs/DECISIONS.md` (D1–D11). Scaling dataset is versioned separat
 
 ## Next recommended issue
 
-#34 Add N-matrix experiment configurations
+#35 Add scaling experiment runner orchestration
 
-https://github.com/Akk525/jev_eval/issues/34
+https://github.com/Akk525/jev_eval/issues/35

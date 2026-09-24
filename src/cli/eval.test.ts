@@ -41,6 +41,32 @@ it("validates the baseline, Jev, LLM, and router-only example configs without ca
   expect(routerOnly.stdout).toContain("router=typesafe/jev-1.13.0");
 });
 
+it("validates every N-matrix config without calling a provider", () => {
+  const paths = [
+    "configs/matrix/baseline-n5.yaml",
+    "configs/matrix/baseline-n10.yaml",
+    "configs/matrix/baseline-n25.yaml",
+    "configs/matrix/baseline-n50.yaml",
+    "configs/matrix/baseline-n100.yaml",
+    "configs/matrix/jev-top5-n5.yaml",
+    "configs/matrix/jev-top5-n10.yaml",
+    "configs/matrix/jev-top5-n25.yaml",
+    "configs/matrix/jev-top5-n50.yaml",
+    "configs/matrix/jev-top5-n100.yaml",
+    "configs/matrix/llm-top5-n5.yaml",
+    "configs/matrix/llm-top5-n10.yaml",
+    "configs/matrix/llm-top5-n25.yaml",
+    "configs/matrix/llm-top5-n50.yaml",
+    "configs/matrix/llm-top5-n100.yaml",
+  ];
+  for (const configPath of paths) {
+    const run = cli(["--validate", "--config", configPath]);
+    expect(run.status, `${configPath}\n${run.stderr}`).toBe(0);
+    expect(run.stdout).toContain("agent=openai/gpt-5.6-sol");
+    expect(run.stdout).not.toContain("jev-latest");
+  }
+});
+
 it("exits non-zero on a dry validation failure", () => {
   const root = mkdtempSync(join(tmpdir(), "jev-config-"));
   const configPath = join(root, "bad.yaml");

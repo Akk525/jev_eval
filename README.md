@@ -57,4 +57,12 @@ npm run eval -- --config configs/jev-top5-20.yaml
 npm run eval -- --config configs/llm-top5-20.yaml
 ```
 
+M3 N-matrix configs (baseline / Jev top-5 / LLM top-5 × N ∈ {5,10,25,50,100}) live under `configs/matrix/` and point at `datasets/v0.2/`. Regenerate with `npm run generate:matrix`. Validate any cell without calling a provider:
+
+```bash
+npm run eval -- --validate --config configs/matrix/baseline-n25.yaml
+npm run eval -- --validate --config configs/matrix/jev-top5-n100.yaml
+npm run eval -- --validate --config configs/matrix/llm-top5-n50.yaml
+```
+
 No invented benchmark numbers. Conclusions come from result directories only.
